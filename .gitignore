@@ -38,6 +38,13 @@ Desktop.ini
 .gemini/
 html-ppt-skill/
 
+# Documents and Presentations (Keep locally, exclude from Git repository)
+*.docx
+*.doc
+*.pdf
+*.pptx
+*.ppt
+
 # Temporary / Scratch files
 ~$*
 search_all.py
