@@ -1,0 +1,107 @@
+      // Bookings System (My Bookings)
+      const bookingForm = ref({
+        lot_id: 1,
+        date: '2026-10-01',
+        time: '18:00',
+        start_time: '18:00',
+        duration_hours: 3,
+        vehicle_id: 1,
+        slot_code: 'A-024'
+      });
+
+      const calculatedBookingFee = computed(() => {
+        const lot = parkingLots.value.find(l => l.id == bookingForm.value.lot_id) || parkingLots.value[0];
+        const hours = parseInt(bookingForm.value.duration_hours) || 1;
+        return hours * (lot.hourly_rate || 10000);
+      });
+
+      function onBookingLotChange() {
+        const lot = parkingLots.value.find(l => l.id == bookingForm.value.lot_id);
+        if (lot) {
+          selectedParkingLot.value = lot;
+          if (lot.slots && lot.slots.length > 0) {
+            const avail = lot.slots.find(s => s.status === 'available');
+            bookingForm.value.slot_code = avail ? avail.code : lot.slots[0].code;
+          }
+        }
+      }
+
+      const myBookings = ref([
+        {
+          id: 1,
+          booking_id: 'BK00123',
+          code: 'BK00123',
+          lot_name: 'Smart Parking - Nguyễn Văn Linh',
+          slot_code: 'A-023',
+          plate: '59A1-123.45',
+          vehicle_plate: '59A1-123.45',
+          date: '2026-10-01',
+          time: '18:00 - 21:00',
+          time_range: '18:00 - 21:00',
+          start_minutes: 1080,
+          end_minutes: 1260,
+          duration_hours: 3,
+          duration_text: '3h 00m',
+          fee: 30000,
+          fee_text: '30,000 VND',
+          status: 'upcoming',
+          qr_token: 'SP-QR-BK00123-A023-NVL'
+        },
+        {
+          id: 2,
+          booking_id: 'BK00120',
+          code: 'BK00120',
+          lot_name: 'Smart Parking - Nguyễn Văn Linh',
+          slot_code: 'A-023',
+          plate: '59A1-123.45',
+          vehicle_plate: '59A1-123.45',
+          date: '2026-10-01',
+          time: '18:05 - Đang gửi',
+          time_range: '18:05 - Đang gửi',
+          start_minutes: 1085,
+          end_minutes: 1260,
+          duration_text: '01h 42m',
+          fee: 17000,
+          fee_text: '17,000 VND',
+          status: 'active',
+          qr_token: 'SP-QR-BK00120-ACT-A023'
+        },
+        {
+          id: 3,
+          booking_id: 'BK00118',
+          code: 'BK00118',
+          lot_name: 'Smart Parking - Nguyễn Văn Linh',
+          slot_code: 'A-012',
+          plate: '59A1-123.45',
+          vehicle_plate: '59A1-123.45',
+          date: '2026-09-01',
+          time: '08:00 - 10:30',
+          time_range: '08:00 - 10:30',
+          start_minutes: 480,
+          end_minutes: 630,
+          duration_text: '2h 30m',
+          fee: 25000,
+          fee_text: '25,000 VND',
+          status: 'completed',
+          qr_token: 'SP-QR-BK00118-A012-NVL'
+        },
+        {
+          id: 4,
+          booking_id: 'BK00095',
+          code: 'BK00095',
+          lot_name: 'Bãi đỗ xe Lê Lợi Central',
+          slot_code: 'L-004',
+          plate: '30F-888.88',
+          vehicle_plate: '30F-888.88',
+          date: '2026-09-20',
+          time: '10:00 - 12:00',
+          time_range: '10:00 - 12:00',
+          start_minutes: 600,
+          end_minutes: 720,
+          duration_text: '2h 00m',
+          fee: 30000,
+          fee_text: '30,000 VND',
+          status: 'cancelled',
+          qr_token: 'SP-QR-BK00095-CNL'
+        }
+      ]);

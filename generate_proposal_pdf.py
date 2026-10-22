@@ -1,0 +1,243 @@
+import subprocess
+import os
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+HTML_FILE = os.path.abspath(r"D:\smart-parking-system\De_xuat_du_an_Smart_Parking_System.html")
+PDF_FILE = os.path.abspath(r"D:\smart-parking-system\De_xuat_du_an_Smart_Parking_System.pdf")
+DOWNLOAD_PDF = os.path.abspath(r"C:\Users\LENOVO\Downloads\De_xuat_du_an_Smart_Parking_System.pdf")
+EDGE_PATH = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+
+html_content = """<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đề Xuất Dự Án - Smart Parking System</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 20mm 20mm 25mm;
+        }
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            color: #000000;
+            line-height: 1.35;
+            font-size: 13pt;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        .header-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 13pt;
+            margin-bottom: 2pt;
+        }
+        .doc-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16pt;
+            margin-top: 4pt;
+            margin-bottom: 14pt;
+        }
+        .field-row {
+            margin-bottom: 5pt;
+        }
+        .field-label {
+            font-weight: bold;
+        }
+        .section-header {
+            font-weight: bold;
+            margin-top: 10pt;
+            margin-bottom: 6pt;
+        }
+        .task-title {
+            font-weight: bold;
+            margin-top: 8pt;
+            margin-bottom: 3pt;
+        }
+        .task-content {
+            text-align: justify;
+            margin-bottom: 4pt;
+        }
+        ul {
+            margin: 2pt 0 4pt 0;
+            padding-left: 20pt;
+        }
+        li {
+            margin-bottom: 3pt;
+            text-align: justify;
+        }
+        ul.level-2 {
+            list-style-type: circle;
+            padding-left: 18pt;
+        }
+        .footer-sig {
+            margin-top: 25pt;
+            text-align: right;
+            page-break-inside: avoid;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">CSE702131-1-1-26(N01) – ĐỒ ÁN CƠ SỞ</div>
+    <div class="doc-title">ĐỀ XUẤT DỰ ÁN</div>
+
+    <div class="field-row">
+        <span class="field-label">TÊN DỰ ÁN:</span> Hệ thống quản lý và dẫn đường bãi đỗ xe thông minh tích hợp thuật toán A* và mô hình học máy dự báo tỷ lệ lấp đầy (Smart Parking System)
+    </div>
+    <div class="field-row">
+        <span class="field-label">SINH VIÊN:</span> Phạm Văn Đạt, Nguyễn Duy Bảo, Trần Tuấn Anh
+    </div>
+    <div class="field-row">
+        <span class="field-label">THỜI GIAN THỰC HIỆN:</span> 01/09/2026 – 30/10/2026
+    </div>
+
+    <div class="section-header">PHẠM VI CÔNG VIỆC:</div>
+
+    <div class="task-title">Task 1: Research – Nghiên cứu &amp; khảo sát công nghệ</div>
+    <div class="task-content">
+        Tiến hành nghiên cứu tổng quan về mô hình bài toán quản lý bãi đỗ xe thông minh (Smart Parking System) trong hạ tầng giao thông tĩnh đô thị (Smart City). Khảo sát nguyên lý hoạt động của các giải thuật tìm đường tối ưu trên lưới tọa độ 2D, đặc biệt là thuật toán A* (A-Star Search) với hàm ước lượng Manhattan Heuristic né vật cản. Nghiên cứu phương pháp học máy (Machine Learning) cho bài toán dự báo chuỗi thời gian tỷ lệ lấp đầy bãi xe (Occupancy Forecasting) sử dụng mô hình hồi quy Random Forest Regressor. Khảo sát kiến trúc backend API hiện đại với FastAPI, cơ chế xác thực JWT, cơ sở dữ liệu quan hệ PostgreSQL và giải pháp kiểm soát đồng thời (Row-Level Locking) chống đặt chỗ trùng lặp (Double-Booking).
+    </div>
+
+    <div class="task-title">Task 2: Building – Xây dựng pipeline dữ liệu, backend &amp; phát triển mô hình</div>
+    <div class="task-content">
+        Tiến hành lập trình bằng Python, FastAPI, PostgreSQL, Scikit-learn và Vue 3 để xây dựng luồng xử lý dữ liệu, giải thuật và mô hình học máy. Hệ thống tập trung phát triển các module chính sau:
+    </div>
+
+    <ul>
+        <li><strong>Kiến trúc Cơ sở dữ liệu &amp; Phân hệ Backend Core:</strong>
+            <ul class="level-2">
+                <li>Thiết kế mô hình dữ liệu quan hệ (ERD) gồm 6 bảng chuẩn: users, parking_lots, parking_slots, bookings, sessions, occupancy_history; quản lý migration tự động qua Alembic.</li>
+                <li>Xây dựng phân hệ Xác thực &amp; Phân quyền bảo mật: Băm mật khẩu an toàn với Bcrypt, cấp phát và giải mã JWT Bearer Token, phân quyền truy cập Role-Based Access Control (Admin, Staff, Customer).</li>
+                <li>Xây dựng nghiệp vụ Đặt chỗ (Booking), tự động sinh vé điện tử mã QR Code (Base64), và quy trình Check-in / Check-out qua Barrier.</li>
+                <li>Áp dụng cơ chế chống đặt chỗ trùng lặp (Anti Double-Booking) bằng kỹ thuật khóa cấp dòng Database (SELECT FOR UPDATE) triệt tiêu hoàn toàn lỗi Race Condition.</li>
+                <li>Xây dựng máy chủ WebSocket hai chiều (ConnectionManager) phát sóng tức thời trạng thái các ô đỗ xe và telemetry cảm biến siêu âm IoT.</li>
+            </ul>
+        </li>
+        <li><strong>Thuật toán Dẫn đường ngắn nhất A* (Pathfinding Module):</strong>
+            <ul class="level-2">
+                <li>Mô hình hóa không gian bãi đỗ xe thành ma trận lưới tọa độ 2D thuần Python, nhận diện và xử lý linh hoạt vật cản tĩnh (tường, cột bê tông) và vật cản động (các ô đang có xe đỗ).</li>
+                <li>Cài đặt giải thuật A* (astar.py) sử dụng hàng đợi ưu tiên (Priority Queue/heapq) và hàm ước lượng Heuristic Manhattan tối ưu khoảng cách di chuyển.</li>
+                <li>Xây dựng dịch vụ định tuyến và endpoint API GET /api/lots/{lot_id}/navigate trả về danh sách tọa độ (waypoints) dẫn từ cổng vào (0, 0) đến đúng ô đỗ đích với thời gian phản hồi siêu tốc (&lt; 5ms).</li>
+            </ul>
+        </li>
+        <li><strong>Pipeline Dữ liệu &amp; Huấn luyện Mô hình Machine Learning (AI Engine):</strong>
+            <ul class="level-2">
+                <li>Tiền xử lý &amp; Sinh dữ liệu (Data Generator): Xây dựng module sinh 4,320 mẫu chuỗi thời gian có quy luật thực tế phản ánh chu kỳ giờ cao điểm sáng/chiều, ngày thường, cuối tuần, ngày lễ và nhiễu Gaussian.</li>
+                <li>Huấn luyện mô hình hồi quy (Model Training): Huấn luyện Random Forest Regressor (200 cây, max depth 10) từ dữ liệu lịch sử; tối ưu sai số tuyệt đối trung bình đạt mức rất thấp (MAE &lt; 0.06 ~ 5.8%).</li>
+                <li>Triển khai suy luận (Inference Service): Đóng gói mô hình occupancy_model.joblib với kỹ thuật Lazy Singleton nạp vào RAM phục vụ API dự báo theo từng giờ và cả ngày 24 giờ.</li>
+            </ul>
+        </li>
+        <li><strong>Giao diện Web điều hành tương tác thời gian thực (Frontend UI/UX):</strong>
+            <ul class="level-2">
+                <li>Xây dựng ứng dụng đơn trang (SPA) bằng Vue 3 (Composition API) kết hợp Tailwind CSS phong cách Dark Cyberpunk chuyên nghiệp.</li>
+                <li>Trực quan hóa sơ đồ lưới bãi đỗ xe 2D hiển thị trực quan 4 trạng thái ô đỗ: Trống (Xanh), Đã đặt (Vàng), Đang đỗ (Đỏ), Vật cản (Xám).</li>
+                <li>Lập trình hiệu ứng chuyển động GSAP 3: Diễn hoạt xe ảo lăn bánh bám sát tọa độ A* tự động xoay đầu xe theo góc cua rẽ, hiệu ứng Stagger 2D và Numeric Counter số liệu KPI.</li>
+                <li>Xây dựng biểu đồ dự báo AI tương tác 24h kèm thanh trượt scrubber mượt mà; tích hợp chế độ Standalone Mock Engine tự động chạy offline trên trình duyệt.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="task-title">Task 3: Testing – Kiểm thử &amp; Đánh giá mô hình / hệ thống</div>
+    <div class="task-content">
+        Tiến hành kiểm thử toàn diện phần mềm nhằm đánh giá tính chính xác của thuật toán, độ ổn định của giao dịch và hiệu năng của mô hình AI:
+    </div>
+    <ul>
+        <li>Kiểm thử thuật toán A* (test_astar.py): Chạy 6 unit test cases tự động bằng Pytest kiểm tra đường thẳng không vật cản, tự động né vật cản, kịch bản bãi xe bị chặn hoàn toàn, điểm xuất phát trùng đích, độ dài đường đi tối ưu Manhattan.</li>
+        <li>Kiểm thử mô hình Machine Learning (test_ml_engine.py): Chạy 5 unit test cases kiểm tra dữ liệu phân phối chuẩn, tính tái lập theo seed ngẫu nhiên, quy luật giờ đêm thấp hơn giờ cao điểm, mô hình hội tụ và dự báo trong miền [0, 1].</li>
+        <li>Kiểm thử kiểm soát đồng thời (Concurrency Test - test_double_booking.py): Mô phỏng đa luồng (multi-threading) 2 khách cùng bấm đặt 1 ô đỗ tại cùng 1 mili-giây, kiểm chứng khóa hàng Row-level lock ngăn chặn triệt để lỗi Race Condition (trả về 409 Conflict).</li>
+        <li>Kiểm thử giao diện đầu-cuối (E2E Test): Kiểm thử tự động qua Chrome DevTools Protocol (CDP) trên trình duyệt Microsoft Edge headless kiểm tra phiên đăng nhập JWT, render lưới ô đỗ và giải phóng bộ nhớ.</li>
+    </ul>
+
+    <div class="task-title">Task 4: Deployment – Tích hợp Full-stack &amp; Đóng gói luồng thực thi</div>
+    <div class="task-content">
+        Tiến hành tích hợp giao diện Frontend trực tiếp vào FastAPI server (phục vụ static files qua app.mount) cho phép toàn bộ hệ sinh thái chạy thống nhất trên một cổng dịch vụ duy nhất (http://localhost:8000). Đóng gói kịch bản khởi chạy 1 chạm cho môi trường Windows (run.bat và run.ps1) tự động kích hoạt môi trường ảo Python và máy chủ Uvicorn. Cấu hình hệ thống Swagger UI tự động tại /docs phục vụ kiểm thử và kết nối API.
+    </div>
+
+    <div class="task-title">Task 5: Documentation &amp; Presentation – Báo cáo và trình bày</div>
+    <div class="task-content">
+        Tổng hợp toàn bộ số liệu kỹ thuật, báo cáo và tài liệu phục vụ quá trình nghiệm thu gồm:
+    </div>
+    <ul>
+        <li>Bảng số liệu phân tích tập dữ liệu lịch sử và biểu đồ đường cong tỷ lệ lấp đầy 24h.</li>
+        <li>Báo cáo đánh giá hiệu năng thuật toán tìm đường ngắn nhất A* và so sánh độ tối ưu lộ trình.</li>
+        <li>Báo cáo đánh giá độ chính xác của mô hình Machine Learning Random Forest (chỉ số MAE, RMSE).</li>
+        <li>Cẩm nang tài liệu kỹ thuật toàn diện và hướng dẫn vận hành cho Khách hàng và Quản trị viên.</li>
+        <li>Chuẩn bị slide thuyết trình và kịch bản chạy demo trực tiếp toàn bộ luồng hệ thống: Đăng nhập &rarr; Sơ đồ lưới 2D &rarr; Thuật toán A* dẫn đường &rarr; Đặt chỗ vé QR &rarr; Check-in/out barrier &rarr; Dự báo AI 24h.</li>
+    </ul>
+
+    <div class="section-header">KẾT QUẢ DỰ ÁN:</div>
+    <div class="task-content">Các kết quả đạt được của dự án gồm:</div>
+
+    <div style="font-weight: bold; margin-top: 4pt;">Báo cáo dự án</div>
+    <ul>
+        <li>Tài liệu đề xuất dự án và nghiên cứu tổng quan hệ thống quản lý bãi đỗ xe thông minh.</li>
+        <li>Tài liệu phân tích kiến trúc hệ thống, thiết kế CSDL quan hệ (ERD) và ma trận trách nhiệm RACI.</li>
+        <li>Tài liệu nghiên cứu, cài đặt giải thuật tìm đường A* và mô hình học máy Random Forest dự báo công suất.</li>
+        <li>Báo cáo kết quả kiểm thử tự động (Unit Tests, Concurrency Test) và đánh giá độ chính xác thực nghiệm.</li>
+    </ul>
+
+    <div style="font-weight: bold; margin-top: 4pt;">Source Code</div>
+    <ul>
+        <li>Mã nguồn Python hoàn chỉnh cho phân hệ Backend FastAPI, cấu hình bảo mật JWT, SQLAlchemy ORM và Alembic.</li>
+        <li>Mã nguồn module tìm đường ngắn nhất A* (astar.py, grid.py) và dịch vụ định tuyến navigation độc lập.</li>
+        <li>Mã nguồn bộ sinh dữ liệu lịch sử giả lập (data_generator.py), module huấn luyện và suy luận AI (train.py, predict.py).</li>
+        <li>Mã nguồn giao diện Web Frontend SPA (Vue 3, Tailwind CSS, GSAP Animation, WebSocket Client và Standalone Mock Engine).</li>
+        <li>Bộ mã nguồn kiểm thử tự động gồm 11 unit test cases Pytest và script kiểm thử đa luồng chống Race Condition.</li>
+    </ul>
+
+    <div style="font-weight: bold; margin-top: 4pt;">Sản phẩm thực nghiệm</div>
+    <ul>
+        <li>Hệ thống Web App hoàn chỉnh chạy tại http://localhost:8000 với đầy đủ giao diện cho Khách hàng và Ban quản lý.</li>
+        <li>Mô hình Machine Learning Random Forest đã huấn luyện và tối ưu đạt sai số MAE &lt; 0.06 (occupancy_model.joblib).</li>
+        <li>Bộ kịch bản khởi chạy 1 chạm tự động (run.bat, run.ps1) giúp triển khai hệ thống dễ dàng trên máy tính.</li>
+    </ul>
+
+    <div style="font-weight: bold; margin-top: 4pt;">Tài liệu hỗ trợ</div>
+    <ul>
+        <li>Slide báo cáo và thuyết trình dự án phục vụ bảo vệ đồ án.</li>
+        <li>Cẩm nang hướng dẫn sử dụng chi tiết cho Khách hàng và Người quản trị (User &amp; Administrator Manual).</li>
+        <li>Tài liệu đặc tả API Swagger UI tương tác trực quan tại đường dẫn /docs.</li>
+    </ul>
+
+    <div class="footer-sig">
+        <em>Hà Nội, Tháng 10/2026</em><br>
+        <strong>Xác nhận của GVHD</strong>
+    </div>
+
+</body>
+</html>
+"""
+
+with open(HTML_FILE, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+args = [
+    EDGE_PATH,
+    "--headless",
+    "--disable-gpu",
+    "--no-pdf-header-footer",
+    f"--print-to-pdf={PDF_FILE}",
+    f"file:///{HTML_FILE.replace(os.sep, '/')}"
+]
+
+subprocess.run(args, check=True)
+
+import shutil
+try:
+    shutil.copy2(PDF_FILE, DOWNLOAD_PDF)
+except Exception:
+    pass
+
+print(f"SUCCESS: Exported PDF at {PDF_FILE}")

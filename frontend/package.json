@@ -1,0 +1,13 @@
+{
+  "name": "smart-parking-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Smart Parking System powered by Vue 3, GSAP and Tailwind CSS",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "serve": "npx serve -l 3000 ."
+  },
+  "dependencies": {
+    "vue": "^3.4.21",
+    "gsap": "^3.12.5"
+  }
+}

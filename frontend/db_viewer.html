@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Parking - Visual Database Explorer (5 Bảng Chuẩn)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+          <i class="fa-solid fa-database text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-base text-white flex items-center gap-2">
+            Smart Parking Database Explorer
+            <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">PostgreSQL 18</span>
+          </h1>
+          <p class="text-xs text-slate-400">Trực quan hóa cấu trúc 5 bảng chuẩn & dữ liệu trực tiếp trong hệ thống</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="/" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Về Giao diện chính
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Database Connection Info Banner -->
+  <div class="max-w-7xl mx-auto px-4 mt-6">
+    <div class="bg-gradient-to-r from-slate-900 via-slate-800/80 to-slate-900 border border-slate-700/80 rounded-2xl p-5 shadow-xl grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+          <i class="fa-solid fa-server text-lg"></i>
+        </div>
+        <div>
+          <div class="text-xs text-slate-400">Database Engine</div>
+          <div class="text-sm font-bold text-white">PostgreSQL 18 (localhost:5432)</div>
+          <div class="text-[11px] text-emerald-400 font-medium">Database: parking_system</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/20">
+          <i class="fa-solid fa-window-maximize text-lg"></i>
+        </div>
+        <div>
+          <div class="text-xs text-slate-400">Phần mềm xem trực quan</div>
+          <div class="text-sm font-bold text-white">pgAdmin 4 & MySQL WB</div>
+          <div class="text-[11px] text-emerald-400 font-medium">Đã cài sẵn trong máy tính của bạn</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center border border-purple-500/20">
+          <i class="fa-solid fa-file-code text-lg"></i>
+        </div>
+        <div>
+          <div class="text-xs text-slate-400">File Backup SQL đã tạo</div>
+          <div class="text-sm font-bold text-white">smart_parking_backup.sql</div>
+          <div class="text-[11px] text-slate-400">513 KB (Full Schema & Seed Data)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERD 5 BẢNG -->
+  <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+      <h2 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-diagram-project text-cyan-400"></i> Cấu Trúc 5 Bảng Chuẩn Hóa
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 font-mono text-xs">
+        <div class="bg-slate-950 border border-blue-500/30 rounded-xl p-3">
+          <div class="font-bold text-blue-400 mb-2">1. ACCOUNTS (users)</div>
+          <div class="text-slate-300 space-y-1 text-[11px]">
+            <div class="text-amber-400">🔑 id (PK)</div>
+            <div>• username</div>
+            <div>• password_hash</div>
+            <div>• full_name, phone</div>
+            <div class="text-cyan-400">• role, status</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 border border-emerald-500/30 rounded-xl p-3">
+          <div class="font-bold text-emerald-400 mb-2">2. VEHICLES (vehicles)</div>
+          <div class="text-slate-300 space-y-1 text-[11px]">
+            <div class="text-amber-400">🔑 id (PK)</div>
+            <div class="text-blue-400">• license_plate</div>
+            <div>• vehicle_type</div>
+            <div>• brand, color</div>
+            <div class="text-purple-400">🔗 user_id (FK)</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 border border-purple-500/30 rounded-xl p-3">
+          <div class="font-bold text-purple-400 mb-2">3. PARKING_AREAS</div>
+          <div class="text-slate-300 space-y-1 text-[11px]">
+            <div class="text-amber-400">🔑 id (PK)</div>
+            <div>• name, floor</div>
+            <div>• district, city</div>
+            <div>• grid_w, grid_h</div>
+            <div>• hourly_base_rate</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 border border-amber-500/30 rounded-xl p-3">
+          <div class="font-bold text-amber-400 mb-2">4. PARKING_LOTS (slots)</div>
+          <div class="text-slate-300 space-y-1 text-[11px]">
+            <div class="text-amber-400">🔑 id (PK)</div>
+            <div class="text-purple-400">🔗 lot_id (FK)</div>
+            <div class="text-cyan-400">• slot_code</div>
+            <div>• vehicle_type</div>
+            <div>• pos_x, pos_y, status</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 border border-rose-500/30 rounded-xl p-3">
+          <div class="font-bold text-rose-400 mb-2">5. PARKING_SESSIONS</div>
+          <div class="text-slate-300 space-y-1 text-[11px]">
+            <div class="text-amber-400">🔑 id (PK)</div>
+            <div class="text-emerald-400">🔗 vehicle_id (FK)</div>
+            <div class="text-amber-400">🔗 slot_id (FK)</div>
+            <div class="text-blue-400">🔗 check_in/out_by</div>
+            <div class="text-rose-400">• status, total_fee</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+
