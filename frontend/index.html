@@ -709,7 +709,7 @@
 
             <!-- 2. Check-in Vehicle -->
             <button
-              @click="activeNav = 'check-in'"
+              @click="activeNav = 'check-in'; syncLotsWithActiveSessions()"
               class="w-full flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-semibold transition cursor-pointer"
               :class="activeNav === 'check-in' ? 'bg-[#10b981] text-white font-bold shadow-lg shadow-emerald-500/25' : 'hover:bg-slate-800/40 text-slate-400 hover:text-white'"
             >
@@ -722,7 +722,7 @@
 
             <!-- 3. Check-out Vehicle -->
             <button
-              @click="activeNav = 'check-out'"
+              @click="activeNav = 'check-out'; syncLotsWithActiveSessions()"
               class="w-full flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-semibold transition cursor-pointer"
               :class="activeNav === 'check-out' ? 'bg-[#10b981] text-white font-bold shadow-lg shadow-emerald-500/25' : 'hover:bg-slate-800/40 text-slate-400 hover:text-white'"
             >
@@ -735,7 +735,7 @@
 
             <!-- 4. Parking Map -->
             <button
-              @click="activeNav = 'parking-map'"
+              @click="activeNav = 'parking-map'; syncLotsWithActiveSessions()"
               class="w-full flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-semibold transition cursor-pointer"
               :class="activeNav === 'parking-map' ? 'bg-[#10b981] text-white font-bold shadow-lg shadow-emerald-500/25' : 'hover:bg-slate-800/40 text-slate-400 hover:text-white'"
             >
@@ -853,7 +853,7 @@
               <span>Home</span>
             </button>
             <button
-              @click="activeNav = 'parking-map'"
+              @click="activeNav = 'parking-map'; syncLotsWithActiveSessions()"
               class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition"
               :class="activeNav === 'parking-map' ? 'bg-slate-800 text-white font-bold' : 'hover:bg-slate-800/40 text-slate-400 hover:text-white'"
             >
@@ -9081,16 +9081,15 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             return aLot === currentLotName || aLot.includes(currentLotName) || currentLotName.includes(aLot);
           });
 
-          // Xe ĐANG ĐỖ: Slot có trạng thái occupied HOẶC có phiên gửi xe thực tế đang diễn ra (Ongoing / PARKING / active)
-          const hasActiveParkingSession = matchedActivity && (matchedActivity.status === 'Ongoing' || matchedActivity.status === 'PARKING' || matchedActivity.status === 'parking' || matchedActivity.status === 'Đang đỗ') && (!matchedActivity.checkOut || matchedActivity.checkOut === 'Chưa ra');
+          // Xe ĐANG ĐỖ: Phải có phiên đỗ xe thực tế đang diễn ra HOẶC booking đã active check-in
+          const hasActiveParkingSession = matchedActivity && (matchedActivity.status === 'Ongoing' || matchedActivity.status === 'PARKING' || matchedActivity.status === 'parking' || matchedActivity.status === 'Active' || matchedActivity.status === 'active' || matchedActivity.status === 'Đang đỗ') && (!matchedActivity.checkOut || matchedActivity.checkOut === 'Chưa ra');
           const hasActiveBookingCheckin = matchedBooking && matchedBooking.status === 'active';
-          const isOccupied = s.status === 'occupied' || Boolean(hasActiveParkingSession) || Boolean(hasActiveBookingCheckin);
+          const isOccupied = Boolean(hasActiveParkingSession) || Boolean(hasActiveBookingCheckin) || (s.status === 'occupied' && (!matchedActivity || !matchedActivity.checkOut || matchedActivity.checkOut === 'Chưa ra') && Boolean(s.plate || s.current_plate));
 
           // Xe ĐÃ ĐẶT: Khách đã đặt chỗ trước (status 'upcoming' hoặc 'confirmed') nhưng CHƯA CHECK-IN vào bãi
           const isUpcomingReservation = Boolean(matchedBooking && (matchedBooking.status === 'upcoming' || matchedBooking.status === 'confirmed'))
-            || (matchedActivity && matchedActivity.status === 'Upcoming')
-            || (s.status === 'reserved' && !isOccupied)
-            || (Boolean(s.bookedPlate) && !isOccupied);
+            || (matchedActivity && (matchedActivity.status === 'Upcoming' || matchedActivity.status === 'upcoming'))
+            || (s.status === 'reserved' && !isOccupied && Boolean(matchedBooking));
           const isBooked = !isOccupied && isUpcomingReservation;
           const isRed = isOccupied || isBooked;
 
@@ -10882,7 +10881,7 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
       function syncLotsWithActiveSessions() {
         const activeSessions = (recentActivities.value || []).filter(a => {
           if (!a) return false;
-          const isAct = (a.status === 'Ongoing' || a.status === 'Active' || a.status === 'PARKING' || a.status === 'parking' || a.status === 'Đang đỗ') && (!a.checkOut || a.checkOut === 'Chưa ra');
+          const isAct = (a.status === 'Ongoing' || a.status === 'Active' || a.status === 'PARKING' || a.status === 'parking' || a.status === 'active' || a.status === 'Đang đỗ') && (!a.checkOut || a.checkOut === 'Chưa ra');
           return isAct;
         });
 
@@ -10902,6 +10901,8 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
 
             if (matchedAct) {
               slot.status = 'occupied';
+              slot.isOccupied = true;
+              slot.isBooked = false;
               slot.current_plate = matchedAct.plate;
               slot.plate = matchedAct.plate;
               slot.checkIn = matchedAct.checkIn;
@@ -10910,16 +10911,32 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             } else if (typeof isSlotBooked === 'function' && isSlotBooked(slotCode)) {
               slot.status = 'reserved';
               slot.isBooked = true;
+              slot.isOccupied = false;
             } else {
-              const currPlate = normalizePlate(slot.current_plate || slot.plate);
-              const hasActiveVehicle = currPlate && activeSessions.some(a => normalizePlate(a.plate) === currPlate);
-              if (!hasActiveVehicle && !slot.bookedCustomer && slot.status !== 'maintenance' && slot.status !== 'reserved') {
+              if (slot.status !== 'maintenance') {
                 slot.status = 'available';
+                slot.isOccupied = false;
+                slot.isBooked = false;
+                slot.isRed = false;
                 slot.current_plate = null;
                 slot.plate = null;
+                slot.bookedPlate = null;
+                slot.bookedCustomer = null;
+                slot.bookedPhone = null;
+                slot.bookingId = null;
+                slot.session_id = null;
+                slot.owner = null;
+                slot.phone = null;
                 delete slot.checkIn;
                 delete slot.duration;
+                delete slot.checkInTimestamp;
+                delete slot.bookedCustomer;
+                delete slot.bookedPhone;
+                delete slot.bookingId;
                 delete slot.session_id;
+                delete slot.owner;
+                delete slot.phone;
+                delete slot.isWalkIn;
               }
             }
           });
@@ -11050,15 +11067,26 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           session.check_out_by_staff = outStaffName;
           session.check_out_shift = outStaffShift;
 
-          const targetSlotCode = normalizeSlotCode(session.lot || '');
-          const targetPlate = normalizePlate(session.plate || '');
+          const targetSlotCode = normalizeSlotCode(session.lot || session.slot_code || session.slot || '');
+          const targetPlate = normalizePlate(session.plate || session.license_plate || session.vehicle_plate || '');
           const targetLotName = (session.lot_name || '').trim().toLowerCase();
 
-          // 1. GIẢI PHÓNG Ô ĐỖ TRONG PARKING LOTS (Đổi status sang 'available' & xóa biển số)
+          // 1. GIẢI PHÓNG Ô ĐỖ TRONG PARKING LOTS & CÁC REFS LIÊN QUAN (Đổi status sang 'available' & xóa sạch dữ liệu đỗ)
           const resetSlot = (slot) => {
+            if (!slot) return;
             slot.status = 'available';
             slot.current_plate = null;
             slot.plate = null;
+            slot.bookedPlate = null;
+            slot.bookedCustomer = null;
+            slot.bookedPhone = null;
+            slot.bookingId = null;
+            slot.session_id = null;
+            slot.isOccupied = false;
+            slot.isBooked = false;
+            slot.isRed = false;
+            slot.owner = null;
+            slot.phone = null;
             delete slot.checkIn;
             delete slot.duration;
             delete slot.checkInTimestamp;
@@ -11066,33 +11094,29 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             delete slot.bookedPhone;
             delete slot.bookingId;
             delete slot.session_id;
+            delete slot.owner;
+            delete slot.phone;
+            delete slot.isWalkIn;
+            delete slot.bookingCode;
+            delete slot.matchedBooking;
           };
 
-          parkingLots.value.forEach(lot => {
+          const allLotsToReset = [
+            ...(parkingLots.value || []),
+            activeStaffLot.value,
+            currentCheckinLot.value,
+            selectedParkingLot.value
+          ].filter(Boolean);
+
+          allLotsToReset.forEach(lot => {
             if (!lot || !lot.slots) return;
             const lotName = (lot.name || '').trim().toLowerCase();
-            const isMatchingLot = !targetLotName || lotName === targetLotName || lotName.includes(targetLotName) || targetLotName.includes(lotName) || (session.lot_id && lot.id == session.lot_id);
+            const isMatchingLot = !targetLotName || !lotName || lotName === targetLotName || lotName.includes(targetLotName) || targetLotName.includes(lotName) || (session.lot_id && lot.id == session.lot_id);
 
             lot.slots.forEach(s => {
               const sCode = normalizeSlotCode(s.code || s.slot_code);
-              const sPlate = normalizePlate(s.current_plate || s.plate);
-              if ((isMatchingLot && sCode === targetSlotCode) || (targetPlate && sPlate === targetPlate)) {
-                resetSlot(s);
-              }
-            });
-            lot.available_spaces = lot.slots.filter(s => s.status === 'available').length;
-          });
-
-          // Đồng bộ trên các ref liên quan: activeStaffLot, currentCheckinLot, selectedParkingLot
-          [activeStaffLot.value, currentCheckinLot.value, selectedParkingLot.value].forEach(lot => {
-            if (!lot || !lot.slots) return;
-            const lotName = (lot.name || '').trim().toLowerCase();
-            const isMatchingLot = !targetLotName || lotName === targetLotName || lotName.includes(targetLotName) || targetLotName.includes(lotName) || (session.lot_id && lot.id == session.lot_id);
-
-            lot.slots.forEach(s => {
-              const sCode = normalizeSlotCode(s.code || s.slot_code);
-              const sPlate = normalizePlate(s.current_plate || s.plate);
-              if ((isMatchingLot && sCode === targetSlotCode) || (targetPlate && sPlate === targetPlate)) {
+              const sPlate = normalizePlate(s.current_plate || s.plate || s.bookedPlate);
+              if ((isMatchingLot && targetSlotCode && sCode === targetSlotCode) || (targetPlate && sPlate === targetPlate)) {
                 resetSlot(s);
               }
             });
@@ -11100,33 +11124,73 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           });
           saveCustomLotsToStorage();
 
-          // 2. CẬP NHẬT ĐƠN ĐẶT CHỖ (MY BOOKINGS) SANG 'completed' ĐỂ GIẢI PHÓNG Ô TRÊN SƠ ĐỒ CHECK-IN & ĐẶT XE
-          myBookings.value.forEach(b => {
-            const bSlot = normalizeSlotCode(b.slot_code);
+          // 2. CẬP NHẬT ĐƠN ĐẶT CHỖ (BOOKINGS) CỦA KHÁCH HÀNG SANG 'completed' TRÊN TOÀN HỆ THỐNG
+          const completeBookingObj = (b) => {
+            if (!b) return false;
+            const bSlot = normalizeSlotCode(b.slot_code || b.slot);
             const bPlate = normalizePlate(b.plate || b.vehicle_plate);
             const bLot = (b.lot_name || '').trim().toLowerCase();
-            const isMatchLot = !targetLotName || bLot === targetLotName || bLot.includes(targetLotName) || targetLotName.includes(bLot) || (session.lot_id && b.lot_id == session.lot_id);
+            const isMatchLot = !targetLotName || !bLot || bLot === targetLotName || bLot.includes(targetLotName) || targetLotName.includes(bLot) || (session.lot_id && b.lot_id == session.lot_id);
 
-            if ((isMatchLot && bSlot === targetSlotCode) || (targetPlate && bPlate === targetPlate)) {
-              if (b.status === 'active' || b.status === 'upcoming') {
+            const isMatch = (targetSlotCode && bSlot === targetSlotCode && isMatchLot) || (targetPlate && bPlate === targetPlate);
+            if (isMatch) {
+              if (b.status !== 'cancelled') {
                 const bPassCheck = checkVehicleMonthlyPass(bPlate);
                 const bIsFree = b.is_monthly_pass || b.fee === 0 || bPassCheck.has_valid_pass;
                 b.status = 'completed';
                 b.checkOut = outTime;
                 b.actual_check_out = outTime;
-                b.fee = bIsFree ? 0 : calc.fee;
+                b.fee = (b.fee !== undefined) ? b.fee : (bIsFree ? 0 : calc.fee);
                 b.duration = calc.duration;
+                return true;
               }
             }
-          });
-          saveCustomerBookingsToStorage();
+            return false;
+          };
 
-          // 3. CẬP NHẬT RECENT ACTIVITIES & SESSIONS CỦA STAFF VÀ ADMIN
+          if (Array.isArray(myBookings.value)) {
+            myBookings.value.forEach(completeBookingObj);
+            saveCustomerBookingsToStorage();
+          }
+
+          if (Array.isArray(allSharedBookings.value)) {
+            allSharedBookings.value.forEach(completeBookingObj);
+          }
+
+          try {
+            const sharedBks = JSON.parse(localStorage.getItem('sps_shared_bookings') || '[]');
+            if (Array.isArray(sharedBks)) {
+              sharedBks.forEach(completeBookingObj);
+              localStorage.setItem('sps_shared_bookings', JSON.stringify(sharedBks));
+            }
+          } catch (e) {}
+
+          try {
+            for (let i = 0; i < localStorage.length; i++) {
+              const k = localStorage.key(i);
+              if (k && k.startsWith('sps_cust_bookings_')) {
+                const custBks = JSON.parse(localStorage.getItem(k) || '[]');
+                if (Array.isArray(custBks)) {
+                  let changed = false;
+                  custBks.forEach(b => {
+                    if (completeBookingObj(b)) changed = true;
+                  });
+                  if (changed) {
+                    localStorage.setItem(k, JSON.stringify(custBks));
+                  }
+                }
+              }
+            }
+          } catch (e) {}
+
+          // 3. CẬP NHẬT RECENT ACTIVITIES & SESSIONS CỦA STAFF VÀ ADMIN SANG 'Completed'
           const isFreePass = (session.fee === 0 || passCheck.is_free || checkVehicleMonthlyPass(targetPlate)?.has_valid_pass);
           recentActivities.value.forEach(a => {
+            if (!a) return;
             const aSlot = normalizeSlotCode(a.lot || a.slot_code);
             const aPlate = normalizePlate(a.plate);
-            if (a === session || (session.id && a.id === session.id) || (targetPlate && aPlate === targetPlate) || (targetSlotCode && aSlot === targetSlotCode && (a.status === 'Ongoing' || a.status === 'Upcoming'))) {
+            const isMatch = a === session || (session.id && a.id === session.id) || (targetPlate && aPlate === targetPlate) || (targetSlotCode && aSlot === targetSlotCode && (a.status === 'Ongoing' || a.status === 'Upcoming' || a.status === 'PARKING' || a.status === 'parking' || a.status === 'Active' || a.status === 'active' || a.status === 'Đang đỗ'));
+            if (isMatch) {
               a.status = 'Completed';
               a.checkOut = outTime;
               a.duration = calc.duration;
@@ -11146,7 +11210,7 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             const updatedS = storedS.map(ss => {
               const ssPlate = normalizePlate(ss.plate);
               const ssSlot = normalizeSlotCode(ss.lot || ss.slot_code);
-              if (ss.id === session.id || (targetPlate && ssPlate === targetPlate) || (targetSlotCode && ssSlot === targetSlotCode && ss.status === 'Ongoing')) {
+              if (ss.id === session.id || (targetPlate && ssPlate === targetPlate) || (targetSlotCode && ssSlot === targetSlotCode && (ss.status === 'Ongoing' || ss.status === 'PARKING' || ss.status === 'parking' || ss.status === 'Active' || ss.status === 'Upcoming' || ss.status === 'Đang đỗ'))) {
                 return {
                   ...ss,
                   status: 'Completed',
@@ -14026,53 +14090,71 @@ console.warn('API /api/vehicles:', e);
 
 // Hàm đồng bộ hai chiều giữa các phiên xe đang đỗ thực tế và các ô đỗ trong bãi (Không bao giờ để ô xanh hiện biển số)
 function syncLotsWithActiveSessions() {
-  const activeSessions = (recentActivities.value || []).filter(a => {
-    if (!a) return false;
-    const isAct = (a.status === 'Ongoing' || a.status === 'Active' || a.status === 'PARKING' || a.status === 'parking' || a.status === 'Đang đỗ') && (!a.checkOut || a.checkOut === 'Chưa ra');
-    return isAct;
-  });
+        const activeSessions = (recentActivities.value || []).filter(a => {
+          if (!a) return false;
+          const isAct = (a.status === 'Ongoing' || a.status === 'Active' || a.status === 'PARKING' || a.status === 'parking' || a.status === 'active' || a.status === 'Đang đỗ') && (!a.checkOut || a.checkOut === 'Chưa ra');
+          return isAct;
+        });
 
-  parkingLots.value.forEach(lot => {
-    if (!lot || !lot.slots) return;
-    const lotName = (lot.name || '').trim().toLowerCase();
+        parkingLots.value.forEach(lot => {
+          if (!lot || !lot.slots) return;
+          const lotName = (lot.name || '').trim().toLowerCase();
 
-    lot.slots.forEach(slot => {
-      const slotCode = normalizeSlotCode(slot.code || slot.slot_code);
-      const matchedAct = activeSessions.find(a => {
-        const aSlot = normalizeSlotCode(a.lot || a.slot_code);
-        if (aSlot !== slotCode) return false;
-        const aLot = (a.lot_name || a.assigned_lot || '').trim().toLowerCase();
-        if (!aLot || !lotName) return true;
-        return aLot === lotName || aLot.includes(lotName) || lotName.includes(aLot) || (a.lot_id && lot.id == a.lot_id);
-      });
+          lot.slots.forEach(slot => {
+            const slotCode = normalizeSlotCode(slot.code || slot.slot_code);
+            const matchedAct = activeSessions.find(a => {
+              const aSlot = normalizeSlotCode(a.lot || a.slot_code);
+              if (aSlot !== slotCode) return false;
+              const aLot = (a.lot_name || a.assigned_lot || '').trim().toLowerCase();
+              if (!aLot || !lotName) return true;
+              return aLot === lotName || aLot.includes(lotName) || lotName.includes(aLot) || (a.lot_id && lot.id == a.lot_id);
+            });
 
-      if (matchedAct) {
-        slot.status = 'occupied';
-        slot.current_plate = matchedAct.plate;
-        slot.plate = matchedAct.plate;
-        slot.checkIn = matchedAct.checkIn;
-        slot.duration = matchedAct.duration || 'Đang đỗ';
-        slot.session_id = matchedAct.id || matchedAct.backend_id;
-      } else if (typeof isSlotBooked === 'function' && isSlotBooked(slotCode)) {
-        slot.status = 'reserved';
-        slot.isBooked = true;
-      } else {
-        const currPlate = normalizePlate(slot.current_plate || slot.plate);
-        const hasActiveVehicle = currPlate && activeSessions.some(a => normalizePlate(a.plate) === currPlate);
-        if (!hasActiveVehicle && !slot.bookedCustomer && slot.status !== 'maintenance' && slot.status !== 'reserved') {
-          slot.status = 'available';
-          slot.current_plate = null;
-          slot.plate = null;
-          delete slot.checkIn;
-          delete slot.duration;
-          delete slot.session_id;
-        }
+            if (matchedAct) {
+              slot.status = 'occupied';
+              slot.isOccupied = true;
+              slot.isBooked = false;
+              slot.current_plate = matchedAct.plate;
+              slot.plate = matchedAct.plate;
+              slot.checkIn = matchedAct.checkIn;
+              slot.duration = matchedAct.duration || 'Đang đỗ';
+              slot.session_id = matchedAct.id || matchedAct.backend_id;
+            } else if (typeof isSlotBooked === 'function' && isSlotBooked(slotCode)) {
+              slot.status = 'reserved';
+              slot.isBooked = true;
+              slot.isOccupied = false;
+            } else {
+              if (slot.status !== 'maintenance') {
+                slot.status = 'available';
+                slot.isOccupied = false;
+                slot.isBooked = false;
+                slot.isRed = false;
+                slot.current_plate = null;
+                slot.plate = null;
+                slot.bookedPlate = null;
+                slot.bookedCustomer = null;
+                slot.bookedPhone = null;
+                slot.bookingId = null;
+                slot.session_id = null;
+                slot.owner = null;
+                slot.phone = null;
+                delete slot.checkIn;
+                delete slot.duration;
+                delete slot.checkInTimestamp;
+                delete slot.bookedCustomer;
+                delete slot.bookedPhone;
+                delete slot.bookingId;
+                delete slot.session_id;
+                delete slot.owner;
+                delete slot.phone;
+                delete slot.isWalkIn;
+              }
+            }
+          });
+
+          lot.available_spaces = lot.slots.filter(s => s.status === 'available').length;
+        });
       }
-    });
-
-    lot.available_spaces = lot.slots.filter(s => s.status === 'available').length;
-  });
-}
 
 try {
 const token = localStorage.getItem('sps_token') || sessionStorage.getItem('sps_token');

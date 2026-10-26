@@ -308,6 +308,14 @@ def check_out(
         booking = db.query(Booking).filter(Booking.id == session.booking_id).first()
         if booking:
             booking.status = BookingStatus.completed
+    elif slot:
+        # Tự động hoàn tất mọi booking đặt giữ chỗ active/confirmed tương ứng trên ô này
+        active_bks = db.query(Booking).filter(
+            Booking.slot_id == slot.id,
+            Booking.status.in_([BookingStatus.confirmed, BookingStatus.pending])
+        ).all()
+        for bk in active_bks:
+            bk.status = BookingStatus.completed
 
     db.commit()
     db.refresh(session)
