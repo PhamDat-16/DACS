@@ -165,6 +165,22 @@ def create_booking(db: DbSession, user: User, payload: BookingCreate) -> tuple[B
                 db.flush()
             vehicle_id = veh.id
 
+            # Kiểm tra phương tiện này có đang đỗ thực tế trong bãi không
+            active_session = (
+                db.query(ParkingSession)
+                .filter(
+                    ParkingSession.vehicle_id == vehicle_id,
+                    ParkingSession.status == SessionStatus.PARKING,
+                    ParkingSession.check_out_time.is_(None)
+                )
+                .first()
+            )
+            if active_session:
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail=f"Phương tiện {clean_plate} hiện đang đỗ thực tế trong bãi! Vui lòng hoàn tất check-out xuất bến trước khi đặt chỗ cho lượt gửi mới.",
+                )
+
             # Kiểm tra phương tiện này đã có lịch đặt chỗ khác trùng khung giờ chưa
             veh_conflict = (
                 db.query(Booking)
