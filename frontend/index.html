@@ -294,29 +294,6 @@
                 <span>{{ loginLoading ? 'Signing in...' : 'Sign In' }}</span>
               </button>
             </form>
-
-            <!-- Gợi ý tài khoản kiểm thử hệ thống (Tự động điền form, backend vẫn xác thực thực tế) -->
-            <div class="mt-8 pt-5 border-t border-slate-100">
-              <div class="flex items-center justify-between mb-2.5">
-                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                  <i class="fa-solid fa-user-check text-blue-500"></i> Tài khoản trải nghiệm
-                </span>
-                <span class="text-[10px] text-slate-400">Click để tự điền form</span>
-              </div>
-              <div class="space-y-1.5 text-[11px]">
-                <button
-                  type="button"
-                  @click="fillDemoCredentials('customer@parking.vn', '123456')"
-                  class="w-full text-left px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/60 transition flex items-center justify-between group cursor-pointer"
-                >
-                  <span class="font-semibold text-slate-700 flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                    Customer: <span class="font-mono text-slate-600 font-normal">customer@parking.vn</span> <span class="text-[10px] text-slate-400 font-mono">(Mật khẩu: 123456)</span>
-                  </span>
-                  <span class="text-[10px] text-indigo-600 font-bold group-hover:translate-x-0.5 transition-transform">Điền &rarr;</span>
-                </button>
-              </div>
-            </div>
           </div>
 
           <!-- ================= TAB 2: SIGN UP ================= -->
