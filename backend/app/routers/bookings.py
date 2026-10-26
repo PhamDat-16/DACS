@@ -31,6 +31,8 @@ def _to_booking_out(b: Booking, default_plate: Optional[str] = None, default_slo
         if pass_check.get("has_valid_pass") and pass_check.get("is_free"):
             fee = 0
 
+    owner_name = (b.user.full_name if b.user else None) or (b.vehicle.owner_name if b.vehicle else None) or "Khách hàng"
+    phone = (b.user.phone if b.user else None) or "--"
 
     return BookingOut(
         id=b.id,
@@ -41,6 +43,8 @@ def _to_booking_out(b: Booking, default_plate: Optional[str] = None, default_slo
         lot_name=lot_name,
         vehicle_plate=plate,
         plate=plate,
+        owner_name=owner_name,
+        phone=phone,
         status=b.status,
         start_time=b.start_time,
         end_time=b.end_time,

@@ -9061,17 +9061,19 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           const code = (s.code || s.slot_code || '').trim().toUpperCase();
           const normCode = normalizeSlotCode(code);
 
-          // 1. Kiểm tra đơn đặt trước của khách hàng (My Bookings)
-          const matchedBooking = myBookings.value.find(b => {
+          // 1. Kiểm tra đơn đặt trước của khách hàng (Đồng bộ từ allSharedBookings và myBookings)
+          const allActiveBookings = [...(allSharedBookings.value || []), ...(myBookings.value || [])];
+          const matchedBooking = allActiveBookings.find(b => {
             if (b.status === 'cancelled' || b.status === 'completed') return false;
             const bSlot = normalizeSlotCode(b.slot_code);
             const bLot = (b.lot_name || '').trim().toLowerCase();
-            return bSlot === normCode && (bLot === currentLotName || bLot.includes(currentLotName) || currentLotName.includes(bLot) || b.lot_id == lot.id);
+            return bSlot === normCode && (!bLot || !currentLotName || bLot === currentLotName || bLot.includes(currentLotName) || currentLotName.includes(bLot) || b.lot_id == lot.id);
           });
 
           // 2. Kiểm tra phiên gửi xe thực tế (Recent Activities)
           const matchedActivity = recentActivities.value.find(a => {
-            if (a.status === 'Completed' || a.status === 'Cancelled' || (a.checkOut && a.checkOut !== 'Chưa ra')) return false;
+            if (a.status === 'Completed' || a.status === 'Cancelled') return false;
+            if (a.status !== 'Upcoming' && a.status !== 'Ongoing' && a.status !== 'PARKING' && a.checkOut && a.checkOut !== 'Chưa ra') return false;
             const aSlot = normalizeSlotCode(a.lot || a.slot_code);
             if (aSlot !== normCode) return false;
             const aLot = (a.lot_name || '').trim().toLowerCase();
@@ -9079,17 +9081,17 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             return aLot === currentLotName || aLot.includes(currentLotName) || currentLotName.includes(aLot);
           });
 
-          const isOccupied = s.status === 'occupied' || (matchedActivity && (matchedActivity.status === 'Ongoing' || matchedActivity.status === 'PARKING' || !matchedActivity.checkOut));
-          const isBooked = !isOccupied && (Boolean(matchedBooking && (matchedBooking.status === 'upcoming' || matchedBooking.status === 'active')) || s.status === 'reserved' || (matchedActivity && matchedActivity.status === 'Upcoming'));
+          const isOccupied = s.status === 'occupied' || (matchedActivity && (matchedActivity.status === 'Ongoing' || matchedActivity.status === 'PARKING' || !matchedActivity.checkOut || matchedActivity.checkOut === 'Chưa ra'));
+          const isBooked = !isOccupied && (Boolean(matchedBooking && (matchedBooking.status === 'upcoming' || matchedBooking.status === 'active')) || s.status === 'reserved' || (matchedActivity && matchedActivity.status === 'Upcoming') || Boolean(s.bookedPlate));
           const isRed = isOccupied || isBooked;
 
-          // QUAN TRỌNG: Nếu ô KHÔNG PHẢI RED (ô trống/sẵn sàng) thì plate BẮT BUỘC là null, không hiển thị biển số cũ!
+          // QUAN TRỌNG: Nếu ô RED thì hiển thị đầy đủ biển số, tên khách hàng và mã đặt chỗ
           const plate = isRed
-            ? (matchedActivity?.plate || s.current_plate || s.plate || matchedBooking?.plate || matchedBooking?.vehicle_plate || null)
+            ? (matchedActivity?.plate || s.current_plate || s.bookedPlate || s.plate || matchedBooking?.plate || matchedBooking?.vehicle_plate || null)
             : null;
-          const owner = matchedBooking?.owner_name || matchedActivity?.owner_name || (isRed ? (s.bookedCustomer || 'Khách đang gửi') : 'Ô trống');
-          const phone = matchedBooking?.phone || matchedActivity?.owner_phone || s.bookedPhone || '--';
-          const bookingCode = matchedBooking?.booking_id || matchedBooking?.code || matchedActivity?.id || null;
+          const owner = matchedBooking?.owner_name || matchedBooking?.customer_name || matchedActivity?.owner_name || s.bookedCustomer || (isRed ? (s.bookedCustomer || 'Khách đặt trước') : 'Ô trống');
+          const phone = matchedBooking?.phone || matchedBooking?.owner_phone || matchedActivity?.owner_phone || s.bookedPhone || '--';
+          const bookingCode = matchedBooking?.booking_id || matchedBooking?.code || matchedActivity?.id || s.bookingId || null;
           const vehicleType = s.vehicle_type || (code.startsWith('B') ? 'motorcycle' : 'car');
 
           return {
@@ -9151,17 +9153,19 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           return;
         }
         targetSlot.value = slot;
-        if (slot.plate) {
-          wizardPlate.value = slot.plate;
+        if (slot.plate || slot.isBooked || slot.bookedPlate) {
+          const pl = slot.plate || slot.bookedPlate;
+          wizardPlate.value = pl || '';
           wizardVehicleFound.value = true;
           wizardVehicleData.value = {
             type: slot.vehicleType === 'motorcycle' ? 'Motorcycle' : (slot.vehicleType === 'ev' ? 'EV' : 'Car'),
-            brand: slot.matchedBooking?.brand || 'Xe đặt trước',
+            brand: slot.matchedBooking?.brand || 'VinFast / Xe đặt trước',
             color: slot.matchedBooking?.color || 'Tiêu chuẩn',
-            owner: slot.owner || 'Khách hàng',
-            phone: slot.phone || '--',
-            lot: currentCheckinLot.value.name
+            owner: slot.owner || slot.bookedCustomer || 'Khách hàng đặt trước',
+            phone: slot.phone || slot.bookedPhone || '--',
+            lot: currentCheckinLot.value?.name || 'Bãi đỗ xe'
           };
+          checkinMode.value = 'lookup';
         } else {
           // Slot trống -> Phục vụ khách vãng lai
           const p = (walkinForm.value.plate || wizardPlate.value || '').trim().toUpperCase();
@@ -10279,13 +10283,26 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           found = myVehicles.value.find(v => (v.license_plate || v.plate || '').toUpperCase() === q);
         }
 
-        // 3. Tìm trong recentActivities hoặc bookings
-        const foundSession = (recentActivities.value || []).find(a => (a.plate || '').toUpperCase() === q);
-        const foundBooking = (typeof myBookings !== 'undefined' && myBookings.value)
-          ? myBookings.value.find(b => (b.plate || b.vehicle_plate || '').toUpperCase() === q)
-          : null;
+        // 3. Tìm trong allSharedBookings hoặc myBookings
+        const allBk = [...(allSharedBookings.value || []), ...(myBookings.value || [])];
+        const foundBooking = allBk.find(b => (b.plate || b.vehicle_plate || '').toUpperCase() === q && b.status !== 'cancelled' && b.status !== 'completed');
 
-        const targetLot = found?.assigned_lot || foundSession?.lot_name || foundBooking?.lot_name || '';
+        // 4. Tìm trong recentActivities
+        const foundSession = (recentActivities.value || []).find(a => (a.plate || '').toUpperCase() === q);
+
+        const targetLot = foundBooking?.lot_name || found?.assigned_lot || foundSession?.lot_name || '';
+
+        // TÌM Ô ĐÃ ĐẶT VÀ GÁN targetSlot
+        const bookedSlotCode = foundBooking?.slot_code || found?.slot_code || foundSession?.lot;
+        if (bookedSlotCode) {
+          const matchedSlot = (checkinMapSlots.value || []).find(s => normalizeSlotCode(s.code) === normalizeSlotCode(bookedSlotCode))
+            || (currentCheckinLot.value?.slots || []).find(s => normalizeSlotCode(s.code || s.slot_code) === normalizeSlotCode(bookedSlotCode));
+          if (matchedSlot) {
+            targetSlot.value = matchedSlot;
+          } else {
+            targetSlot.value = { code: bookedSlotCode, slot_code: bookedSlotCode, status: 'reserved' };
+          }
+        }
 
         // KIỂM TRA PHÂN QUYỀN NƠI LÀM VIỆC CỦA NHÂN VIÊN:
         // Nhân viên chỉ được xem thông tin khách hàng và làm thủ tục check-in tại đúng bãi mình đang trực.
@@ -10700,16 +10717,18 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           lot.available_spaces = lot.slots.filter(s => s.status === 'available').length;
         }
 
-        // Đồng bộ sang myBookings của khách hàng: Chuyển đơn đặt trước sang 'active' (đang gửi tại bãi)
-        const matchedBk = myBookings.value.find(b => {
+        // Đồng bộ sang allSharedBookings và myBookings của khách hàng: Chuyển đơn đặt trước sang 'active' (đang gửi tại bãi)
+        const allBkForCheckin = [...(allSharedBookings.value || []), ...(myBookings.value || [])];
+        const matchedBk = allBkForCheckin.find(b => {
           const bSlot = (b.slot_code || '').trim().toUpperCase();
           const bPlate = (b.plate || b.vehicle_plate || '').trim().toUpperCase();
-          return (bSlot === slotCode || bPlate === plate) && b.status === 'upcoming';
+          return (bSlot === slotCode || bPlate === plate) && (b.status === 'upcoming' || b.status === 'confirmed');
         });
         if (matchedBk) {
           matchedBk.status = 'active';
           matchedBk.actual_check_in = nowTime;
           matchedBk.time = `${nowTime} - Đang gửi`;
+          saveBookingToSharedStorage(matchedBk);
           saveCustomerBookingsToStorage();
         }
 
@@ -11601,8 +11620,10 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           // Route to appropriate view according to role
           if (currentRole.value === 'admin') {
             activeNav.value = 'parking-lots';
+            await loadAllBookingsForStaff();
           } else if (currentRole.value === 'staff') {
             activeNav.value = 'dashboard';
+            await loadAllBookingsForStaff();
           } else {
             activeNav.value = 'cust-dashboard';
             await loadCustomerVehicles();
@@ -11610,6 +11631,7 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             await loadCustomerParkingHistory();
           }
           await fetchBackendData();
+          await loadAllBookingsForStaff();
         } catch (err) {
           const emailInput = (loginForm.value.email || '').trim().toLowerCase();
           const isFileProto = window.location.protocol === 'file:';
@@ -11758,14 +11780,17 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             isLoggedIn.value = true;
             if (currentRole.value === 'admin') {
               activeNav.value = 'parking-lots';
+              await loadAllBookingsForStaff();
             } else if (currentRole.value === 'staff') {
               activeNav.value = 'dashboard';
+              await loadAllBookingsForStaff();
             } else {
               activeNav.value = 'cust-dashboard';
               await loadCustomerVehicles();
               await loadCustomerBookings();
               await loadCustomerParkingHistory();
             }
+            await loadAllBookingsForStaff();
           } else {
             localStorage.removeItem('sps_token');
             sessionStorage.removeItem('sps_token');
@@ -13065,6 +13090,189 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
         }
       }
 
+      const allSharedBookings = ref([]);
+
+      function saveBookingToSharedStorage(bk) {
+        if (!bk) return;
+        try {
+          const sharedList = JSON.parse(localStorage.getItem('sps_shared_bookings') || '[]');
+          const cleanPlate = (bk.plate || bk.vehicle_plate || '').trim().toUpperCase();
+          const cleanSlot = (bk.slot_code || '').trim().toUpperCase();
+          const idx = sharedList.findIndex(b => (b.id && b.id === bk.id) || (b.code && b.code === bk.code) || (b.booking_id && b.booking_id === bk.booking_id) || (b.slot_code === cleanSlot && (b.plate || b.vehicle_plate) === cleanPlate));
+          const fullBk = {
+            id: bk.id || bk.code || bk.booking_id,
+            booking_id: bk.booking_id || bk.code || bk.id,
+            code: bk.code || bk.booking_id || bk.id,
+            lot_id: bk.lot_id,
+            lot_name: bk.lot_name || 'Bãi đỗ xe hệ thống',
+            slot_code: cleanSlot,
+            plate: cleanPlate,
+            vehicle_plate: cleanPlate,
+            owner_name: bk.owner_name || bk.customer_name || 'Khách hàng đặt trước',
+            phone: bk.phone || bk.owner_phone || '--',
+            brand: bk.brand || 'VinFast / Khách đặt',
+            color: bk.color || 'Tiêu chuẩn',
+            date: bk.date || getTodayDateStr(),
+            time: bk.time || bk.time_range,
+            time_range: bk.time_range || bk.time,
+            start_time: bk.start_time,
+            end_time: bk.end_time,
+            start_minutes: bk.start_minutes,
+            end_minutes: bk.end_minutes,
+            duration_hours: bk.duration_hours || 2,
+            fee: bk.fee || 30000,
+            fee_text: bk.fee_text || '30.000 VNĐ',
+            status: bk.status || 'upcoming',
+            qr_token: bk.qr_token
+          };
+          if (idx >= 0) sharedList[idx] = fullBk;
+          else sharedList.unshift(fullBk);
+          localStorage.setItem('sps_shared_bookings', JSON.stringify(sharedList));
+        } catch (e) {}
+      }
+
+      async function loadAllBookingsForStaff() {
+        const merged = [];
+        const seenIds = new Set();
+
+        const addBk = (b) => {
+          if (!b) return;
+          const plate = (b.plate || b.vehicle_plate || '').trim().toUpperCase();
+          const slot = (b.slot_code || '').trim().toUpperCase();
+          const key = b.id || b.code || b.booking_id || `${plate}_${slot}_${b.date}`;
+          if (!seenIds.has(key)) {
+            seenIds.add(key);
+            merged.push(b);
+          }
+        };
+
+        // 1. Quét sps_shared_bookings từ localStorage
+        try {
+          const shared = JSON.parse(localStorage.getItem('sps_shared_bookings') || '[]');
+          if (Array.isArray(shared)) shared.forEach(addBk);
+        } catch (e) {}
+
+        // 2. Quét mọi sps_cust_bookings_* trong localStorage
+        try {
+          for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith('sps_cust_bookings_')) {
+              const items = JSON.parse(localStorage.getItem(k) || '[]');
+              if (Array.isArray(items)) items.forEach(addBk);
+            }
+          }
+        } catch (e) {}
+
+        // 3. Quét myBookings của người dùng hiện tại
+        if (Array.isArray(myBookings.value)) {
+          myBookings.value.forEach(addBk);
+        }
+
+        // 4. Lấy từ backend API: GET /api/bookings
+        try {
+          const token = localStorage.getItem('sps_token') || sessionStorage.getItem('sps_token');
+          const res = await fetch('/api/bookings', {
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+          });
+          if (res.ok) {
+            const apiData = await res.json();
+            if (Array.isArray(apiData)) {
+              apiData.forEach(item => {
+                addBk({
+                  id: item.id,
+                  booking_id: item.code || item.booking_id || item.id,
+                  code: item.code || item.booking_id || item.id,
+                  lot_name: item.lot_name || 'Bãi đỗ xe hệ thống',
+                  slot_code: item.slot_code,
+                  plate: item.vehicle_plate || item.plate,
+                  vehicle_plate: item.vehicle_plate || item.plate,
+                  status: item.status || 'upcoming',
+                  date: item.start_time ? item.start_time.slice(0, 10) : getTodayDateStr(),
+                  time: `${item.start_time ? new Date(item.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '08:00'} - ${item.end_time ? new Date(item.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '10:00'}`,
+                  time_range: `${item.start_time ? new Date(item.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '08:00'} - ${item.end_time ? new Date(item.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '10:00'}`,
+                  duration_hours: item.duration_hours || 2,
+                  fee: item.fee || 30000,
+                  fee_text: `${(item.fee || 30000).toLocaleString()} VND`,
+                  owner_name: item.owner_name || 'Khách đặt trước',
+                  phone: item.phone || '--'
+                });
+              });
+            }
+          }
+        } catch (e) {
+          console.warn('API /api/bookings fetch in loadAllBookingsForStaff:', e);
+        }
+
+        allSharedBookings.value = merged;
+
+        // 5. Cập nhật vào parkingLots, recentActivities, liveVehicles
+        merged.forEach(b => {
+          if (b.status === 'cancelled' || b.status === 'completed') return;
+          const plate = (b.plate || b.vehicle_plate || '').trim().toUpperCase();
+          const slotCode = (b.slot_code || '').trim().toUpperCase();
+          const lotName = (b.lot_name || '').trim().toLowerCase();
+
+          // Sơ đồ bãi xe
+          parkingLots.value.forEach(lot => {
+            const lName = (lot.name || '').trim().toLowerCase();
+            if (!lotName || lName === lotName || lName.includes(lotName) || lotName.includes(lName) || (b.lot_id && b.lot_id == lot.id)) {
+              if (lot.slots) {
+                const sl = lot.slots.find(s => normalizeSlotCode(s.code || s.slot_code) === normalizeSlotCode(slotCode));
+                if (sl && sl.status !== 'occupied') {
+                  sl.status = 'reserved';
+                  sl.isBooked = true;
+                  sl.bookedPlate = plate;
+                  sl.bookedCustomer = b.owner_name || 'Khách hàng đặt trước';
+                  sl.bookedTime = b.time || b.time_range;
+                  sl.bookingId = b.id || b.code;
+                }
+              }
+            }
+          });
+
+          // Hoạt động gần đây (recentActivities)
+          const actExists = recentActivities.value.some(a => (a.id === b.id || a.id === b.code || (a.plate === plate && normalizeSlotCode(a.lot || a.slot_code) === normalizeSlotCode(slotCode))));
+          if (!actExists && plate) {
+            recentActivities.value.unshift({
+              id: b.id || b.code || Date.now(),
+              plate: plate,
+              type: b.type || 'Car',
+              lot: slotCode,
+              slot_code: slotCode,
+              lot_name: b.lot_name || 'Bãi đỗ xe hệ thống',
+              date: b.date || getTodayDateStr(),
+              checkIn: b.time ? b.time.split(' - ')[0] : '08:00',
+              checkOut: 'Chưa ra',
+              status: b.status === 'active' ? 'Ongoing' : 'Upcoming',
+              fee: b.fee || 30000,
+              duration: b.duration_text || '2h 00m',
+              owner_name: b.owner_name || 'Khách đặt trước',
+              owner_phone: b.phone || '--',
+              brand: b.brand || 'VinFast / Khách đặt',
+              color: b.color || 'Tiêu chuẩn',
+              note: `Đặt chỗ trước ô ${slotCode}`
+            });
+          }
+
+          // Xe trong hệ thống (liveVehicles)
+          const vehExists = liveVehicles.value.some(v => (v.license_plate || v.plate || '').toUpperCase() === plate);
+          if (!vehExists && plate) {
+            liveVehicles.value.unshift({
+              license_plate: plate,
+              plate: plate,
+              type: b.type || 'Car',
+              vehicle_type: b.vehicle_type || 'car',
+              brand: b.brand || 'Khách đặt chỗ',
+              color: b.color || 'Tiêu chuẩn',
+              owner_name: b.owner_name || 'Khách hàng',
+              owner_phone: b.phone || '--',
+              assigned_lot: b.lot_name || 'Bãi đỗ xe',
+              slot_code: slotCode
+            });
+          }
+        });
+      }
+
       const myBookings = ref([
         {
           id: 1,
@@ -13439,28 +13647,10 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           lot.available_spaces--;
         }
 
-        // 6. LƯU VÀO DANH SÁCH SHARED BOOKINGS ĐỂ ĐỒNG BỘ MỌI TÀI KHOẢN KHÁCH HÀNG
-        try {
-          const sharedList = JSON.parse(localStorage.getItem('sps_shared_bookings') || '[]');
-          sharedList.unshift({
-            id: bookingId,
-            booking_id: bookingId,
-            code: bookingId,
-            lot_id: lot.id,
-            lot_name: lot.name,
-            slot_code: chosenSlotCode,
-            date: chosenDate,
-            time: timeRangeStr,
-            start_time: startTimeStr,
-            end_time: endTimeStr,
-            start_minutes: startMins,
-            end_minutes: endMins,
-            duration_hours: hours,
-            fee: fee,
-            status: 'upcoming'
-          });
-          localStorage.setItem('sps_shared_bookings', JSON.stringify(sharedList));
-        } catch (e) {}
+        // 6. LƯU VÀO DANH SÁCH SHARED BOOKINGS ĐỂ ĐỒNG BỘ CHO NHÂN VIÊN VÀ QUẢN TRỊ VIÊN
+        saveBookingToSharedStorage(newBk);
+        allSharedBookings.value.unshift(newBk);
+        saveCustomLotsToStorage();
 
         syncLotsWithActiveSessions();
         confirmedBookingData.value = newBk;
@@ -14091,6 +14281,9 @@ syncLotsWithActiveSessions();
         if (['cust-history', 'cust-dashboard', 'cust-payments'].includes(newNav) && currentUser.value && currentRole.value === 'customer') {
           await loadCustomerParkingHistory();
         }
+        if (['check-in', 'dashboard', 'parking-lots', 'parking-sessions'].includes(newNav)) {
+          await loadAllBookingsForStaff();
+        }
       });
 
       onMounted(async () => {
@@ -14101,6 +14294,7 @@ syncLotsWithActiveSessions();
           await loadCustomerParkingHistory();
         }
         await fetchBackendData();
+        await loadAllBookingsForStaff();
       });
 
 return {
@@ -14368,6 +14562,9 @@ myBookings,
 activeBookingTab,
 filteredBookings,
 upcomingBookings,
+allSharedBookings,
+loadAllBookingsForStaff,
+saveBookingToSharedStorage,
 activeLotSlots,
 availableBookingSlots,
 slotSliderRef,

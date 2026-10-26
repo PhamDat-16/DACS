@@ -29,6 +29,8 @@ class BookingOut(BaseModel):
     lot_name: Optional[str] = None
     vehicle_plate: Optional[str] = None
     plate: Optional[str] = None
+    owner_name: Optional[str] = None
+    phone: Optional[str] = None
     status: BookingStatus
     start_time: datetime
     end_time: Optional[datetime] = None
