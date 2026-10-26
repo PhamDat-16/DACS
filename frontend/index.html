@@ -570,7 +570,7 @@
   <!-- ========================================== -->
   <!-- 2. GIAO DIỆN CHÍNH (MAIN APP SHELL)        -->
   <!-- ========================================== -->
-  <div v-else class="min-h-screen flex flex-col md:flex-row bg-[#f6f8fb]">
+  <div v-if="isLoggedIn || guestMode" class="min-h-screen flex flex-col md:flex-row bg-[#f6f8fb]">
 
     <!-- SIDEBAR BÊN TRÁI (Dark Navy) -->
     <aside class="w-full md:w-64 bg-[#0b1020] text-slate-300 flex flex-col justify-between shrink-0 p-5 md:min-h-screen">
@@ -897,7 +897,15 @@
 
       <!-- TOP HEADER (Search, Bell, User Profile, Role Badge) -->
       <header class="bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between sticky top-0 z-30 shadow-sm">
-        <div>
+        <div class="flex items-center gap-3">
+          <!-- Nút mũi tên trên cùng bên trái: Đăng xuất / Quay về giao diện đăng nhập -->
+          <button
+            @click="handleLogout"
+            class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 flex items-center justify-center transition cursor-pointer border border-slate-200/60 shadow-xs group"
+            title="Đăng xuất khỏi tài khoản, quay về giao diện đăng nhập"
+          >
+            <i class="fa-solid fa-arrow-left text-xs group-hover:-translate-x-0.5 transition-transform"></i>
+          </button>
           <h2 class="text-xl font-black text-slate-900 tracking-tight">
             {{ screenTitle }}
           </h2>
@@ -11779,15 +11787,19 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
       function handleLogout() {
         localStorage.removeItem('sps_token');
         sessionStorage.removeItem('sps_token');
+        localStorage.removeItem('sps_current_user');
         isLoggedIn.value = false;
         guestMode.value = false;
         currentUser.value = null;
         currentRole.value = 'customer';
+        authMode.value = 'login';
+        loginErrors.value = {};
+        loginError.value = '';
         myVehicles.value = [];
         myBookings.value = [];
         parkingHistory.value = [];
         currentParkingSession.value = null;
-        loginError.value = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
 
