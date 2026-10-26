@@ -9157,14 +9157,19 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             `Theo quy định vận hành: Nhân viên chỉ được phép chọn ô và mở cổng check-in xe mới trong đúng khung giờ ca trực của mình!`);
           return;
         }
+
+        // 1. Trường hợp ô ĐANG CÓ XE ĐỖ THỰC TẾ
         if (slot.isOccupied) {
-          alert(`⚠️ Ô đỗ [${slot.code}] hiện đang có xe ${slot.plate || ''} đỗ tại bãi. Phương tiện này cần Check-out xuất bến trước khi ô đỗ có thể tiếp nhận xe mới!`);
+          alert(`⚠️ Ô đỗ [${slot.code}] hiện đang có xe ${slot.plate || ''} đỗ tại bãi (${slot.checkIn ? 'vào lúc ' + slot.checkIn : 'đang đỗ'}).\n\nPhương tiện này cần làm thủ tục Check-out xuất bến trước khi ô đỗ có thể tiếp nhận xe mới!`);
           return;
         }
+
         targetSlot.value = slot;
-        if (slot.plate || slot.isBooked || slot.bookedPlate) {
-          const pl = slot.plate || slot.bookedPlate;
-          wizardPlate.value = pl || '';
+
+        // 2. Trường hợp ô ĐÃ ĐẶT TRƯỚC (Booked / Reserved)
+        if (slot.isBooked || slot.status === 'reserved' || slot.plate) {
+          const pl = slot.plate || slot.bookedPlate || '';
+          wizardPlate.value = pl;
           wizardVehicleFound.value = true;
           wizardVehicleData.value = {
             type: slot.vehicleType === 'motorcycle' ? 'Motorcycle' : (slot.vehicleType === 'ev' ? 'EV' : 'Car'),
@@ -9175,46 +9180,59 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             lot: currentCheckinLot.value?.name || 'Bãi đỗ xe'
           };
           checkinMode.value = 'lookup';
-        } else {
-          // Slot trống -> Phục vụ khách vãng lai
-          const p = (walkinForm.value.plate || wizardPlate.value || '').trim().toUpperCase();
-          if (p) {
-            const already = findActiveParkingSessionForPlate(p);
-            if (already) {
-              alert(`⛔ TỪ CHỐI CHECK-IN: PHƯƠNG TIỆN ĐANG ĐỖ SẴN TRONG BÃI!\n\n` +
-                `• Biển số xe: ${p}\n` +
-                `• Đang đỗ tại: Ô ${already.slot} (${already.lot_name})\n` +
-                `• Check-in lúc: ${already.checkIn}\n\n` +
-                `Phương tiện này đang trong phiên gửi xe chưa hoàn tất Check-out. Hệ thống không cho phép check-in thêm vào ô [${slot.code}]!`);
-              return;
-            }
-          }
-          wizardPlate.value = p;
-          wizardVehicleFound.value = false;
-
-          const vType = walkinForm.value.vehicle_type || (slot.vehicleType === 'motorcycle' ? 'motorcycle' : (slot.vehicleType === 'ev' ? 'ev' : 'car'));
-          const customerName = walkinForm.value.name ? walkinForm.value.name.trim() : 'Khách vãng lai';
-          const customerPhone = walkinForm.value.phone ? walkinForm.value.phone.trim() : '--';
-          const vehTypeName = vType === 'motorcycle' ? 'Motorcycle' : (vType === 'ev' ? 'EV' : 'Car');
-          const vehBrand = walkinForm.value.brand || (vehTypeName === 'Motorcycle' ? 'Xe máy (Vãng lai)' : (vehTypeName === 'EV' ? 'Xe điện EV (Vãng lai)' : 'Ô tô (Vãng lai)'));
-
-          wizardVehicleData.value = {
-            type: vehTypeName,
-            brand: vehBrand,
-            color: walkinForm.value.color || 'Tiêu chuẩn',
-            owner: customerName,
-            phone: customerPhone,
-            lot: currentCheckinLot.value.name
-          };
-
-          targetSlot.value.owner = customerName;
-          targetSlot.value.phone = customerPhone;
-          targetSlot.value.plate = p;
-          targetSlot.value.isWalkIn = true;
-          targetSlot.value.isBooked = false;
-          targetSlot.value.bookingCode = null;
-          targetSlot.value.matchedBooking = null;
+          showConfirmModal.value = true;
+          return;
         }
+
+        // 3. Trường hợp ô ĐANG TRỐNG (Available / Sẵn sàng)
+        // Reset sạch dữ liệu của các ô trước đó, tuyệt đối không lấy thông tin xe ô khác đè vào
+        wizardPlate.value = '';
+        wizardVehicleFound.value = false;
+        wizardVehicleData.value = null;
+        checkinMode.value = 'walkin';
+
+        const walkinPlate = (walkinForm.value.plate || '').trim().toUpperCase();
+        if (!walkinPlate) {
+          // Khi ô đang trống và nhân viên chưa nhập biển số xe vãng lai -> Chỉ thông báo ô đang trống
+          alert(`ℹ️ Vị trí ô đỗ [${slot.code}] hiện ĐANG TRỐNG (sẵn sàng tiếp nhận phương tiện)!`);
+          return;
+        }
+
+        // Nếu nhân viên đã nhập sẵn biển số xe ở form vãng lai thì mới xác nhận xếp xe vào ô trống này
+        const already = findActiveParkingSessionForPlate(walkinPlate);
+        if (already) {
+          alert(`⛔ TỪ CHỐI CHECK-IN: PHƯƠNG TIỆN ĐANG ĐỖ SẴN TRONG BÃI!\n\n` +
+            `• Biển số xe: ${walkinPlate}\n` +
+            `• Đang đỗ tại: Ô ${already.slot} (${already.lot_name})\n` +
+            `• Check-in lúc: ${already.checkIn}\n\n` +
+            `Phương tiện này đang trong phiên gửi xe chưa hoàn tất Check-out. Hệ thống không cho phép check-in thêm vào ô [${slot.code}]!`);
+          return;
+        }
+
+        wizardPlate.value = walkinPlate;
+        const vType = walkinForm.value.vehicle_type || (slot.vehicleType === 'motorcycle' ? 'motorcycle' : (slot.vehicleType === 'ev' ? 'ev' : 'car'));
+        const customerName = walkinForm.value.name ? walkinForm.value.name.trim() : 'Khách vãng lai';
+        const customerPhone = walkinForm.value.phone ? walkinForm.value.phone.trim() : '--';
+        const vehTypeName = vType === 'motorcycle' ? 'Motorcycle' : (vType === 'ev' ? 'EV' : 'Car');
+        const vehBrand = walkinForm.value.brand || (vehTypeName === 'Motorcycle' ? 'Xe máy (Vãng lai)' : (vehTypeName === 'EV' ? 'Xe điện EV (Vãng lai)' : 'Ô tô (Vãng lai)'));
+
+        wizardVehicleData.value = {
+          type: vehTypeName,
+          brand: vehBrand,
+          color: walkinForm.value.color || 'Tiêu chuẩn',
+          owner: customerName,
+          phone: customerPhone,
+          lot: currentCheckinLot.value?.name || 'Bãi đỗ xe'
+        };
+
+        targetSlot.value.owner = customerName;
+        targetSlot.value.phone = customerPhone;
+        targetSlot.value.plate = walkinPlate;
+        targetSlot.value.isWalkIn = true;
+        targetSlot.value.isBooked = false;
+        targetSlot.value.bookingCode = null;
+        targetSlot.value.matchedBooking = null;
+
         showConfirmModal.value = true;
       }
 
