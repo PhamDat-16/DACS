@@ -9081,15 +9081,24 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             return aLot === currentLotName || aLot.includes(currentLotName) || currentLotName.includes(aLot);
           });
 
-          const isOccupied = s.status === 'occupied' || (matchedActivity && (matchedActivity.status === 'Ongoing' || matchedActivity.status === 'PARKING' || !matchedActivity.checkOut || matchedActivity.checkOut === 'Chưa ra'));
-          const isBooked = !isOccupied && (Boolean(matchedBooking && (matchedBooking.status === 'upcoming' || matchedBooking.status === 'active')) || s.status === 'reserved' || (matchedActivity && matchedActivity.status === 'Upcoming') || Boolean(s.bookedPlate));
+          // Xe ĐANG ĐỖ: Slot có trạng thái occupied HOẶC có phiên gửi xe thực tế đang diễn ra (Ongoing / PARKING / active)
+          const hasActiveParkingSession = matchedActivity && (matchedActivity.status === 'Ongoing' || matchedActivity.status === 'PARKING' || matchedActivity.status === 'parking' || matchedActivity.status === 'Đang đỗ') && (!matchedActivity.checkOut || matchedActivity.checkOut === 'Chưa ra');
+          const hasActiveBookingCheckin = matchedBooking && matchedBooking.status === 'active';
+          const isOccupied = s.status === 'occupied' || Boolean(hasActiveParkingSession) || Boolean(hasActiveBookingCheckin);
+
+          // Xe ĐÃ ĐẶT: Khách đã đặt chỗ trước (status 'upcoming' hoặc 'confirmed') nhưng CHƯA CHECK-IN vào bãi
+          const isUpcomingReservation = Boolean(matchedBooking && (matchedBooking.status === 'upcoming' || matchedBooking.status === 'confirmed'))
+            || (matchedActivity && matchedActivity.status === 'Upcoming')
+            || (s.status === 'reserved' && !isOccupied)
+            || (Boolean(s.bookedPlate) && !isOccupied);
+          const isBooked = !isOccupied && isUpcomingReservation;
           const isRed = isOccupied || isBooked;
 
           // QUAN TRỌNG: Nếu ô RED thì hiển thị đầy đủ biển số, tên khách hàng và mã đặt chỗ
           const plate = isRed
             ? (matchedActivity?.plate || s.current_plate || s.bookedPlate || s.plate || matchedBooking?.plate || matchedBooking?.vehicle_plate || null)
             : null;
-          const owner = matchedBooking?.owner_name || matchedBooking?.customer_name || matchedActivity?.owner_name || s.bookedCustomer || (isRed ? (s.bookedCustomer || 'Khách đặt trước') : 'Ô trống');
+          const owner = matchedBooking?.owner_name || matchedBooking?.customer_name || matchedActivity?.owner_name || s.bookedCustomer || (isRed ? (isOccupied ? 'Khách đang gửi' : 'Khách đặt trước') : 'Ô trống');
           const phone = matchedBooking?.phone || matchedBooking?.owner_phone || matchedActivity?.owner_phone || s.bookedPhone || '--';
           const bookingCode = matchedBooking?.booking_id || matchedBooking?.code || matchedActivity?.id || s.bookingId || null;
           const vehicleType = s.vehicle_type || (code.startsWith('B') ? 'motorcycle' : 'car');
@@ -9109,8 +9118,8 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             bookingCode,
             matchedBooking,
             matchedActivity,
-            checkIn: matchedActivity?.checkIn || s.checkIn || (isRed ? 'Đang đỗ' : null),
-            duration: matchedActivity?.duration || s.duration || (isRed ? 'Đang đỗ' : null),
+            checkIn: isOccupied ? (matchedActivity?.checkIn || s.checkIn || 'Đang đỗ') : (isBooked ? (matchedBooking?.time || matchedBooking?.start_time || 'Đã đặt trước') : null),
+            duration: isOccupied ? (matchedActivity?.duration || s.duration || 'Đang đỗ') : (isBooked ? (matchedBooking?.duration_text || 'Đặt trước') : null),
             vehicleType
           };
         });
@@ -10623,7 +10632,26 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
         if (found) {
           selectSessionForCheckout(found);
         } else {
-          alert(`Không tìm thấy phiên đỗ đang hoạt động tại bãi này cho từ khóa "${checkoutSearchQuery.value}".\n\nVui lòng kiểm tra lại biển số xe hoặc chọn trực tiếp từ danh sách xe đang trong bãi.`);
+          // KIỂM TRA XEM PHƯƠNG TIỆN NÀY CÓ PHẢI ĐANG TRONG TRẠNG THÁI "ĐÃ ĐẶT TRƯỚC" (CHƯA CHECK-IN) HAY KHÔNG
+          const allBk = [...(allSharedBookings.value || []), ...(myBookings.value || [])];
+          const bookedCar = allBk.find(b => {
+            const bPlateNorm = normalizePlate(b.plate || b.vehicle_plate);
+            const bSlotNorm = normalizeSlotCode(b.slot_code);
+            return ((bPlateNorm && (bPlateNorm === normQ || bPlateNorm.includes(normQ))) || (bSlotNorm && bSlotNorm === normSlotQ)) && (b.status === 'upcoming' || b.status === 'confirmed');
+          });
+
+          if (bookedCar) {
+            alert(`ℹ️ THÔNG BÁO TÌM KIẾM XE XUẤT BẾN:\n\n` +
+              `• Phương tiện [${bookedCar.plate || bookedCar.vehicle_plate}] hiện đang ở trạng thái: [ĐÃ ĐẶT CHỖ TRƯỚC].\n` +
+              `• Vị trí ô đã đặt: Ô ${bookedCar.slot_code} (${bookedCar.lot_name || 'Bãi đỗ xe'}).\n` +
+              `• Khung giờ đặt trước: ${bookedCar.time || bookedCar.time_range || bookedCar.start_time}\n\n` +
+              `⛔ NGUYÊN NHÂN KHÔNG THỂ CHECK-OUT:\n` +
+              `Xe này mới chỉ được khách hàng ĐẶT CHỖ TRƯỚC trên ứng dụng, XE CHƯA CHECK-IN VÀO BÃI (chưa qua cổng Barie vào).\n\n` +
+              `👉 HƯỚNG DẪN XỬ LÝ:\n` +
+              `Vui lòng chuyển sang màn hình [2. Check-in Vehicle], bấm vào ô [${bookedCar.slot_code}] hoặc nhập biển số để mở Barie đón xe vào bãi trước khi thực hiện Check-out!`);
+          } else {
+            alert(`Không tìm thấy phiên đỗ đang hoạt động tại bãi này cho từ khóa "${checkoutSearchQuery.value}".\n\nVui lòng kiểm tra lại biển số xe hoặc chọn trực tiếp từ danh sách xe đang trong bãi.`);
+          }
         }
       }
 
@@ -13219,8 +13247,10 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
               if (lot.slots) {
                 const sl = lot.slots.find(s => normalizeSlotCode(s.code || s.slot_code) === normalizeSlotCode(slotCode));
                 if (sl && sl.status !== 'occupied') {
-                  sl.status = 'reserved';
-                  sl.isBooked = true;
+                  const isAct = b.status === 'active';
+                  sl.status = isAct ? 'occupied' : 'reserved';
+                  sl.isBooked = !isAct;
+                  sl.isOccupied = isAct;
                   sl.bookedPlate = plate;
                   sl.bookedCustomer = b.owner_name || 'Khách hàng đặt trước';
                   sl.bookedTime = b.time || b.time_range;
@@ -13233,6 +13263,7 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           // Hoạt động gần đây (recentActivities)
           const actExists = recentActivities.value.some(a => (a.id === b.id || a.id === b.code || (a.plate === plate && normalizeSlotCode(a.lot || a.slot_code) === normalizeSlotCode(slotCode))));
           if (!actExists && plate) {
+            const isAct = b.status === 'active';
             recentActivities.value.unshift({
               id: b.id || b.code || Date.now(),
               plate: plate,
@@ -13242,8 +13273,8 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
               lot_name: b.lot_name || 'Bãi đỗ xe hệ thống',
               date: b.date || getTodayDateStr(),
               checkIn: b.time ? b.time.split(' - ')[0] : '08:00',
-              checkOut: 'Chưa ra',
-              status: b.status === 'active' ? 'Ongoing' : 'Upcoming',
+              checkOut: isAct ? 'Chưa ra' : (b.time && b.time.includes(' - ') ? b.time.split(' - ')[1] : '10:00'),
+              status: isAct ? 'Ongoing' : 'Upcoming',
               fee: b.fee || 30000,
               duration: b.duration_text || '2h 00m',
               owner_name: b.owner_name || 'Khách đặt trước',
