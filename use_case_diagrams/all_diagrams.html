@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bộ 8 Biểu đồ Use Case - Smart Parking System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0f172a;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .diagram-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 30px 30px 30px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+      width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .diagram-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge {
+      background: #1e293b;
+      color: #38bdf8;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .desc {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .caption {
+      margin-top: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      font-style: italic;
+      color: #1e293b;
+      text-align: center;
+    }
+    svg {
+      display: block;
+      overflow: visible;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="diagram-card" id="diagram-1">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-01</span>
+        <div>
+          <div class="title">Đăng nhập và Phân quyền người dùng (Authentication & RBAC)</div>
+          <div class="desc">Mô tả sự tương tác giữa các tác nhân người dùng với cơ chế xác thực JWT và phân quyền vai trò (Role-Based Access Control) gồm Customer, Staff và Admin.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="417.2" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ QUẢN TRỊ & XÁC THỰC (AUTH MODULE)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Smart Parking Security & RBAC System</text>
+    </g>
+    
+          
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="158" r="17" fill="#dbeafe" />
+      <!-- Head -->
+      <circle cx="110" cy="158" r="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="172" x2="110" y2="204" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="186" x2="132" y2="186" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="204" x2="94" y2="232" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="204" x2="126" y2="232" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="240" width="140" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="256" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Khách hàng</text>
+      <text x="110" y="270" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#2563eb">(Customer)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="358" r="17" fill="#d1fae5" />
+      <!-- Head -->
+      <circle cx="110" cy="358" r="14" fill="#ffffff" stroke="#059669" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="372" x2="110" y2="404" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="386" x2="132" y2="386" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="404" x2="94" y2="432" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="404" x2="126" y2="432" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="440" width="140" height="36" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="456" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Nhân viên trực cổng</text>
+      <text x="110" y="470" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#059669">(Staff)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="558" r="17" fill="#ede9fe" />
+      <!-- Head -->
+      <circle cx="110" cy="558" r="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="572" x2="110" y2="604" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="586" x2="132" y2="586" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="604" x2="94" y2="632" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="604" x2="126" y2="632" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="640" width="140" height="36" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="656" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Quản trị viên</text>
+      <text x="110" y="670" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#7c3aed">(Admin)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="150" rx="95" ry="27" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="147" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đăng ký tài khoản</text>
+      <text x="430" y="163" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Register Account</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="350" rx="100" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="347" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đăng nhập hệ thống</text>
+      <text x="430" y="363" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">JWT Login Authentication</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="570" rx="95" ry="27" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="567" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đăng xuất tài khoản</text>
+      <text x="430" y="583" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Secure Session Logout</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="220" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="217" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xác thực JWT Token</text>
+      <text x="780" y="233" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">& Phân quyền RBAC</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="350" rx="115" ry="28" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="347" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Mã hóa & Đối soát Bcrypt</text>
+      <text x="780" y="363" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Password Hash Verification</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="480" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="477" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Điều hướng làm việc</text>
+      <text x="780" y="493" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Portal / Staff / Admin View</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="610" rx="115" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="780" y="607" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Khôi phục mật khẩu</text>
+      <text x="780" y="623" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Forgot / Reset Password</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="470" rx="105" ry="27" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="467" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Cảnh báo sai mật khẩu</text>
+      <text x="430" y="483" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">401 Unauthorized / Locked</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="190" x2="335" y2="150" stroke="#475569" stroke-width="2" stroke-linecap="round"/>  <!-- Customer -> Register -->
+          <line x1="180" y1="190" x2="330" y2="350" stroke="#475569" stroke-width="2" stroke-linecap="round"/>  <!-- Customer -> Login -->
+          <line x1="180" y1="190" x2="335" y2="570" stroke="#475569" stroke-width="2" stroke-linecap="round"/>  <!-- Customer -> Logout -->
+          
+          <line x1="180" y1="390" x2="330" y2="350" stroke="#475569" stroke-width="2" stroke-linecap="round"/>  <!-- Staff -> Login -->
+          <line x1="180" y1="390" x2="335" y2="570" stroke="#475569" stroke-width="2" stroke-linecap="round"/>  <!-- Staff -> Logout -->
+
+          <line x1="180" y1="590" x2="330" y2="350" stroke="#475569" stroke-width="2" stroke-linecap="round"/>  <!-- Admin -> Login -->
+          <line x1="180" y1="590" x2="335" y2="570" stroke="#475569" stroke-width="2" stroke-linecap="round"/>  <!-- Admin -> Logout -->
+
+          <!-- Include dependencies -->
+          
+    <g class="dependency">
+      <line x1="525" y1="335" x2="675" y2="240" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="563.0" y="278.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="600.0" y="291.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="530" y1="350" x2="665" y2="350" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="560.5" y="341.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="597.5" y="354.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="525" y1="365" x2="675" y2="460" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="563.0" y="403.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="600.0" y="416.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+
+          <!-- Extend dependencies -->
+          
+    <g class="dependency">
+      <line x1="670" y1="600" x2="510" y2="375" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="551.0" y="478.5" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="590.0" y="491.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="442" x2="430" y2="380" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="402.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="415.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.1: Biểu đồ Use Case UC-01 - Đăng nhập và Phân quyền người dùng (Authentication & RBAC)</div>
+  </div>
+
+  <div class="diagram-card" id="diagram-2">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-02</span>
+        <div>
+          <div class="title">Tra cứu bãi đỗ xe và Sơ đồ ô trống thời gian thực (Live Matrix Grid)</div>
+          <div class="desc">Mô tả tính năng trực quan hóa mạng lưới bãi đỗ xe trên bản đồ và hiển thị ma trận ô đỗ theo thời gian thực với 4 trạng thái mã màu chuẩn.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="426.4" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ TRA CỨU & SƠ ĐỒ Ô ĐỖ (MATRIX GRID)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Live Parking Lot & Slot Visualization</text>
+    </g>
+    
+
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="228" r="17" fill="#dbeafe" />
+      <!-- Head -->
+      <circle cx="110" cy="228" r="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="242" x2="110" y2="274" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="256" x2="132" y2="256" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="274" x2="94" y2="302" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="274" x2="126" y2="302" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="310" width="140" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="326" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Khách hàng</text>
+      <text x="110" y="340" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#2563eb">(Customer)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="468" r="17" fill="#d1fae5" />
+      <!-- Head -->
+      <circle cx="110" cy="468" r="14" fill="#ffffff" stroke="#059669" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="482" x2="110" y2="514" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="496" x2="132" y2="496" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="514" x2="94" y2="542" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="514" x2="126" y2="542" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="550" width="140" height="36" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="566" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Nhân viên trực cổng</text>
+      <text x="110" y="580" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#059669">(Staff)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="348" r="17" fill="#f1f5f9" />
+      <!-- Head -->
+      <circle cx="1090" cy="348" r="14" fill="#ffffff" stroke="#475569" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="362" x2="1090" y2="394" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="376" x2="1112" y2="376" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="394" x2="1074" y2="422" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="394" x2="1106" y2="422" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#475569" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Hệ thống CSDL</text>
+      <text x="1090" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#475569">(Database Engine)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="160" rx="105" ry="28" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xem mạng lưới bãi đỗ xe</text>
+      <text x="430" y="173" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">City Lots Map View</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="350" rx="110" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="347" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tra cứu sơ đồ ma trận ô đỗ</text>
+      <text x="430" y="363" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Live Slot Matrix Grid</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="530" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="527" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Lọc ô đỗ theo loại xe</text>
+      <text x="430" y="543" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Filter Car / Motorbike</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="630" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="627" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Lọc ô đỗ theo tầng</text>
+      <text x="430" y="643" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Floor / Zone Filtering</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="230" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xem 4 trạng thái mã màu</text>
+      <text x="780" y="243" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Green/Red/Yellow/Gray</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="370" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="367" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đồng bộ ô trống tức thời</text>
+      <text x="780" y="383" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Live Data Synchronization</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="510" rx="115" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="780" y="507" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Cảnh báo bãi đầy</text>
+      <text x="780" y="523" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Lot Full Alert Badge</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="260" x2="330" y2="170" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="260" x2="320" y2="350" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="500" x2="330" y2="170" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="500" x2="320" y2="350" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Associations Right -->
+          <line x1="895" y1="370" x2="1020" y2="380" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Dependencies -->
+          
+    <g class="dependency">
+      <line x1="535" y1="330" x2="675" y2="250" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="568.0" y="281.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="605.0" y="294.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="540" y1="355" x2="665" y2="370" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="565.5" y="353.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="602.5" y="366.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="502" x2="430" y2="380" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="432.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="445.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="602" x2="430" y2="558" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="571.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="584.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="675" y1="490" x2="535" y2="375" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="566.0" y="423.5" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="605.0" y="436.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.2: Biểu đồ Use Case UC-02 - Tra cứu bãi đỗ xe và Sơ đồ ô trống thời gian thực (Live Matrix Grid)</div>
+  </div>
+
+  <div class="diagram-card" id="diagram-3">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-03</span>
+        <div>
+          <div class="title">Đặt giữ chỗ ô đỗ xe trực tuyến (Online Booking & Concurrency Control)</div>
+          <div class="desc">Mô tả luồng giao dịch đặt giữ chỗ trước ô đỗ với cơ chế khóa bi quan SELECT FOR UPDATE trên PostgreSQL, triệt tiêu xung đột tranh chấp đồng thời.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="444.79999999999995" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ ĐẶT GIỮ CHỖ Ô ĐỖ XE (BOOKING MODULE)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Online Reservation & Concurrency Lock Control</text>
+    </g>
+    
+
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="348" r="17" fill="#dbeafe" />
+      <!-- Head -->
+      <circle cx="110" cy="348" r="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="362" x2="110" y2="394" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="376" x2="132" y2="376" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="394" x2="94" y2="422" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="394" x2="126" y2="422" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Khách hàng</text>
+      <text x="110" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#2563eb">(Customer)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="348" r="17" fill="#e0f2fe" />
+      <!-- Head -->
+      <circle cx="1090" cy="348" r="14" fill="#ffffff" stroke="#0369a1" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="362" x2="1090" y2="394" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="376" x2="1112" y2="376" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="394" x2="1074" y2="422" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="394" x2="1106" y2="422" stroke="#0369a1" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#0369a1" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">PostgreSQL Engine</text>
+      <text x="1090" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#0369a1">(Khóa bi quan hàng)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="170" rx="105" ry="28" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Chọn ô đỗ còn trống</text>
+      <text x="430" y="183" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Select Available Slot</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="310" rx="105" ry="28" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="307" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Khai báo biển số xe</text>
+      <text x="430" y="323" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">& Khung giờ dự kiến</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="460" rx="110" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="457" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xác nhận tạo đơn đặt chỗ</text>
+      <text x="430" y="473" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Submit Booking Request</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="610" rx="110" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="607" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xử lý xung đột (409 Conflict)</text>
+      <text x="430" y="623" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Slot Already Booked Alert</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="210" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="207" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Khóa bi quan ô đỗ xe</text>
+      <text x="780" y="223" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">SELECT ... FOR UPDATE</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="340" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="337" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đổi trạng thái Reserved</text>
+      <text x="780" y="353" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Slot Status -> Yellow</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="470" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="467" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Sinh vé điện tử & QR Code</text>
+      <text x="780" y="483" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Generate booking_code & QR</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="600" rx="120" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="780" y="597" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tự động hủy đơn quá hạn</text>
+      <text x="780" y="613" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">No-show Auto Cancel (15m)</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="360" x2="330" y2="185" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="380" x2="325" y2="310" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="400" x2="320" y2="460" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Associations Right -->
+          <line x1="900" y1="215" x2="1020" y2="360" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Dependencies -->
+          
+    <g class="dependency">
+      <line x1="525" y1="435" x2="675" y2="245" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="570.5" y="321.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="607.5" y="334.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="535" y1="445" x2="665" y2="360" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="563.0" y="393.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="600.0" y="406.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="540" y1="465" x2="660" y2="470" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="563.0" y="458.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="600.0" y="471.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="582" x2="430" y2="490" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="527.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="540.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="670" y1="580" x2="530" y2="480" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="561.0" y="521.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="600.0" y="534.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.3: Biểu đồ Use Case UC-03 - Đặt giữ chỗ ô đỗ xe trực tuyến (Online Booking & Concurrency Control)</div>
+  </div>
+
+  <div class="diagram-card" id="diagram-4">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-04</span>
+        <div>
+          <div class="title">Dẫn đường tìm vị trí đỗ xe tối ưu bằng thuật toán A* (A* Pathfinding)</div>
+          <div class="desc">Mô tả cơ chế tính toán lộ trình ngắn nhất từ cổng vào đến ô đỗ mục tiêu bằng thuật toán A* với hàm đánh giá khoảng cách Manhattan né vật cản.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="453.99999999999994" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ DẪN ĐƯỜNG THÔNG MINH (A* PATHFINDING)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Optimal Pathfinding & Manhattan Heuristic Navigation</text>
+    </g>
+    
+
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="348" r="17" fill="#dbeafe" />
+      <!-- Head -->
+      <circle cx="110" cy="348" r="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="362" x2="110" y2="394" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="376" x2="132" y2="376" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="394" x2="94" y2="422" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="394" x2="126" y2="422" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Khách lái xe</text>
+      <text x="110" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#2563eb">(Driver Customer)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="348" r="17" fill="#e0e7ff" />
+      <!-- Head -->
+      <circle cx="1090" cy="348" r="14" fill="#ffffff" stroke="#4338ca" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="362" x2="1090" y2="394" stroke="#4338ca" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="376" x2="1112" y2="376" stroke="#4338ca" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="394" x2="1074" y2="422" stroke="#4338ca" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="394" x2="1106" y2="422" stroke="#4338ca" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#4338ca" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">A* Pathfinding Engine</text>
+      <text x="1090" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#4338ca">(Thuật toán dẫn đường)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="230" rx="110" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Yêu cầu dẫn đường đến ô</text>
+      <text x="430" y="243" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Request Navigation Path</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="410" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="430" y="407" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Vẽ đường Polyline động</text>
+      <text x="430" y="423" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Animated SVG Path / Canvas</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="580" rx="110" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="577" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tính lại khi đổi ô đỗ</text>
+      <text x="430" y="593" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Dynamic Re-route Path</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="160" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xây dựng ma trận lưới 2D</text>
+      <text x="780" y="173" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">& Xác định vật cản (Walls/Cars)</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="290" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="287" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tính toán đường ngắn nhất A*</text>
+      <text x="780" y="303" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">f(n) = g(n) + h(n)</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="420" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="417" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đánh giá Manhattan Heuristic</text>
+      <text x="780" y="433" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">h(n) = |dx| + |dy|</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="540" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="537" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Truy vết danh sách tọa độ</text>
+      <text x="780" y="553" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Extract Waypoints Path</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="650" rx="120" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="780" y="647" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Báo không tìm thấy đường</text>
+      <text x="780" y="663" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">No Feasible Path Warning</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="380" x2="320" y2="240" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Associations Right -->
+          <line x1="900" y1="175" x2="1020" y2="360" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="900" y1="295" x2="1020" y2="380" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Dependencies -->
+          
+    <g class="dependency">
+      <line x1="530" y1="240" x2="665" y2="280" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="560.5" y="251.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="597.5" y="264.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="260" x2="430" y2="380" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="393.0" y="311.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="324.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="780" y1="260" x2="780" y2="190" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="743.0" y="216.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="780.0" y="229.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="780" y1="320" x2="780" y2="390" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="743.0" y="346.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="780.0" y="359.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="780" y1="450" x2="780" y2="510" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="743.0" y="471.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="780.0" y="484.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="552" x2="430" y2="260" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="397.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="410.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="670" y1="630" x2="520" y2="250" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="548.5" y="412.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="587.5" y="425.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.4: Biểu đồ Use Case UC-04 - Dẫn đường tìm vị trí đỗ xe tối ưu bằng thuật toán A* (A* Pathfinding)</div>
+  </div>
+
+  <div class="diagram-card" id="diagram-5">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-05</span>
+        <div>
+          <div class="title">Đăng ký và Quản lý Thuê bao Vé tháng VIP (Monthly Pass VIP System)</div>
+          <div class="desc">Mô tả tính năng đăng ký gói vé tháng VIP, thanh toán cước thuê bao qua VietQR và chính sách miễn phí 0đ tự động tại đúng bãi đỗ xe đã đăng ký.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="398.79999999999995" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ VÉ THÁNG VIP (MONTHLY PASS VIP)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Subscription & VIP Benefits Management</text>
+    </g>
+    
+
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="248" r="17" fill="#dbeafe" />
+      <!-- Head -->
+      <circle cx="110" cy="248" r="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="262" x2="110" y2="294" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="276" x2="132" y2="276" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="294" x2="94" y2="322" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="294" x2="126" y2="322" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="330" width="140" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="346" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Khách hàng</text>
+      <text x="110" y="360" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#2563eb">(Customer)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="508" r="17" fill="#ede9fe" />
+      <!-- Head -->
+      <circle cx="110" cy="508" r="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="522" x2="110" y2="554" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="536" x2="132" y2="536" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="554" x2="94" y2="582" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="554" x2="126" y2="582" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="590" width="140" height="36" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="606" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Nhân viên / Admin</text>
+      <text x="110" y="620" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#7c3aed">(Staff / Admin)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="348" r="17" fill="#fef3c7" />
+      <!-- Head -->
+      <circle cx="1090" cy="348" r="14" fill="#ffffff" stroke="#b45309" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="362" x2="1090" y2="394" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="376" x2="1112" y2="376" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="394" x2="1074" y2="422" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="394" x2="1106" y2="422" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#b45309" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Cổng VietQR Napas</text>
+      <text x="1090" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#b45309">(Payment Gateway)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="170" rx="105" ry="28" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đăng ký vé tháng mới</text>
+      <text x="430" y="183" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Register Monthly Pass</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="320" rx="105" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="430" y="317" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Thanh toán cước thuê bao</text>
+      <text x="430" y="333" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Dynamic VietQR Payment</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="470" rx="110" ry="30" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="467" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tự động miễn phí cước 0đ</text>
+      <text x="430" y="483" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Zero-fee at Registered Lot</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="610" rx="110" ry="28" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="607" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Quản lý danh sách vé tháng</text>
+      <text x="430" y="623" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Admin / Staff Pass Audit</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="170" rx="115" ry="28" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="167" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Chọn bãi xe & Gói thời hạn</text>
+      <text x="780" y="183" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">1, 3, 6, 12 Months</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="290" rx="115" ry="28" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="287" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Khai báo biển số & Loại xe</text>
+      <text x="780" y="303" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">License Plate Binding</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="420" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="417" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Kích hoạt & Cấp thẻ VIP</text>
+      <text x="780" y="433" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Generate Active Pass</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="560" rx="115" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="780" y="557" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Gia hạn thuê bao khi hết hạn</text>
+      <text x="780" y="573" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Renew Expired Pass</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="280" x2="325" y2="180" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="540" x2="320" y2="610" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Associations Right -->
+          <line x1="535" y1="320" x2="1020" y2="375" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Dependencies -->
+          
+    <g class="dependency">
+      <line x1="535" y1="170" x2="665" y2="170" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="563.0" y="161.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="600.0" y="174.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="515" y1="190" x2="680" y2="275" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="560.5" y="223.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="597.5" y="236.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="198" x2="430" y2="290" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="393.0" y="235.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="248.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="530" y1="335" x2="675" y2="405" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="565.5" y="361.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="602.5" y="374.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="440" x2="430" y2="200" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="311.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="324.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="670" y1="545" x2="520" y2="200" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="548.5" y="346.25" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="587.5" y="359.25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.5: Biểu đồ Use Case UC-05 - Đăng ký và Quản lý Thuê bao Vé tháng VIP (Monthly Pass VIP System)</div>
+  </div>
+
+  <div class="diagram-card" id="diagram-6">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-06</span>
+        <div>
+          <div class="title">Kiểm soát phương tiện vào bãi và Mở Barrier tự động (Staff Check-in)</div>
+          <div class="desc">Mô tả quy trình tiếp nhận xe tại cổng vào: phân loại xe đặt trước, vé tháng VIP, xe vãng lai, đồng bộ ô đỗ sang Occupied và kích hoạt mở rào chắn.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="472.4" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ KIỂM SOÁT CỔNG VÀO (IN-GATE OPERATIONS)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Staff Vehicle Check-in & Barrier Automation</text>
+    </g>
+    
+
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="248" r="17" fill="#d1fae5" />
+      <!-- Head -->
+      <circle cx="110" cy="248" r="14" fill="#ffffff" stroke="#059669" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="262" x2="110" y2="294" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="276" x2="132" y2="276" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="294" x2="94" y2="322" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="294" x2="126" y2="322" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="330" width="140" height="36" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="346" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Nhân viên trực cổng</text>
+      <text x="110" y="360" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#059669">(Staff)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="488" r="17" fill="#dbeafe" />
+      <!-- Head -->
+      <circle cx="110" cy="488" r="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="502" x2="110" y2="534" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="516" x2="132" y2="516" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="534" x2="94" y2="562" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="534" x2="126" y2="562" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="570" width="140" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="586" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Khách lái xe</text>
+      <text x="110" y="600" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#2563eb">(Driver Customer)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="348" r="17" fill="#fee2e2" />
+      <!-- Head -->
+      <circle cx="1090" cy="348" r="14" fill="#ffffff" stroke="#dc2626" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="362" x2="1090" y2="394" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="376" x2="1112" y2="376" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="394" x2="1074" y2="422" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="394" x2="1106" y2="422" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Rào chắn Barrier</text>
+      <text x="1090" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#dc2626">(Barrier Controller)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="150" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="147" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Quét mã QR vé đặt trước</text>
+      <text x="430" y="163" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Booking QR Scan Check-in</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="260" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="257" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Nhận diện biển số vé tháng</text>
+      <text x="430" y="273" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">VIP Monthly Pass Check-in</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="380" rx="110" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="377" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tiếp nhận xe tại làn vào</text>
+      <text x="430" y="393" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">In-Gate Vehicle Processing</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="510" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="507" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Cấp ô trống cho xe vãng lai</text>
+      <text x="430" y="523" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Assign Optimal Slot</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="620" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="617" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Cảnh báo bãi đầy từ chối xe</text>
+      <text x="430" y="633" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Lot Full Rejection</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="190" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tạo phiên gửi xe mới</text>
+      <text x="780" y="203" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">ParkingSession: Active</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="320" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="317" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Cập nhật ô đỗ Occupied</text>
+      <text x="780" y="333" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Slot Status -> Red</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="450" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="447" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Giảm số chỗ trống bãi</text>
+      <text x="780" y="463" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">available_spots = spots - 1</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="580" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="577" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Kích hoạt mở Barrier</text>
+      <text x="780" y="593" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Open Barrier Gate (90 deg)</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="280" x2="320" y2="370" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="520" x2="325" y2="390" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Associations Right -->
+          <line x1="895" y1="580" x2="1020" y2="400" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Dependencies -->
+          
+    <g class="dependency">
+      <line x1="430" y1="178" x2="430" y2="350" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="255.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="268.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="288" x2="430" y2="350" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="310.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="323.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="482" x2="430" y2="410" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="437.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="450.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="592" x2="430" y2="410" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="492.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="505.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="dependency">
+      <line x1="530" y1="360" x2="675" y2="215" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="572.75" y="271.25" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="609.75" y="284.25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="540" y1="375" x2="665" y2="330" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="565.5" y="343.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="602.5" y="356.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="540" y1="395" x2="665" y2="440" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="565.5" y="408.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="602.5" y="421.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="530" y1="405" x2="675" y2="560" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="572.75" y="481.25" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="609.75" y="494.25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.6: Biểu đồ Use Case UC-06 - Kiểm soát phương tiện vào bãi và Mở Barrier tự động (Staff Check-in)</div>
+  </div>
+
+  <div class="diagram-card" id="diagram-7">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-07</span>
+        <div>
+          <div class="title">Kiểm soát phương tiện xuất bến và Thanh toán VietQR (Staff Check-out)</div>
+          <div class="desc">Mô tả quy trình xe ra bãi: đối soát thời gian đỗ, áp dụng miễn phí 0đ cho vé VIP hoặc tính cước động/lũy tiến, sinh mã VietQR, giải phóng ô đỗ và mở barrier.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="592.0" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ KIỂM SOÁT CỔNG RA & THANH TOÁN (OUT-GATE OPERATIONS)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Vehicle Check-out & Dynamic VietQR Billing</text>
+    </g>
+    
+
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="228" r="17" fill="#d1fae5" />
+      <!-- Head -->
+      <circle cx="110" cy="228" r="14" fill="#ffffff" stroke="#059669" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="242" x2="110" y2="274" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="256" x2="132" y2="256" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="274" x2="94" y2="302" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="274" x2="126" y2="302" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="310" width="140" height="36" rx="6" fill="#ffffff" stroke="#059669" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="326" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Nhân viên trực cổng</text>
+      <text x="110" y="340" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#059669">(Staff)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="488" r="17" fill="#dbeafe" />
+      <!-- Head -->
+      <circle cx="110" cy="488" r="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="502" x2="110" y2="534" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="516" x2="132" y2="516" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="534" x2="94" y2="562" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="534" x2="126" y2="562" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="570" width="140" height="36" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="586" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Khách lái xe</text>
+      <text x="110" y="600" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#2563eb">(Driver Customer)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="208" r="17" fill="#fef3c7" />
+      <!-- Head -->
+      <circle cx="1090" cy="208" r="14" fill="#ffffff" stroke="#b45309" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="222" x2="1090" y2="254" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="236" x2="1112" y2="236" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="254" x2="1074" y2="282" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="254" x2="1106" y2="282" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="290" width="140" height="36" rx="6" fill="#ffffff" stroke="#b45309" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="306" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Cổng VietQR Napas</text>
+      <text x="1090" y="320" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#b45309">(VietQR Gateway)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="508" r="17" fill="#fee2e2" />
+      <!-- Head -->
+      <circle cx="1090" cy="508" r="14" fill="#ffffff" stroke="#dc2626" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="522" x2="1090" y2="554" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="536" x2="1112" y2="536" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="554" x2="1074" y2="582" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="554" x2="1106" y2="582" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="590" width="140" height="36" rx="6" fill="#ffffff" stroke="#dc2626" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="606" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Rào chắn Barrier</text>
+      <text x="1090" y="620" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#dc2626">(Barrier Controller)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="160" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="157" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Miễn phí 0đ cho vé VIP</text>
+      <text x="430" y="173" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">0 VND for Monthly Pass</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="300" rx="110" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="297" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tiếp nhận xe tại làn ra</text>
+      <text x="430" y="313" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Out-Gate Vehicle Processing</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="450" rx="110" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="447" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xác nhận xuất bến</text>
+      <text x="430" y="463" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Confirm Payment & Release</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="590" rx="105" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="587" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xử lý cước tiền mặt</text>
+      <text x="430" y="603" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Cash Payment Fallback</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="140" rx="115" ry="28" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="137" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tra cứu phiên đỗ active</text>
+      <text x="780" y="153" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Search by License Plate</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="260" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="257" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tính tiền theo thời gian đỗ</text>
+      <text x="780" y="273" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Duration & Pricing Tier</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="380" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="377" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Sinh mã VietQR động</text>
+      <text x="780" y="393" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Dynamic Napas 247 QR Code</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="500" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="497" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Đóng phiên (Completed)</text>
+      <text x="780" y="513" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">ParkingSession: Completed</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="620" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="617" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Giải phóng ô đỗ Available</text>
+      <text x="780" y="633" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Slot Status -> Green</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="260" x2="320" y2="300" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="260" x2="320" y2="450" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="180" y1="520" x2="325" y2="310" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Associations Right -->
+          <line x1="895" y1="380" x2="1020" y2="260" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="895" y1="620" x2="1020" y2="540" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Dependencies -->
+          
+    <g class="dependency">
+      <line x1="430" y1="188" x2="430" y2="270" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="220.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="233.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="530" y1="285" x2="675" y2="160" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="572.75" y="207.25" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="609.75" y="220.25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="540" y1="295" x2="665" y2="265" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="565.5" y="271.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="602.5" y="284.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="780" y1="290" x2="780" y2="350" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="743.0" y="311.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="780.0" y="324.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+          
+    <g class="dependency">
+      <line x1="540" y1="455" x2="665" y2="490" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="565.5" y="463.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="602.5" y="476.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="530" y1="470" x2="675" y2="600" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="572.75" y="532.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="609.75" y="545.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="562" x2="430" y2="480" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="512.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="525.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.7: Biểu đồ Use Case UC-07 - Kiểm soát phương tiện xuất bến và Thanh toán VietQR (Staff Check-out)</div>
+  </div>
+
+  <div class="diagram-card" id="diagram-8">
+    <div class="diagram-header">
+      <div class="header-left">
+        <span class="badge">UC-08</span>
+        <div>
+          <div class="title">Dự báo tỷ lệ lấp đầy bằng Random Forest & Điều chỉnh giá động (Admin AI Forecast)</div>
+          <div class="desc">Mô tả hoạt động của mô hình học máy Random Forest Regressor dự báo lưu lượng và công cụ định giá động gợi ý hệ số giá tối ưu doanh thu.</div>
+        </div>
+      </div>
+      <div style="font-weight:600; color:#64748b; font-size:13px;">Hệ thống Quản lý Bãi đỗ xe Thông minh</div>
+    </div>
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780">
+          
+    <defs>
+      <!-- Shadow filter for clean modern look -->
+      <filter id="cardShadow" x="-5%" y="-5%" width="115%" height="115%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12" flood-color="#0f172a" />
+      </filter>
+      <filter id="pillShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.10" flood-color="#0f172a" />
+      </filter>
+
+      <!-- Arrow marker for <<include>> and <<extend>> -->
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7" />
+      </marker>
+      <marker id="arrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9 z" fill="#b45309" />
+      </marker>
+
+      <!-- Gradients for Use Case Ellipses -->
+      <linearGradient id="ucGradPrimary" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#f0f9ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradInclude" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#eff6ff"/>
+      </linearGradient>
+      <linearGradient id="ucGradExtend" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#fffbeb"/>
+      </linearGradient>
+      <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#f1f5f9"/>
+      </linearGradient>
+    </defs>
+    
+          
+    <g class="system-boundary">
+      <rect x="230" y="50" width="770" height="700" rx="14" fill="url(#boundaryGrad)" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="8,5" filter="url(#cardShadow)"/>
+      <!-- Header Badge -->
+      <rect x="250" y="34" width="509.2" height="32" rx="8" fill="#1e293b" filter="url(#pillShadow)"/>
+      <text x="265" y="55" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#f8fafc">HỆ THỐNG: PHÂN HỆ AI & ĐỊNH GIÁ ĐỘNG (AI ANALYTICS & PRICING)</text>
+      <text x="260" y="82" font-family="'Segoe UI', Arial, sans-serif" font-size="11" font-style="italic" fill="#64748b">Random Forest Occupancy Forecast & Dynamic Multiplier</text>
+    </g>
+    
+
+          <!-- Actors -->
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="110" cy="348" r="17" fill="#ede9fe" />
+      <!-- Head -->
+      <circle cx="110" cy="348" r="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="110" y1="362" x2="110" y2="394" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="88" y1="376" x2="132" y2="376" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="110" y1="394" x2="94" y2="422" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="110" y1="394" x2="126" y2="422" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="40" y="430" width="140" height="36" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="110" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Quản trị viên</text>
+      <text x="110" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#7c3aed">(Admin)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="208" r="17" fill="#cffafe" />
+      <!-- Head -->
+      <circle cx="1090" cy="208" r="14" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="222" x2="1090" y2="254" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="236" x2="1112" y2="236" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="254" x2="1074" y2="282" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="254" x2="1106" y2="282" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="290" width="140" height="36" rx="6" fill="#ffffff" stroke="#0891b2" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="306" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Mô hình AI Random Forest</text>
+      <text x="1090" y="320" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#0891b2">(Machine Learning)</text>
+    </g>
+    
+          
+    <g class="actor">
+      <!-- Glow aura -->
+      <circle cx="1090" cy="488" r="17" fill="#fef3c7" />
+      <!-- Head -->
+      <circle cx="1090" cy="488" r="14" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+      <!-- Body -->
+      <line x1="1090" y1="502" x2="1090" y2="534" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Arms -->
+      <line x1="1068" y1="516" x2="1112" y2="516" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Left Leg -->
+      <line x1="1090" y1="534" x2="1074" y2="562" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right Leg -->
+      <line x1="1090" y1="534" x2="1106" y2="562" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Label Box -->
+      <rect x="1020" y="570" width="140" height="36" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2" filter="url(#pillShadow)"/>
+      <text x="1090" y="586" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0f172a">Dynamic Pricing Engine</text>
+      <text x="1090" y="600" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="600" fill="#d97706">(Định giá động)</text>
+    </g>
+    
+
+          <!-- Use Cases Col 1 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="230" rx="110" ry="30" fill="url(#ucGradPrimary)" stroke="#2563eb" stroke-width="1.8"/>
+      <text x="430" y="227" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Xem Dashboard phân tích AI</text>
+      <text x="430" y="243" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Occupancy Forecast View</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="390" rx="115" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="430" y="387" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Trực quan hóa biểu đồ</text>
+      <text x="430" y="403" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Line / Bar Chart 24h - 7d</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="540" rx="110" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="537" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Cảnh báo quá tải (> 85%)</text>
+      <text x="430" y="553" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Peak Surge Alert</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="430" cy="640" rx="110" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="430" y="637" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Điều chỉnh giá thủ công</text>
+      <text x="430" y="653" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Manual Price Override</text>
+    </g>
+    
+
+          <!-- Use Cases Col 2 -->
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="150" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="147" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Trích xuất đặc trưng thời gian</text>
+      <text x="780" y="163" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Hour, Day, Weekend, Holiday</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="280" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="277" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Dự báo lấp đầy 24h - 7 ngày</text>
+      <text x="780" y="293" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">RF Regressor Prediction</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="420" rx="120" ry="30" fill="url(#ucGradInclude)" stroke="#0284c7" stroke-width="1.8"/>
+      <text x="780" y="417" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Tính hệ số giá động</text>
+      <text x="780" y="433" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Multiplier 0.8x - 1.5x</text>
+    </g>
+    
+          
+    <g class="usecase" filter="url(#cardShadow)">
+      <ellipse cx="780" cy="570" rx="120" ry="28" fill="url(#ucGradExtend)" stroke="#d97706" stroke-width="1.8"/>
+      <text x="780" y="567" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#0f172a">Bật chế độ Auto-Pilot Giá</text>
+      <text x="780" y="583" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#334155">Automated Pricing Policy</text>
+    </g>
+    
+
+          <!-- Associations Left -->
+          <line x1="180" y1="380" x2="320" y2="245" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Associations Right -->
+          <line x1="900" y1="160" x2="1020" y2="230" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="900" y1="285" x2="1020" y2="245" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+          <line x1="900" y1="430" x2="1020" y2="510" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Dependencies -->
+          
+    <g class="dependency">
+      <line x1="530" y1="240" x2="665" y2="275" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="560.5" y="248.5" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="597.5" y="261.5" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="780" y1="250" x2="780" y2="180" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="743.0" y="206.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="780.0" y="219.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="260" x2="430" y2="360" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="393.0" y="301.0" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="314.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="540" y1="245" x2="680" y2="400" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <rect x="580.0" y="321.25" width="74" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="617.0" y="334.25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8"><<include>></text>
+    </g>
+    
+          
+          
+    <g class="dependency">
+      <line x1="430" y1="512" x2="430" y2="260" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="377.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="390.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="430" y1="612" x2="430" y2="260" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="391.0" y="427.0" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="430.0" y="440.0" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+          
+    <g class="dependency">
+      <line x1="670" y1="555" x2="520" y2="260" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+      <rect x="548.5" y="383.75" width="78" height="18" rx="4" fill="#fffbeb" stroke="#fde68a" stroke-width="1" filter="url(#pillShadow)"/>
+      <text x="587.5" y="396.75" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309"><<extend>></text>
+    </g>
+    
+
+          
+    <g class="legend" transform="translate(430, 715)">
+      <rect x="0" y="0" width="370" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" filter="url(#pillShadow)"/>
+      <!-- Item 1: Association -->
+      <line x1="15" y1="17" x2="45" y2="17" stroke="#475569" stroke-width="2"/>
+      <text x="52" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="600" fill="#334155">Liên kết (Association)</text>
+      <!-- Item 2: Include -->
+      <line x1="175" y1="17" x2="200" y2="17" stroke="#0284c7" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="206" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">&lt;&lt;include&gt;&gt;</text>
+      <!-- Item 3: Extend -->
+      <line x1="285" y1="17" x2="310" y2="17" stroke="#d97706" stroke-width="1.6" stroke-dasharray="4,3" marker-end="url(#arrowExtend)"/>
+      <text x="316" y="21" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" font-weight="700" fill="#b45309">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+    
+        </svg>
+        
+    <div class="caption">Hình 2.8: Biểu đồ Use Case UC-08 - Dự báo tỷ lệ lấp đầy bằng Random Forest & Điều chỉnh giá động (Admin AI Forecast)</div>
+  </div>
+
+</body>
+</html>

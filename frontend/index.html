@@ -3148,6 +3148,7 @@
                   <th class="py-3 px-4">Số điện thoại</th>
                   <th class="py-3 px-4">Bãi đỗ / Điểm gửi</th>
                   <th class="py-3 px-4">Ngày gửi &amp; Check-in</th>
+                  <th class="py-3 px-4 text-center">Lịch sử đỗ &amp; Thao tác</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100 text-slate-800 font-medium">
@@ -3170,7 +3171,7 @@
                   <td class="py-3.5 px-4">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10.5px] font-bold bg-amber-50 text-amber-900 border border-amber-200">
                       <i class="fa-solid fa-location-dot text-amber-600 text-xs"></i>
-                      {{ v.assigned_lot || 'Chưa phân bãi' }}
+                      {{ getVehicleLot(v) }}
                     </span>
                   </td>
                   <td class="py-3.5 px-4 text-slate-600 font-semibold">
@@ -3185,9 +3186,20 @@
                       </span>
                     </div>
                   </td>
+                  <td class="py-3.5 px-4 text-center">
+                    <button
+                      type="button"
+                      @click.stop="openVehicleHistoryModal(v)"
+                      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-600 hover:text-white"
+                      title="Bấm để xem toàn bộ lịch sử các lần gửi đỗ xe của phương tiện này"
+                    >
+                      <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+                      <span>Lịch sử đỗ ({{ getVehicleSessionCount(v) }})</span>
+                    </button>
+                  </td>
                 </tr>
                 <tr v-if="filteredLiveVehicles.length === 0">
-                  <td colspan="8" class="py-12 text-center text-slate-400 text-xs">
+                  <td colspan="9" class="py-12 text-center text-slate-400 text-xs">
                     <div class="flex flex-col items-center justify-center space-y-2">
                       <i class="fa-solid fa-car-side text-3xl text-slate-300"></i>
                       <p class="font-bold text-slate-600">Không tìm thấy phương tiện nào phù hợp với bộ lọc tìm kiếm.</p>
@@ -8238,6 +8250,123 @@
 
 </div>
 
+
+  <!-- ============================================================== -->
+  <!-- MODAL: VEHICLE PARKING HISTORY (Lịch Sử Gửi Đỗ Xe Phương Tiện)  -->
+  <!-- ============================================================== -->
+  <div v-if="isVehicleHistoryModalOpen && selectedHistoryVehicle" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+    <div class="bg-white rounded-3xl max-w-3xl w-full p-6 shadow-2xl border border-slate-100 space-y-5 max-h-[90vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-base text-slate-900 flex items-center gap-2">
+              Lịch Sử Gửi Đỗ Xe:
+              <span class="font-mono px-2 py-0.5 rounded-lg bg-slate-100 border border-slate-200 text-indigo-700">
+                {{ selectedHistoryVehicle.license_plate || selectedHistoryVehicle.plate }}
+              </span>
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Chủ xe: <strong>{{ selectedHistoryVehicle.owner_name || selectedHistoryVehicle.owner || 'Khách hàng' }}</strong>
+              • SĐT: <strong>{{ selectedHistoryVehicle.owner_phone || selectedHistoryVehicle.phone || '--' }}</strong>
+              • Loại xe: <strong>{{ (selectedHistoryVehicle.vehicle_type || selectedHistoryVehicle.type || 'Car').toUpperCase() }}</strong>
+            </p>
+          </div>
+        </div>
+        <button @click="closeVehicleHistoryModal" class="w-8 h-8 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center cursor-pointer transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Quick KPI stats -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-center">
+          <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Tổng số lượt gửi</div>
+          <div class="text-xl font-black text-slate-900 mt-0.5">{{ vehicleHistorySessions.length }} lượt</div>
+        </div>
+        <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-center">
+          <div class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">Đang đỗ trong bãi</div>
+          <div class="text-xl font-black text-emerald-800 mt-0.5">
+            {{ vehicleHistorySessions.filter(s => s.status === 'PARKING' || s.status === 'Ongoing' || !s.check_out_time || s.check_out_time === 'Đang đỗ').length }} lượt
+          </div>
+        </div>
+        <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200/80 text-center">
+          <div class="text-[11px] font-bold text-indigo-700 uppercase tracking-wider">Đã hoàn thành</div>
+          <div class="text-xl font-black text-indigo-800 mt-0.5">
+            {{ vehicleHistorySessions.filter(s => s.status === 'COMPLETED' || s.status === 'Completed').length }} lượt
+          </div>
+        </div>
+      </div>
+
+      <!-- Table of Parking Sessions -->
+      <div class="overflow-y-auto flex-1 min-h-[220px] border border-slate-100 rounded-2xl">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead class="bg-slate-50 sticky top-0 z-10">
+            <tr class="text-slate-500 font-bold border-b border-slate-200">
+              <th class="py-3 px-3.5">Bãi đỗ xe</th>
+              <th class="py-3 px-3">Vị trí ô</th>
+              <th class="py-3 px-3.5">Giờ vào (Check-in)</th>
+              <th class="py-3 px-3.5">Giờ ra (Check-out)</th>
+              <th class="py-3 px-3">Thời lượng</th>
+              <th class="py-3 px-3 text-right">Cước phí</th>
+              <th class="py-3 px-3.5 text-center">Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-800 font-medium">
+            <tr v-for="s in vehicleHistorySessions" :key="s.id" class="hover:bg-slate-50/80 transition">
+              <td class="py-3 px-3.5 font-bold text-slate-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-location-dot text-emerald-600 text-xs"></i>
+                <span>{{ s.lot_name }}</span>
+              </td>
+              <td class="py-3 px-3 font-mono font-bold text-indigo-700">
+                <span class="px-2 py-0.5 rounded bg-indigo-50 border border-indigo-200">{{ s.slot_code }}</span>
+              </td>
+              <td class="py-3 px-3.5 text-slate-700 font-semibold">{{ s.check_in_time }}</td>
+              <td class="py-3 px-3.5 text-slate-600 font-semibold">{{ s.check_out_time }}</td>
+              <td class="py-3 px-3 text-slate-500">{{ s.duration }}</td>
+              <td class="py-3 px-3 text-right font-bold text-emerald-700">
+                {{ s.total_fee === 0 ? '0 VNĐ (Vé tháng VIP)' : formatMoney(s.total_fee) }}
+              </td>
+              <td class="py-3 px-3.5 text-center">
+                <span
+                  class="px-2.5 py-0.5 rounded-full text-[10px] font-bold"
+                  :class="(s.status === 'PARKING' || s.status === 'Ongoing' || s.check_out_time === 'Đang đỗ') ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-700 border border-slate-200'"
+                >
+                  {{ (s.status === 'PARKING' || s.status === 'Ongoing' || s.check_out_time === 'Đang đỗ') ? 'Đang đỗ' : 'Đã ra bãi' }}
+                </span>
+              </td>
+            </tr>
+            <tr v-if="vehicleHistorySessions.length === 0">
+              <td colspan="7" class="py-12 text-center text-slate-400">
+                <div class="flex flex-col items-center justify-center space-y-1.5">
+                  <i class="fa-solid fa-clock-rotate-left text-2xl text-slate-300"></i>
+                  <p class="font-bold text-slate-600 text-xs">Phương tiện này chưa có lượt gửi đỗ xe nào được ghi nhận.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-2 flex items-center justify-between border-t border-slate-100">
+        <span class="text-xs text-slate-500">
+          Dữ liệu đồng bộ tự động thời gian thực từ cơ sở dữ liệu và ca trực bãi xe
+        </span>
+        <button
+          type="button"
+          @click="closeVehicleHistoryModal"
+          class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs cursor-pointer transition shadow-xs"
+        >
+          Đóng cửa sổ
+        </button>
+      </div>
+    </div>
+  </div>
+
 <!-- Vue 3 Application Script -->
 <script>
   const { createApp, ref, computed, onMounted, watch, watchEffect } = Vue;
@@ -8666,6 +8795,71 @@
 
       // Danh mục phương tiện thực tế của hệ thống (Chỉ hiển thị xe thật do người dùng đăng ký hoặc check-in)
       const liveVehicles = ref([]);
+
+      // State cho Modal Xem Lịch Sử Gửi Đỗ Xe của Phương Tiện (Admin & Staff)
+      const isVehicleHistoryModalOpen = ref(false);
+      const selectedHistoryVehicle = ref(null);
+      const vehicleHistorySessions = ref([]);
+
+      function openVehicleHistoryModal(veh) {
+        if (!veh) return;
+        selectedHistoryVehicle.value = veh;
+        const normPlate = normalizePlate(veh.license_plate || veh.plate || '');
+
+        // 1. Lấy từ recentActivities
+        const acts = (recentActivities.value || []).filter(a => normalizePlate(a.plate || '') === normPlate).map(a => ({
+          id: a.id || a.backend_id,
+          lot_name: a.lot_name || getVehicleLot(veh),
+          slot_code: a.slot_code || a.lot || '---',
+          check_in_time: a.checkIn ? `${a.checkIn} ${a.date || ''}` : (a.raw_check_in_time ? new Date(a.raw_check_in_time).toLocaleString('vi-VN') : '--'),
+          check_out_time: a.checkOut || (a.status === 'Ongoing' ? 'Đang đỗ' : 'Đã kết thúc'),
+          duration: a.duration || 'Đang đỗ',
+          status: a.status || 'PARKING',
+          total_fee: a.fee || 0,
+          handled_by_staff: a.check_in_by_staff || 'Nhân viên trực',
+          note: a.note || ''
+        }));
+
+        // 2. Lấy từ veh.sessions_history nếu có từ backend PostgreSQL
+        const dbHist = (veh.sessions_history || []).map(s => ({
+          id: s.id,
+          lot_name: s.lot_name || getVehicleLot(veh),
+          slot_code: s.slot_code || '---',
+          check_in_time: s.check_in_time,
+          check_out_time: s.check_out_time,
+          duration: s.duration || 'Đang đỗ',
+          status: s.status,
+          total_fee: s.total_fee || 0,
+          handled_by_staff: s.handled_by_staff || 'Nhân viên trực',
+          note: s.note || ''
+        }));
+
+        // Merge loại bỏ trùng lặp id
+        const merged = [...acts];
+        const seenIds = new Set(merged.map(m => String(m.id)));
+        dbHist.forEach(item => {
+          if (!seenIds.has(String(item.id))) {
+            seenIds.add(String(item.id));
+            merged.push(item);
+          }
+        });
+
+        // Sắp xếp thời gian mới nhất lên đầu
+        merged.sort((a, b) => {
+          const tA = a.check_in_time || '';
+          const tB = b.check_in_time || '';
+          return tB.localeCompare(tA);
+        });
+
+        vehicleHistorySessions.value = merged;
+        isVehicleHistoryModalOpen.value = true;
+      }
+
+      function closeVehicleHistoryModal() {
+        isVehicleHistoryModalOpen.value = false;
+        selectedHistoryVehicle.value = null;
+        vehicleHistorySessions.value = [];
+      }
       try {
         const storedAllVeh = localStorage.getItem('sps_all_vehicles');
         if (storedAllVeh) {
@@ -11622,8 +11816,20 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
         if (vehicleLotFilter.value && vehicleLotFilter.value !== 'all') {
           const targetLotName = vehicleLotFilter.value.trim().toLowerCase();
           list = list.filter(v => {
-            const vLot = (v.assigned_lot || '').trim().toLowerCase();
-            return vLot === targetLotName || vLot.includes(targetLotName) || targetLotName.includes(vLot);
+            const currentLot = getVehicleLot(v).trim().toLowerCase();
+            if (currentLot === targetLotName || currentLot.includes(targetLotName) || targetLotName.includes(currentLot)) {
+              return true;
+            }
+            if (v.assigned_lot && (v.assigned_lot.toLowerCase().includes(targetLotName) || targetLotName.includes(v.assigned_lot.toLowerCase()))) {
+              return true;
+            }
+            if (v.sessions_history && Array.isArray(v.sessions_history)) {
+              if (v.sessions_history.some(s => (s.lot_name || '').toLowerCase().includes(targetLotName) || targetLotName.includes((s.lot_name || '').toLowerCase()))) {
+                return true;
+              }
+            }
+            const normV = normalizePlate(v.license_plate || v.plate || '');
+            return (recentActivities.value || []).some(a => normalizePlate(a.plate || '') === normV && (a.lot_name || '').toLowerCase().includes(targetLotName));
           });
         }
 
@@ -11631,8 +11837,24 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
         if (vehicleDateFilter.value !== 'all' && vehicleDateSelected.value) {
           const targetDate = vehicleDateSelected.value.trim();
           list = list.filter(v => {
-            if (!v.date) return false;
-            return v.date === targetDate;
+            const vDateStr = getVehicleCheckInDate(v);
+            if (v.date === targetDate || v.check_in_date === targetDate) return true;
+            try {
+              const tParts = targetDate.split('-');
+              if (tParts.length === 3) {
+                const viTarget = `${parseInt(tParts[2])}/${parseInt(tParts[1])}/${tParts[0]}`;
+                const viTargetPad = `${tParts[2]}/${tParts[1]}/${tParts[0]}`;
+                if (vDateStr === viTarget || vDateStr === viTargetPad || vDateStr.includes(viTarget) || vDateStr.includes(viTargetPad)) return true;
+              }
+            } catch (e) {}
+
+            if (v.sessions_history && Array.isArray(v.sessions_history)) {
+              if (v.sessions_history.some(s => (s.check_in_raw || '').startsWith(targetDate) || (s.check_in_time || '').includes(targetDate))) {
+                return true;
+              }
+            }
+            const normV = normalizePlate(v.license_plate || v.plate || '');
+            return (recentActivities.value || []).some(a => normalizePlate(a.plate || '') === normV && ((a.date || '') === targetDate || (a.raw_check_in_time || '').startsWith(targetDate)));
           });
         }
 
@@ -11686,7 +11908,27 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
         };
       });
 
-      // Lấy thời gian check-in chính xác từ phiên thực tế mà nhân viên đã thao tác
+      // Lấy bãi đỗ xe mới nhất của phương tiện (Đồng bộ thời gian thực từ lịch sử gửi đỗ xe)
+      function getVehicleLot(v) {
+        if (!v) return 'Chưa phân bãi';
+        const normV = normalizePlate(v.license_plate || v.plate || '');
+        // 1. Tìm phiên hoạt động thực tế trong recentActivities (phiên mới nhất)
+        const matchedAct = (recentActivities.value || []).find(a => normalizePlate(a.plate || '') === normV && a.lot_name);
+        if (matchedAct && matchedAct.lot_name) {
+          return matchedAct.lot_name;
+        }
+        // 2. Tìm trong sessions_history từ PostgreSQL
+        if (v.sessions_history && v.sessions_history.length > 0 && v.sessions_history[0].lot_name) {
+          return v.sessions_history[0].lot_name;
+        }
+        // 3. Fallback sang v.assigned_lot nếu có
+        if (v.assigned_lot && v.assigned_lot !== 'Chưa phân bãi') {
+          return v.assigned_lot;
+        }
+        return 'Chưa phân bãi';
+      }
+
+      // Lấy thời gian check-in chính xác từ phiên thực tế mà nhân viên hoặc khách đã thao tác
       function getVehicleCheckIn(v) {
         if (!v) return '--';
         const normV = normalizePlate(v.license_plate || v.plate || '');
@@ -11695,7 +11937,17 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
         if (matchedAct && (matchedAct.checkIn || matchedAct.check_in)) {
           return matchedAct.checkIn || matchedAct.check_in;
         }
-        // 2. Tìm trong chính vehicle nếu đã được gán checkIn thực tế
+        // 2. Tìm trong sessions_history
+        if (v.sessions_history && v.sessions_history.length > 0) {
+          const raw = v.sessions_history[0].check_in_raw || v.sessions_history[0].check_in_time;
+          if (raw) {
+            try {
+              const d = new Date(raw);
+              if (!isNaN(d.getTime())) return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } catch (e) {}
+          }
+        }
+        // 3. Tìm trong chính vehicle nếu đã được gán checkIn thực tế
         if (v.checkIn && v.checkIn !== '08:00 AM' && v.checkIn !== '08:00' && v.checkIn !== '8:00') {
           return v.checkIn;
         }
@@ -11711,7 +11963,6 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
             if (!isNaN(d.getTime())) return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           } catch (e) {}
         }
-        // 3. Nếu có created_at của phương tiện
         if (v.created_at) {
           try {
             const d = new Date(v.created_at);
@@ -11728,6 +11979,15 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
         if (matchedAct && matchedAct.date) {
           return matchedAct.date;
         }
+        if (v.sessions_history && v.sessions_history.length > 0) {
+          const raw = v.sessions_history[0].check_in_raw || v.sessions_history[0].check_in_time;
+          if (raw) {
+            try {
+              const d = new Date(raw);
+              if (!isNaN(d.getTime())) return d.toLocaleDateString('vi-VN');
+            } catch (e) {}
+          }
+        }
         if (v.date && v.date !== '2026-10-05') {
           return v.date;
         }
@@ -11741,6 +12001,15 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           } catch (e) {}
         }
         return new Date().toLocaleDateString('vi-VN');
+      }
+
+      // Đếm tổng số lượt gửi đỗ xe của phương tiện
+      function getVehicleSessionCount(v) {
+        if (!v) return 0;
+        const normV = normalizePlate(v.license_plate || v.plate || '');
+        const matchedActs = (recentActivities.value || []).filter(a => normalizePlate(a.plate || '') === normV);
+        const histCount = v.sessions_history ? v.sessions_history.length : (v.total_sessions || 0);
+        return Math.max(matchedActs.length, histCount);
       }
 
       // ==============================================================
@@ -14446,6 +14715,54 @@ if (Array.isArray(sessData) && sessData.length > 0) {
     } else {
       recentActivities.value.unshift(actObj);
     }
+
+    // ĐỒNG BỘ HAI CHIỀU TỨC THÌ SANG liveVehicles CỦA HỆ THỐNG
+    const sNorm = normalizePlate(sPlate);
+    const existingVehIdx = (liveVehicles.value || []).findIndex(v => normalizePlate(v.license_plate || v.plate || '') === sNorm);
+    const sHistItem = {
+      id: s.id,
+      lot_name: s.lot_name || 'Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)',
+      slot_code: normSlot,
+      check_in_time: sTime ? `${sTime} ${sDate}` : sDate,
+      check_out_time: isOngoing ? 'Đang đỗ' : (sOut ? `${sOut} ${sDate}` : 'Đã ra bãi'),
+      check_in_raw: s.check_in_time,
+      check_out_raw: s.check_out_time,
+      duration: isOngoing ? 'Đang đỗ' : 'Đã kết thúc',
+      status: s.status || (isOngoing ? 'PARKING' : 'COMPLETED'),
+      total_fee: s.total_fee || 0,
+      handled_by_staff: s.handled_by_staff || 'Nhân viên trực',
+      note: s.note || ''
+    };
+
+    if (existingVehIdx >= 0) {
+      const vObj = liveVehicles.value[existingVehIdx];
+      if (!vObj.sessions_history) vObj.sessions_history = [];
+      const hasHist = vObj.sessions_history.some(h => String(h.id) === String(s.id));
+      if (!hasHist) {
+        vObj.sessions_history.unshift(sHistItem);
+      }
+      if (s.lot_name) vObj.assigned_lot = s.lot_name;
+      if (sDate) vObj.date = sDate;
+      if (sTime) { vObj.checkIn = sTime; vObj.check_in = sTime; }
+      vObj.total_sessions = Math.max(vObj.total_sessions || 0, vObj.sessions_history.length);
+    } else {
+      liveVehicles.value.unshift({
+        license_plate: sPlate,
+        plate: sPlate,
+        type: 'Car',
+        vehicle_type: 'car',
+        brand: 'Khách gửi xe',
+        color: 'Tiêu chuẩn',
+        owner_name: 'Khách hàng',
+        owner_phone: '--',
+        assigned_lot: s.lot_name || 'Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)',
+        date: sDate,
+        checkIn: sTime,
+        check_in: sTime,
+        total_sessions: 1,
+        sessions_history: [sHistItem]
+      });
+    }
   });
 }
 }
@@ -15016,6 +15333,13 @@ resetVehicleFilters,
 vehicleCounts,
 getVehicleCheckIn,
 getVehicleCheckInDate,
+getVehicleLot,
+getVehicleSessionCount,
+isVehicleHistoryModalOpen,
+selectedHistoryVehicle,
+vehicleHistorySessions,
+openVehicleHistoryModal,
+closeVehicleHistoryModal,
 loadCustomerVehicles,
 saveCustomerVehiclesToStorage,
 loadMonthlyPassesFromStorage,

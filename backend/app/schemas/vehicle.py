@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List, Dict, Any
 
 from pydantic import BaseModel, ConfigDict
 from app.models.vehicle import VehicleType
@@ -38,5 +38,9 @@ class VehicleOut(BaseModel):
     check_in: Optional[str] = None
     check_in_date: Optional[str] = None
     assigned_lot: Optional[str] = None
+    latest_slot: Optional[str] = None
+    latest_status: Optional[str] = None
+    total_sessions: int = 0
+    sessions_history: Optional[List[Dict[str, Any]]] = None
 
     model_config = ConfigDict(from_attributes=True)
