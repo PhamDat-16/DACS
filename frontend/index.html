@@ -10531,9 +10531,24 @@ Bãi xe này đã lập tức khả dụng trên hệ thống Khách hàng và N
           found = myVehicles.value.find(v => (v.license_plate || v.plate || '').toUpperCase() === q);
         }
 
-        // 3. Tìm trong allSharedBookings hoặc myBookings
+        // 3. Tìm trong allSharedBookings hoặc myBookings (Tìm theo Biển số, Mã Booking hoặc Mã QR)
         const allBk = [...(allSharedBookings.value || []), ...(myBookings.value || [])];
-        const foundBooking = allBk.find(b => (b.plate || b.vehicle_plate || '').toUpperCase() === q && b.status !== 'cancelled' && b.status !== 'completed');
+        const foundBooking = allBk.find(b => {
+          if (!b || b.status === 'cancelled' || b.status === 'completed') return false;
+          const bPlate = (b.plate || b.vehicle_plate || '').toUpperCase();
+          const bCode = (b.code || b.booking_id || '').toUpperCase();
+          const bQr = (b.qr_token || b.qr_code || '').toUpperCase();
+          const bId = b.id ? String(b.id) : '';
+          return bPlate === q || bCode === q || bQr === q || (bQr && bQr.includes(q)) || (q && q.includes(bQr)) || bId === q;
+        });
+
+        if (foundBooking && !found) {
+          const bkPlate = (foundBooking.plate || foundBooking.vehicle_plate || '').trim().toUpperCase();
+          if (bkPlate) {
+            found = (liveVehicles.value || []).find(v => (v.license_plate || v.plate || '').toUpperCase() === bkPlate);
+            wizardPlate.value = bkPlate;
+          }
+        }
 
         // 4. Tìm trong recentActivities
         const foundSession = (recentActivities.value || []).find(a => (a.plate || '').toUpperCase() === q);
