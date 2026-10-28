@@ -3,13 +3,14 @@ import os
 import subprocess
 
 # Tự động chuyển sang môi trường ảo backend/venv nếu người dùng chạy bằng Python toàn cục
-venv_python = os.path.abspath(os.path.join(os.path.dirname(__file__), "backend", "venv", "Scripts", "python.exe"))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+venv_python = os.path.abspath(os.path.join(project_root, "backend", "venv", "Scripts", "python.exe"))
 if os.path.exists(venv_python) and os.path.normcase(sys.executable) != os.path.normcase(venv_python):
     result = subprocess.run([venv_python] + sys.argv)
     sys.exit(result.returncode)
 
 # Đảm bảo import được backend
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "backend")))
+sys.path.insert(0, os.path.abspath(os.path.join(project_root, "backend")))
 sys.stdout.reconfigure(encoding="utf-8")
 
 from app.core.database import SessionLocal

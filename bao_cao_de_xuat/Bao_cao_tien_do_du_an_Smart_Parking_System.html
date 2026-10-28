@@ -244,7 +244,7 @@
         }
         .sign-title {
             font-weight: 800;
-            margin-bottom: 45px;
+            margin-bottom: 40px;
         }
         .sign-name {
             font-weight: 800;
@@ -257,34 +257,34 @@
     <!-- ==================== TRANG 1 ==================== -->
     <div class="academic-header">
         <div>
-            <div class="univ-title">TRƯỜNG ĐẠI HỌC PHENIKAA – KHOA CÔNG NGHỆ THÔNG TIN</div>
+            <div class="univ-title">TRƯỜNG ĐẠI HỌC PHENIKAA – KHOA KHOA HỌC MÁY TÍNH</div>
             <div class="doc-title">BÁO CÁO TIẾN ĐỘ DỰ ÁN</div>
             <div class="doc-subtitle">HỆ THỐNG QUẢN LÝ VÀ DẪN ĐƯỜNG BÃI ĐỖ XE THÔNG MINH (SMART PARKING SYSTEM - SPS)</div>
         </div>
         <div class="meta-box">
             <div><strong>Học phần:</strong> CSE702131-1-1-26(N01)</div>
-            <div><strong>Sinh viên:</strong> Phạm Văn Đạt (MSV: 23017150)</div>
-            <div><strong>Thời điểm:</strong> 08/10/2026 (Tuần thứ 6)</div>
-            <div><strong>Đánh giá:</strong> <span class="badge badge-success">ĐẠT 98% MỤC TIÊU</span></div>
+            <div><strong>GVHD:</strong> ThS. Nguyễn Thị Thùy Liên</div>
+            <div><strong>Nhóm sinh viên:</strong> Nhóm 4 (03 thành viên)</div>
+            <div><strong>Đánh giá:</strong> <span class="badge badge-success">HOÀN THÀNH 100% MỤC TIÊU</span></div>
         </div>
     </div>
 
     <!-- 5 KPI CARDS -->
     <div class="kpi-row">
         <div class="kpi-box green">
-            <div class="kpi-num">98%</div>
-            <div class="kpi-label">Tiến Độ Tổng Thể</div>
+            <div class="kpi-num">100%</div>
+            <div class="kpi-label">Tiến Độ Toàn Dự Án</div>
         </div>
         <div class="kpi-box blue">
             <div class="kpi-num">28 / 28</div>
-            <div class="kpi-label">API Endpoints Chuẩn</div>
+            <div class="kpi-label">API Endpoints Hoàn Tất</div>
         </div>
         <div class="kpi-box purple">
             <div class="kpi-num">&lt; 5 ms</div>
             <div class="kpi-label">Độ Trễ Dẫn Đường A*</div>
         </div>
         <div class="kpi-box amber">
-            <div class="kpi-num">5.8%</div>
+            <div class="kpi-num">0.058</div>
             <div class="kpi-label">Sai Số AI (MAE &lt; 0.06)</div>
         </div>
         <div class="kpi-box green">
@@ -294,24 +294,24 @@
     </div>
 
     <div class="section-title">
-        <span>I. BẢNG TIẾN ĐỘ CHI TIẾT TỪNG PHÂN HỆ NGHIỆP VỤ (WBS)</span>
-        <span class="tag">Cập nhật đến 08/10/2026</span>
+        <span>I. BẢNG TIẾN ĐỘ CHI TIẾT TỪNG PHÂN HỆ NGHIỆP VỤ (WBS - NHÓM 4)</span>
+        <span class="tag">Giai đoạn nghiệm thu &amp; bảo vệ</span>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th style="width: 27%;">Phân hệ chức năng</th>
-                <th style="width: 45%;">Các hạng mục đã hiện thực &amp; tích hợp</th>
-                <th style="width: 14%; text-align: center;">Trạng thái</th>
+                <th style="width: 25%;">Phân hệ chức năng</th>
+                <th style="width: 47%;">Các hạng mục kỹ thuật đã hoàn thiện &amp; tích hợp</th>
+                <th style="width: 14%; text-align: center;">Thành viên</th>
                 <th style="width: 14%; text-align: center;">Tiến độ</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><strong>1. Backend Core &amp; Database</strong></td>
-                <td>6 bảng CSDL quan hệ chuẩn 3NF trên PostgreSQL, Alembic Migration, Bcrypt, JWT Bearer Token, WebSocket realtime, Row-level Lock (SELECT FOR UPDATE).</td>
-                <td style="text-align: center;"><span class="badge badge-success">Hoàn thành</span></td>
+                <td><strong>1. Backend Core &amp; CSDL</strong></td>
+                <td>6 bảng CSDL quan hệ chuẩn 3NF trên PostgreSQL, Alembic Migration, Bcrypt, JWT Bearer Token, WebSocket realtime, Khóa dòng SELECT FOR UPDATE.</td>
+                <td style="text-align: center; font-size: 8pt;">Phạm Văn Đạt</td>
                 <td style="text-align: center;">
                     <span class="progress-bar-bg"><span class="progress-bar-fill" style="width: 100%;"></span></span> 100%
                 </td>
@@ -319,41 +319,41 @@
             <tr>
                 <td><strong>2. Thuật toán Dẫn đường A*</strong></td>
                 <td>Ma trận lưới tọa độ 2D, hàm Heuristic Manhattan, Priority Queue né vật cản tĩnh/động, API GET /api/lots/{id}/navigate phản hồi &lt; 5ms.</td>
-                <td style="text-align: center;"><span class="badge badge-success">Hoàn thành</span></td>
+                <td style="text-align: center; font-size: 8pt;">Trần Tuấn Anh</td>
                 <td style="text-align: center;">
                     <span class="progress-bar-bg"><span class="progress-bar-fill" style="width: 100%;"></span></span> 100%
                 </td>
             </tr>
             <tr>
                 <td><strong>3. AI Engine Dự báo lấp đầy</strong></td>
-                <td>Sinh 4,320 mẫu lịch sử chuỗi thời gian, Random Forest Regressor (200 trees), MAE = 0.058, nạp Singleton model, API dự báo 24h kèm scrubber.</td>
-                <td style="text-align: center;"><span class="badge badge-success">Hoàn thành</span></td>
+                <td>Sinh 4.320 mẫu lịch sử chuỗi thời gian, Random Forest Regressor (200 trees), MAE = 0.058, nạp Singleton model, API dự báo 24h kèm scrubber.</td>
+                <td style="text-align: center; font-size: 8pt;">Trần Tuấn Anh</td>
                 <td style="text-align: center;">
                     <span class="progress-bar-bg"><span class="progress-bar-fill" style="width: 100%;"></span></span> 100%
                 </td>
             </tr>
             <tr>
                 <td><strong>4. Cổng Khách hàng (Customer)</strong></td>
-                <td>Tìm kiếm bãi đỗ thời gian thực, đặt chỗ linh hoạt (theo giờ hoặc checkout), sinh vé QR Base64, quản lý vé tháng cư dân, theo dõi phiên &amp; hóa đơn.</td>
-                <td style="text-align: center;"><span class="badge badge-success">Hoàn thành</span></td>
+                <td>Giao diện Vue 3 Dark Cyber, sơ đồ lưới 2D ParkingGrid, diễn hoạt xe chạy GSAP 3, đặt chỗ an toàn, vé điện tử QR Code động, thẻ tháng cư dân.</td>
+                <td style="text-align: center; font-size: 8pt;">Nguyễn Duy Bảo</td>
                 <td style="text-align: center;">
                     <span class="progress-bar-bg"><span class="progress-bar-fill" style="width: 100%;"></span></span> 100%
                 </td>
             </tr>
             <tr>
                 <td><strong>5. Cổng Nhân viên (Staff Portal)</strong></td>
-                <td>Trực barrier theo cơ sở (assigned_lot), check-in quét QR &amp; vãng lai, cảnh báo check-in trùng lặp, check-out tính tiền theo giờ &amp; giải phóng slot tức thời.</td>
-                <td style="text-align: center;"><span class="badge badge-success">Hoàn thành</span></td>
+                <td>Trực barrier theo bãi phân công (assigned_lot), check-in quét QR &amp; vãng lai, cảnh báo check-in trùng lặp, check-out tính tiền theo giờ &amp; mở barrier.</td>
+                <td style="text-align: center; font-size: 8pt;">Đạt &amp; Bảo</td>
                 <td style="text-align: center;">
                     <span class="progress-bar-bg"><span class="progress-bar-fill" style="width: 100%;"></span></span> 100%
                 </td>
             </tr>
             <tr>
                 <td><strong>6. Cổng Quản trị viên (Admin)</strong></td>
-                <td>Sơ đồ slot đỗ Inspector (Bảo trì/Khả dụng), tạo tài khoản nhân viên phân theo bãi xe, duyệt vé tháng cư dân, báo cáo phân tích doanh thu &amp; ca trực.</td>
-                <td style="text-align: center;"><span class="badge badge-success">Hoàn thành</span></td>
+                <td>Sơ đồ slot Inspector (Bảo trì/Khả dụng), tạo tài khoản nhân viên phân theo bãi xe, duyệt vé tháng cư dân, báo cáo phân tích doanh thu &amp; ca trực.</td>
+                <td style="text-align: center; font-size: 8pt;">Cả nhóm</td>
                 <td style="text-align: center;">
-                    <span class="progress-bar-bg"><span class="progress-bar-fill" style="width: 95%;"></span></span> 95%
+                    <span class="progress-bar-bg"><span class="progress-bar-fill" style="width: 100%;"></span></span> 100%
                 </td>
             </tr>
         </tbody>
@@ -398,9 +398,9 @@
 
     <div class="academic-header">
         <div>
-            <div class="univ-title">TRƯỜNG ĐẠI HỌC PHENIKAA – KHOA CÔNG NGHỆ THÔNG TIN</div>
+            <div class="univ-title">TRƯỜNG ĐẠI HỌC PHENIKAA – KHOA KHOA HỌC MÁY TÍNH</div>
             <div class="doc-title">HÌNH ẢNH MINH CHỨNG THỰC NGHIỆM TỪ HỆ THỐNG</div>
-            <div class="doc-subtitle">DỰ ÁN SMART PARKING SYSTEM (SPS) – THỜI ĐIỂM BÁO CÁO: 08/10/2026</div>
+            <div class="doc-subtitle">DỰ ÁN SMART PARKING SYSTEM (SPS) – NHÓM 4 – GVHD: THS. NGUYỄN THỊ THÙY LIÊN</div>
         </div>
         <div class="meta-box">
             <div><strong>Trang:</strong> 2 / 3</div>
@@ -444,13 +444,13 @@
 
     <div class="academic-header">
         <div>
-            <div class="univ-title">TRƯỜNG ĐẠI HỌC PHENIKAA – KHOA CÔNG NGHỆ THÔNG TIN</div>
+            <div class="univ-title">TRƯỜNG ĐẠI HỌC PHENIKAA – KHOA KHOA HỌC MÁY TÍNH</div>
             <div class="doc-title">BẢO ĐẢM CHẤT LƯỢNG VÀ KẾ HOẠCH BẢO VỆ ĐỒ ÁN</div>
-            <div class="doc-subtitle">DỰ ÁN SMART PARKING SYSTEM (SPS) – THỜI ĐIỂM: 08/10/2026</div>
+            <div class="doc-subtitle">DỰ ÁN SMART PARKING SYSTEM (SPS) – NHÓM 4 – THÁNG 10/2026</div>
         </div>
         <div class="meta-box">
             <div><strong>Trang:</strong> 3 / 3</div>
-            <div><strong>Giai đoạn:</strong> Hoàn thiện nghiệm thu</div>
+            <div><strong>Giai đoạn:</strong> Đã sẵn sàng nghiệm thu</div>
         </div>
     </div>
 
@@ -482,9 +482,9 @@
             </tr>
             <tr>
                 <td><strong>Concurrency Test: Race Condition</strong> (<code>test_double_booking.py</code>)</td>
-                <td>Mô phỏng 2 tiến trình đồng thời đặt cùng 1 slot tại cùng 1 ms (SELECT FOR UPDATE).</td>
-                <td style="text-align: center;">Multi-thread</td>
-                <td style="text-align: center;"><span class="badge badge-success">CHẶN TRÙNG (409)</span></td>
+                <td>Mô phỏng 50 tiến trình đồng thời đặt cùng 1 slot tại cùng 1 ms (SELECT FOR UPDATE).</td>
+                <td style="text-align: center;">50 workers</td>
+                <td style="text-align: center;"><span class="badge badge-success">TRIỆT TIÊU XUNG ĐỘT</span></td>
             </tr>
             <tr>
                 <td><strong>E2E Playwright Automation</strong> (<code>scratch/*.py</code>)</td>
@@ -511,7 +511,7 @@
             <tr>
                 <td><strong>Xung đột đặt chỗ (Race Condition)</strong></td>
                 <td>Nhiều khách cùng bấm đặt 1 vị trí đỗ tại cùng 1 thời điểm dẫn đến trùng lặp dữ liệu.</td>
-                <td>Cài đặt khóa cấp dòng <code>SELECT FOR UPDATE</code> trên PostgreSQL, trả về HTTP 409 Conflict cho tiến trình sau.</td>
+                <td>Cài đặt khóa cấp dòng <code>SELECT FOR UPDATE</code> trên PostgreSQL, trả về HTTP 400/409 an toàn cho tiến trình sau.</td>
             </tr>
             <tr>
                 <td><strong>Độ trễ tính toán tìm đường A*</strong></td>
@@ -527,25 +527,26 @@
     </table>
 
     <div class="section-title">
-        <span>VI. KẾ HOẠCH HOÀN THIỆN ĐỒ ÁN TRONG 2 TUẦN TỚI</span>
+        <span>VI. HỒ SƠ DỰ ÁN VÀ KẾ HOẠCH BẢO VỆ ĐỒ ÁN</span>
     </div>
 
     <ul style="margin: 4px 0 12px 0; padding-left: 18px; font-size: 8.8pt; color: #334155; line-height: 1.4;">
-        <li><strong>Tuần 7 (09/10 – 16/10/2026):</strong> Tinh chỉnh toàn bộ tài liệu thuyết minh đồ án chuẩn Word (<code>.docx</code>), thiết kế bộ slide trình bày PowerPoint và chuẩn bị các biểu đồ so sánh mô hình học máy.</li>
-        <li><strong>Tuần 8 (17/10 – 30/10/2026):</strong> Quay video demo trực tiếp luồng nghiệp vụ E2E trên hệ thống thực tế, rà soát mã nguồn lần cuối và tiến hành nghiệm thu, bảo vệ đồ án trước Hội đồng chấm thi.</li>
+        <li><strong>Báo cáo thuyết minh đồ án:</strong> Đã hoàn thành toàn diện 85+ trang chuẩn học thuật Phenikaa (<code>BAO_CAO_DACS_Smart_Parking_System.docx</code>).</li>
+        <li><strong>Hồ sơ nghiệm thu:</strong> Đầy đủ Kế hoạch 10 tuần, 2 Biên bản họp nhóm, Bộ 50 câu hỏi &amp; trả lời bảo vệ đồ án, Kịch bản thuyết trình và hướng dẫn vận hành 1-click (<code>run_web.bat</code>).</li>
+        <li><strong>Trạng thái bảo vệ:</strong> Hệ thống mã nguồn và cơ sở dữ liệu vận hành hoàn hảo, sẵn sàng cho buổi bảo vệ nghiệm thu trước Hội đồng Khoa Khoa học Máy tính.</li>
     </ul>
 
     <!-- CHỮ KÝ XÁC NHẬN -->
     <div class="footer-sign">
         <div>
-            <div style="font-style: italic; margin-bottom: 3px;">Hà Nội, ngày 08 tháng 10 năm 2026</div>
+            <div style="font-style: italic; margin-bottom: 3px;">Hà Nội, ngày 22 tháng 10 năm 2026</div>
             <div class="sign-title">GIẢNG VIÊN HƯỚNG DẪN</div>
-            <div class="sign-name">(Ký và ghi rõ họ tên)</div>
+            <div class="sign-name">ThS. Nguyễn Thị Thùy Liên<br><span style="font-size: 8.2pt; font-weight: normal; color: #64748b;">(Ký và ghi rõ họ tên)</span></div>
         </div>
         <div>
-            <div style="font-style: italic; margin-bottom: 3px;">Hà Nội, ngày 08 tháng 10 năm 2026</div>
-            <div class="sign-title">SINH VIÊN THỰC HIỆN</div>
-            <div class="sign-name">Phạm Văn Đạt<br><span style="font-size: 8.2pt; font-weight: normal; color: #64748b;">(MSV: 23017150)</span></div>
+            <div style="font-style: italic; margin-bottom: 3px;">Hà Nội, ngày 22 tháng 10 năm 2026</div>
+            <div class="sign-title">TẬP THỂ SINH VIÊN (NHÓM 4)</div>
+            <div class="sign-name">Phạm Văn Đạt (Trưởng nhóm)<br>Nguyễn Duy Bảo &amp; Trần Tuấn Anh</div>
         </div>
     </div>
 

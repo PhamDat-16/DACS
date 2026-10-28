@@ -53,3 +53,4 @@ inspect_dot2.py
 scratch/
 temp_*
 *.tmp
+_archive_unrelated_files/
