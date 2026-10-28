@@ -1,0 +1,59 @@
+=============================================================================
+         HƯỚNG DẪN KHỞI CHẠY DỰ ÁN SMART PARKING SYSTEM (SPS)
+=============================================================================
+
+Xin chào! Đây là đồ án "Hệ Thống Quản Lý Bãi Đỗ Xe Thông Minh" (Smart Parking System).
+Để chạy hệ thống trên máy tính của bạn một cách nhanh nhất, vui lòng làm theo 3 bước sau:
+
+-----------------------------------------------------------------------------
+1. YÊU CẦU MÁY TÍNH CẦN CÓ TRƯỚC:
+-----------------------------------------------------------------------------
+- Python 3.10 hoặc 3.11 (Khi cài đặt hãy tick chọn: "Add Python to PATH").
+- PostgreSQL (phiên bản 14, 15, 16 hoặc 17).
+
+-----------------------------------------------------------------------------
+2. CÁCH KHỞI CHẠY (CHỈ CẦN 3 BƯỚC CỰC KỲ ĐƠN GIẢN):
+-----------------------------------------------------------------------------
+
+👉 BƯỚC 1: Khởi tạo Cơ sở dữ liệu (PostgreSQL)
+   - Cách 1 (Nhanh nhất): Nhấp đúp chuột vào file: khoi_tao_database.bat
+     (Script sẽ tự tạo database 'parking_system' và nạp file smart_parking_backup.sql).
+   - Cách 2 (Qua pgAdmin 4): Mở pgAdmin -> Tạo Database tên là `parking_system`
+     -> Nhấp chuột phải vào `parking_system` -> Chọn Restore -> Chọn file `smart_parking_backup.sql`.
+
+👉 BƯỚC 2: Kiểm tra mật khẩu Database trong file .env
+   - Mở file `.env` bằng Notepad.
+   - Sửa lại mật khẩu PostgreSQL của máy bạn ở dòng:
+     DATABASE_URL=postgresql://postgres:<MẬT_KHẨU_CỦA_BẠN>@localhost:5432/parking_system
+   - Lưu file lại (Ctrl + S).
+
+👉 BƯỚC 3: Khởi động Web 1-Click!
+   - Nhấp đúp chuột vào file: run_web.bat
+   - Hệ thống sẽ:
+     * Tự động tạo môi trường ảo Python và tự cài đặt toàn bộ thư viện cần thiết.
+     * Tự động bật Backend FastAPI (Port 8000).
+     * Tự động bật Frontend Web Server (Port 3000).
+     * Tự động mở trình duyệt Web tại: http://localhost:3000
+
+-----------------------------------------------------------------------------
+3. THÔNG TIN ĐĂNG NHẬP KIỂM THỬ:
+-----------------------------------------------------------------------------
+| Vai trò               | Tài khoản đăng nhập      | Mật khẩu mặc định |
+| --------------------- | ------------------------ | ----------------- |
+| Quản trị viên (Admin) | admin@parking.vn (hoặc gõ: admin)   | admin123  |
+| Nhân viên bãi (Staff) | staff@parking.vn (hoặc gõ: staff)   | 1234567890 |
+| Khách hàng (Customer) | customer@parking.vn (hoặc gõ: customer) | 123456 |
+
+-----------------------------------------------------------------------------
+4. CÁC TÍNH NĂNG CHÍNH CÓ THỂ TRẢI NGHIỆM:
+-----------------------------------------------------------------------------
+- Bản đồ trực quan 2D và mô phỏng dẫn đường thuật toán A* bằng GSAP.
+- Đặt chỗ trực tuyến có khóa chống trùng lịch (SELECT FOR UPDATE).
+- Vé xe điện tử QR Code động và quét vé qua camera webcam mô phỏng Barrier.
+- Cổng nhân viên phân quyền theo bãi làm việc (assigned_lot).
+- Quản lý xe, tra cứu lịch sử đỗ của từng phương tiện.
+- Đăng ký và quản lý Vé tháng (Monthly Pass).
+- Biểu đồ AI Random Forest dự báo tỷ lệ lấp đầy trong 24 giờ tới.
+
+Chúc bạn có trải nghiệm tuyệt vời với Smart Parking System!
+=============================================================================
