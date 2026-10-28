@@ -109,7 +109,8 @@ async def test_booking_qr():
                     data = json.loads(msg)
                     if data.get('id') == 9:
                         img_data = base64.b64decode(data['result']['data'])
-                        with open('d:\\smart-parking-system\\qr_booking_modal.png', 'wb') as f:
+                        os.makedirs('d:\\smart-parking-system\\screenshots', exist_ok=True)
+                        with open('d:\\smart-parking-system\\screenshots\\qr_booking_modal.png', 'wb') as f:
                             f.write(img_data)
                         print('QR MODAL SCREENSHOT SAVED, size:', len(img_data))
                         break

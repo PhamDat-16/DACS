@@ -11,13 +11,18 @@ DOWNLOAD_PDF = os.path.abspath(r"C:\Users\LENOVO\Downloads\bao_cao_ket_qua_du_an
 EDGE_PATH = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 def get_base64_image(image_path):
+    if not os.path.exists(image_path):
+        fname = os.path.basename(image_path)
+        alt = os.path.join(r"d:\smart-parking-system\screenshots", fname)
+        if os.path.exists(alt):
+            image_path = alt
     if os.path.exists(image_path):
         with open(image_path, "rb") as f:
             return "data:image/png;base64," + base64.b64encode(f.read()).decode("utf-8")
     return ""
 
-img_dashboard = get_base64_image(r"d:\smart-parking-system\authenticated_dashboard.png")
-img_auth = get_base64_image(r"d:\smart-parking-system\auth_screen.png")
+img_dashboard = get_base64_image(r"d:\smart-parking-system\screenshots\authenticated_dashboard.png")
+img_auth = get_base64_image(r"d:\smart-parking-system\screenshots\auth_screen.png")
 
 html_content = f"""<!DOCTYPE html>
 <html lang="vi">

@@ -93,7 +93,7 @@ def astar_search(grid, start, goal, obstacles):
         doc,
         fig_id="Hình 3.1",
         fig_title="Minh họa lộ trình tìm đường A* và giao diện bãi xe trực quan 2D",
-        image_path=os.path.join(os.getcwd(), "frontend_live.png"),
+        image_path=os.path.join(os.getcwd(), "screenshots", "frontend_live.png"),
         note_instructions="Ảnh chụp màn hình thực tế giao diện bản đồ 2D và lộ trình tìm đường A* từ Cổng vào (0, 0) đến ô đỗ."
     )
 

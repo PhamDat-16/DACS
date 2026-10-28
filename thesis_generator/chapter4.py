@@ -101,7 +101,7 @@ class ConnectionManager:
         doc,
         fig_id="Hình 4.1",
         fig_title="Giao diện Cổng khách hàng: Bản đồ đặt chỗ và Vé điện tử chứa mã QR",
-        image_path=os.path.join(os.getcwd(), "qr_booking_modal.png"),
+        image_path=os.path.join(os.getcwd(), "screenshots", "qr_booking_modal.png"),
         note_instructions="Ảnh chụp màn hình thực tế Cổng khách hàng với Modal đặt chỗ và Vé điện tử có mã QR."
     )
 
@@ -116,7 +116,7 @@ class ConnectionManager:
         doc,
         fig_id="Hình 4.2",
         fig_title="Giao diện Cổng nhân viên: Lưới giám sát ô đỗ thời gian thực và Cửa sổ quét QR Barrier",
-        image_path=os.path.join(os.getcwd(), "shift_handover_verified.png"),
+        image_path=os.path.join(os.getcwd(), "screenshots", "shift_handover_verified.png"),
         note_instructions="Ảnh chụp màn hình thực tế Bảng điều khiển nhân viên trực bãi và giao diện mở Barrier khi quét QR."
     )
 
@@ -131,7 +131,7 @@ class ConnectionManager:
         doc,
         fig_id="Hình 4.3",
         fig_title="Giao diện Cổng quản trị viên: Dashboard doanh thu và Quản trị hệ thống",
-        image_path=os.path.join(os.getcwd(), "authenticated_dashboard.png"),
+        image_path=os.path.join(os.getcwd(), "screenshots", "authenticated_dashboard.png"),
         note_instructions="Ảnh chụp màn hình thực tế Admin Dashboard quản trị bãi đỗ, phân tích doanh thu và quản lý tài khoản nhân viên."
     )
 

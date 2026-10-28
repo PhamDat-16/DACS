@@ -55,7 +55,7 @@ def add_chapter_5(doc):
         doc,
         fig_id="Hình 5.1",
         fig_title="Minh họa luồng kiểm thử giao diện E2E và màn hình xác thực",
-        image_path=os.path.join(os.getcwd(), "auth_screen.png"),
+        image_path=os.path.join(os.getcwd(), "screenshots", "auth_screen.png"),
         note_instructions="Ảnh chụp màn hình thực tế kịch bản kiểm thử E2E: Xác thực người dùng và phân quyền truy cập hệ thống."
     )
 

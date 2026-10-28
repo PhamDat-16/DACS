@@ -150,6 +150,19 @@ def add_bullet_item(doc, text, bold_prefix="", level=1):
 
 def add_image_figure(doc, fig_id, fig_title, image_path=None, note_instructions=""):
     """Thêm hình ảnh thực tế nếu tồn tại, hoặc tạo khung placeholder nếu chưa có ảnh"""
+    if image_path and not os.path.exists(image_path):
+        fname = os.path.basename(image_path)
+        candidates = [
+            os.path.join(os.getcwd(), "screenshots", fname),
+            os.path.join(os.getcwd(), "report_images", fname),
+            os.path.join(os.path.dirname(__file__), "..", "screenshots", fname),
+            os.path.join(os.path.dirname(__file__), "..", "report_images", fname),
+        ]
+        for c in candidates:
+            if os.path.exists(c):
+                image_path = c
+                break
+
     if image_path and os.path.exists(image_path):
         p_img = doc.add_paragraph()
         p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
