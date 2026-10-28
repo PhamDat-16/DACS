@@ -129,9 +129,43 @@ Hệ thống quản lý dữ liệu qua 6 bảng thực thể:
 
 ---
 
+## 📁 CẤU TRÚC THƯ MỤC DỰ ÁN (PROJECT DIRECTORY TREE)
+
+Toàn bộ dự án được quy hoạch theo cấu trúc module rõ ràng, gọn gàng và chuẩn mực:
+
+````
+smart-parking-system/
+│
+├── 📂 backend/                     # Máy chủ API FastAPI, ORM SQLAlchemy, AI Model & Unit Tests
+│   ├── app/                        # Kiến trúc phân tầng: api, core, models, schemas, services
+│   └── tests/                      # Bộ 24 bài kiểm thử tự động (Pytest)
+├── 📂 frontend/                    # Giao diện Single Page Application (Vue 3, Tailwind CSS)
+│   └── index.html                  # Giao diện tích hợp Customer, Staff & Admin Portal
+├── 📂 scripts/                     # Thư mục công cụ và kịch bản phụ trợ
+│   ├── document_generators/       # 19 script tự động sinh Đồ án Word, Báo cáo tiến độ & Slide PDF
+│   ├── test_tools/                # 10 script kiểm thử chức năng chuyên sâu (A*, QR, Barrier, Checkout)
+│   ├── view_db.py                 # Công cụ in toàn bộ dữ liệu PostgreSQL ra màn hình console
+│   └── README.md                  # Hướng dẫn chi tiết sử dụng các scripts
+├── 📂 screenshots/                 # 6 ảnh chụp màn hình minh chứng thực tế hệ thống
+│   └── README.md                  # Thuyết minh từng ảnh chụp và vị trí trích dẫn trong Báo cáo
+├── 📂 use_case_diagrams/           # Bộ 8 biểu đồ Use Case trực quan chuẩn UML
+├── 📂 thesis_generator/            # Engine biên soạn tự động Đồ án tốt nghiệp 100 trang (.docx)
+├── 📂 reports/                     # Lưu trữ các báo cáo học thuật và tài liệu liên quan
+│
+├── ⚙️ run.bat                       # File chạy 1-click khởi động Backend + Frontend
+├── ⚙️ run_web.bat                   # File chạy 1-click khởi động Frontend máy chủ web
+├── ⚙️ xem_database.bat              # File chạy 1-click tra cứu nhanh PostgreSQL Database
+├── 📄 occupancy_dataset.csv        # Dataset 4.320 mẫu huấn luyện mô hình AI Random Forest
+├── 📄 smart_parking_backup.sql     # Bản sao lưu cấu trúc và dữ liệu Database
+├── 📄 README.md                    # Tài liệu hướng dẫn sử dụng và triển khai dự án
+└── 📄 .env, .gitignore            # Biến môi trường và cấu hình tệp loại trừ Git
+````
+
+---
+
 ## 📄 TÀI LIỆU BÁO CÁO ĐỒ ÁN & PHỤ LỤC
 
 Trong thư mục dự án đã tạo sẵn các tài liệu nghiệm thu chuẩn quy cách Đại học Phenikaa:
 
 - **Báo cáo đồ án đầy đủ (Word .docx)**: `D:\smart-parking-system\Bao_cao_do_an_Smart_Parking_System.docx` (và trong thư mục `Downloads`).
-- **Bộ kiểm thử tự động Pytest**: Chạy `pytest backend/tests/ -v` (11/11 Test cases Passed).
+- **Bộ kiểm thử tự động Pytest**: Chạy `backend\\venv\\Scripts\\python.exe -m pytest backend/tests` (24/24 Test cases Passed 100%).
