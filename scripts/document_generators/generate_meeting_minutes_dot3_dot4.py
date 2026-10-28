@@ -259,18 +259,26 @@ def create_meeting_doc(filename, time_str, period_str, details, tasks, plans, co
     add_signature_table(doc, leader_name="Phạm Văn Đạt")
 
     full_save_path = os.path.join(OUTPUT_DIR, filename)
-    doc.save(full_save_path)
-    print(f"==> Đã lưu file tại: {full_save_path}")
+    saved_path = full_save_path
+    try:
+        doc.save(full_save_path)
+        print(f"==> Đã lưu file tại: {full_save_path}")
+    except PermissionError:
+        saved_path = full_save_path.replace(".docx", "_CapNhat.docx")
+        doc.save(saved_path)
+        print(f"==> File gốc đang mở trong Word/WPS. Đã lưu bản cập nhật tại: {saved_path}")
 
     # Đồng thời sao chép sang Downloads
     user_dl = os.path.join(os.path.expanduser("~"), "Downloads")
     if os.path.exists(user_dl):
         dl_target = os.path.join(user_dl, filename)
         try:
-            shutil.copy2(full_save_path, dl_target)
-            print(f"==> Đã sao chép sang Downloads: {dl_target}")
+            shutil.copy2(saved_path, dl_target)
+            print(f"==> Đã cập nhật sang Downloads: {dl_target}")
         except Exception as e:
-            print(f"Lưu ý: Không thể sao chép sang Downloads: {e}")
+            dl_alt = os.path.join(user_dl, filename.replace(".docx", "_CapNhat.docx"))
+            shutil.copy2(saved_path, dl_alt)
+            print(f"==> Đã lưu bản cập nhật vào Downloads: {dl_alt}")
 
 # ==============================================================================
 # 1. BIÊN BẢN HỌP NHÓM ĐỢT 3 (LẦN 3) - Ngày 14/10/2026
@@ -283,7 +291,7 @@ def generate_dot_3():
     details = [
         "Đánh giá tiến độ triển khai Đợt 3 của đồ án Smart Parking System: Hoàn thiện cổng kiểm soát dành cho Nhân viên vận hành (Staff Portal) với cơ chế phân quyền bãi trực nghiêm ngặt (assigned_lot).",
         "Tích hợp kết nối WebSocket hai chiều (app/api/websocket.py) cập nhật trạng thái ô đỗ thời gian thực: khi khách đặt chỗ hoặc check-in, ma trận ô đỗ lập tức đổi màu (Xanh: Trống; Đỏ: Có xe; Vàng: Đã đặt trước) tức thì trên toàn bộ các trình duyệt đang mở.",
-        "Tích hợp thành công thư viện quét mã QR Code trực tiếp qua camera/webcam (html5-qrcode) tại cổng barrier: hệ thống tự động giải mã chuỗi JWT/Token vé xe, kiểm tra tính hợp lệ và kích hoạt hoạt ảnh mở cần barrier tự động.",
+        "Tích hợp thư viện quét mã QR Code trực tiếp qua webcam trình duyệt hoặc tải tệp ảnh vé (html5-qrcode) tại cổng barrier: hệ thống tự động giải mã chuỗi mã vé, kiểm tra tính hợp lệ và kích hoạt hoạt ảnh mở cần barrier tự động.",
         "Xây dựng và kiểm thử luồng Check-in xe vãng lai (Walk-in check-in): nhân viên chỉ cần nhấp một nút, hệ thống tự động tìm và cấp phát ô đỗ trống gần cổng nhất cho khách không đặt trước.",
         "Hiện thực hóa và huấn luyện mô hình Trí tuệ nhân tạo (Random Forest Regressor): Xây dựng pipeline xử lý 4.320 bản ghi lịch sử lấp đầy theo 24 khung giờ x 180 ngày; mô hình đạt 200 Decision Trees, sai số MAE = 0.058 và được xuất bản thành file Singleton model (.joblib) nạp sẵn trong bộ nhớ RAM phục vụ dự báo tỷ lệ lấp đầy trong 24 giờ tới.",
         "Tiếp tục chuẩn hóa cơ sở dữ liệu PostgreSQL và kiểm thử khóa giao dịch SELECT FOR UPDATE, đảm bảo khả năng chịu tải khi nhiều yêu cầu đặt chỗ gửi đến cùng một thời điểm."
@@ -304,9 +312,9 @@ def generate_dot_3():
             "23017133",
             "Nguyễn Duy Bảo",
             "Staff Portal UI – Webcam QR Scanner – Barrier Animation Modal",
-            "Xây dựng giao diện bảng điều khiển nhân viên trực bãi; tích hợp thư viện html5-qrcode quét vé qua webcam; thiết kế hiệu ứng cần barrier nâng hạ bằng CSS/GSAP.",
+            "Xây dựng giao diện bảng điều khiển nhân viên trực bãi; tích hợp thư viện html5-qrcode quét vé qua webcam hoặc tải ảnh QR; thiết kế hiệu ứng cần barrier nâng hạ bằng CSS/GSAP.",
             "Đúng kế hoạch",
-            "Phối hợp kiểm thử thực tế quét vé QR trên nhiều loại điện thoại và góc camera."
+            "Kiểm tra hiển thị đường nét đứt dẫn đường A* và hoạt ảnh mở cần barrier trên giao diện trình duyệt web."
         ],
         [
             "3",
@@ -403,3 +411,4 @@ if __name__ == "__main__":
     generate_dot_3()
     generate_dot_4()
     print("\n===> TẤT CẢ 2 BIÊN BẢN HỌP NHÓM ĐỢT 3 VÀ 4 ĐÃ ĐƯỢC TẠO THÀNH CÔNG!")
+
