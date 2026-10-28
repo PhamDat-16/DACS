@@ -49,10 +49,10 @@ Hệ thống đã có sẵn các tài khoản mẫu trong cơ sở dữ liệu �
 | Vai trò                     | Email đăng nhập          | Tên đăng nhập tắt | Mật khẩu mặc định | Đơn vị làm việc (`assigned_lot`) |
 | :-------------------------- | :----------------------- | :---------------- | :---------------- | :------------------------------- |
 | **Quản trị viên (Admin)**   | `admin@parking.vn`       | `admin`           | `admin123`        | Toàn quyền hệ thống              |
-| **Nhân viên (Staff)**       | `staff@parking.vn`       | `staff`           | `123456`          | Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông) |
-| **Nhân viên 2 (Staff)**     | `manh@gmail.com`         | `manh`            | `123456`          | Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông) |
+| **Nhân viên (Staff)**       | `staff@parking.vn`       | `staff`           | `1234567890`      | Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông) |
+| **Nhân viên 2 (Staff)**     | `manh@gmail.com`         | `manh`            | `1234567890`      | Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông) |
 | **Khách hàng (Customer)**   | `customer@parking.vn`    | `customer`        | `123456`          | Khách gửi xe cá nhân             |
-| **Khách hàng 2 (Customer)** | `phvdat220805@gmail.com` | —                 | `123456`          | Khách gửi xe cá nhân             |
+| **Khách hàng 2 (Customer)** | `phvdat220805@gmail.com` | —                 | `1234567890`      | Khách gửi xe cá nhân             |
 
 > 💡 **Mẹo:** Ở ô Email đăng nhập, bạn có thể gõ trực tiếp chữ `admin` hoặc `staff` kèm mật khẩu tương ứng, hệ thống sẽ tự động nhận diện alias thông minh!
 
