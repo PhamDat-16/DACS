@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict LfBwmSsCFGMHlKfDK86U216ysh41a5pDLMLPVHCQbJk1XpdplXMvGYD1LFZeVaS
+\restrict kb47p3AxKxb0BaUVZPCERUJuEVtfeEq0HvvJ87aEHk3S0pkzqwP0cUx82bgfcEi
 
 -- Dumped from database version 18.6
 -- Dumped by pg_dump version 18.6
@@ -220,7 +220,9 @@ CREATE TABLE public.users (
     username character varying(100),
     phone character varying(50),
     status character varying(50) DEFAULT 'active'::character varying NOT NULL,
-    updated_at timestamp with time zone DEFAULT now()
+    updated_at timestamp with time zone DEFAULT now(),
+    assigned_lot character varying(255) DEFAULT 'Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)'::character varying,
+    shift character varying(100) DEFAULT 'Ca Sáng (06h - 14h)'::character varying
 );
 
 
@@ -260,7 +262,26 @@ c38e9e212f32
 --
 
 COPY public.bookings (id, user_id, slot_id, qr_code, status, start_time, end_time, created_at, vehicle_id) FROM stdin;
-b4b263bb-a302-452b-8f2f-9f2d19867bb0	efc32a41-1828-4322-93f3-ca131bfe923c	90fd4836-3fb6-4094-83c4-289257e2dde7	BOOKING-682bf63ff59f475088df7d2ff039a953	completed	2026-09-12 17:00:00+07	2026-09-12 19:00:00+07	2026-09-12 08:30:47.165394+07	\N
+71730323-e914-4124-9ffe-6c76845221e7	745c5c32-4f43-4512-b34f-f9ec8dc977ea	44081ad8-d5d2-4dc4-b043-44928b9843b0	BOOKING-1ed2785da1ed4829b4d1ece144732dd6	confirmed	2026-10-14 18:00:00+07	2026-10-14 21:00:00+07	2026-10-14 01:13:43.534782+07	b9468e92-2e57-4010-96d8-779ab1e8a62b
+5b8daf25-f9c0-4a0c-bd76-442fb822a3da	745c5c32-4f43-4512-b34f-f9ec8dc977ea	c5bcfe44-d190-40d4-942d-9026d5f10c3b	BOOKING-0d3d51a22b194397badc604803a87ba7	confirmed	2026-10-06 03:05:00+07	2026-10-06 11:05:00+07	2026-10-06 01:11:10.694267+07	b9468e92-2e57-4010-96d8-779ab1e8a62b
+a901fc13-1a41-4983-a21a-44d9ef2e66f9	745c5c32-4f43-4512-b34f-f9ec8dc977ea	43e27143-6f21-468f-a1e4-f38c28b96df9	BOOKING-54a75393dd6e47b8b0897b7934e6cf65	confirmed	2026-10-06 18:00:00+07	2026-10-06 21:00:00+07	2026-10-06 14:56:05.385971+07	b9468e92-2e57-4010-96d8-779ab1e8a62b
+8b3e7922-3b9a-4b7e-b9ed-e3712aa1c645	745c5c32-4f43-4512-b34f-f9ec8dc977ea	933273ab-b02c-4857-8a13-9bc69c0ab43e	BOOKING-4816f25ab6354d48ac32369068755e39	completed	2026-10-22 20:24:00+07	2026-10-22 23:24:00+07	2026-10-22 20:24:55.858092+07	afae64c0-09f2-4a09-9393-1a897f9fcfc4
+4cf2a945-a30e-4995-b731-516ddd94855b	745c5c32-4f43-4512-b34f-f9ec8dc977ea	976446e6-e308-4d56-9c78-48d656ffecde	BOOKING-8a80314d13f94795a2c79ea8c59c1a84	completed	2026-10-09 06:00:00+07	2026-10-09 09:00:00+07	2026-10-09 01:23:56.364542+07	b9468e92-2e57-4010-96d8-779ab1e8a62b
+4d56c4cb-7437-49ec-82eb-035a2ab2947d	745c5c32-4f43-4512-b34f-f9ec8dc977ea	a1c5dbf6-829d-4c53-b237-757f0f3f5ac0	BOOKING-31f122ed6db444ffbfb7bce97bee7be5	confirmed	2026-10-07 12:00:00+07	2026-10-07 16:00:00+07	2026-10-07 10:04:03.560383+07	b9468e92-2e57-4010-96d8-779ab1e8a62b
+6fc9b49e-54d7-40df-9b43-fd0082e6a6db	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	976446e6-e308-4d56-9c78-48d656ffecde	BOOKING-196664ef26544f65a2e4c35491397f0d	completed	2026-10-05 19:00:00+07	2026-10-05 23:00:00+07	2026-10-05 17:33:59.365857+07	6676c325-096c-490a-a2f9-0d5ad9146969
+c969b69e-15d0-41d9-b611-4b93c7df6688	745c5c32-4f43-4512-b34f-f9ec8dc977ea	976446e6-e308-4d56-9c78-48d656ffecde	BOOKING-474b3cfe46b848dc92cab726c5081583	completed	2026-10-06 06:00:00+07	2026-10-06 10:00:00+07	2026-10-05 16:58:59.254504+07	afae64c0-09f2-4a09-9393-1a897f9fcfc4
+f1ef4dbd-9ee1-4f6a-b1b4-f740c0ce581e	745c5c32-4f43-4512-b34f-f9ec8dc977ea	976446e6-e308-4d56-9c78-48d656ffecde	BOOKING-d94053458b2e43a9a523e4d7ce77d69d	completed	2026-10-06 14:00:00+07	2026-10-06 18:00:00+07	2026-10-05 16:59:22.123414+07	a128ffe4-8cb4-4027-8f7a-1b983f4cf0ad
+fa4c0bd6-8199-4021-acf1-d4fc99009bb4	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	976446e6-e308-4d56-9c78-48d656ffecde	BOOKING-97883fd2304646b89bab466c06b7d13f	completed	2026-10-08 06:00:00+07	2026-10-08 09:00:00+07	2026-10-08 00:10:47.657236+07	6676c325-096c-490a-a2f9-0d5ad9146969
+7183a902-655e-4b9c-853e-327267832bb0	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	933273ab-b02c-4857-8a13-9bc69c0ab43e	BOOKING-3f94cfdf3a014fd4b714d9a66428cdbb	completed	2026-10-27 06:00:00+07	2026-10-27 09:00:00+07	2026-10-27 00:45:51.895604+07	6676c325-096c-490a-a2f9-0d5ad9146969
+77611f5b-ba3a-4060-a6cf-433c33970e2c	745c5c32-4f43-4512-b34f-f9ec8dc977ea	86060857-2821-4a06-b48a-1594808f2c95	BOOKING-baed7ea01d7640e4be8f1f69d2998c78	completed	2026-10-05 18:00:00+07	2026-10-05 21:00:00+07	2026-10-05 17:19:46.549438+07	a5c52a93-cd4d-45ac-b762-167b32998585
+ae261043-69de-4ffd-91c9-95d8242533e7	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	ff31697e-1cdb-4c4f-8236-438cac6aa3fd	BOOKING-d4e42628c5cc4b65a259026f68fe4afc	completed	2026-10-09 06:00:00+07	2026-10-09 09:00:00+07	2026-10-09 02:01:03.461969+07	6676c325-096c-490a-a2f9-0d5ad9146969
+975a004a-b03a-486c-b57b-d4a5e1310b37	745c5c32-4f43-4512-b34f-f9ec8dc977ea	56ccd7c0-ce16-4919-a93e-e4faedc43c52	BOOKING-d216b5372c1241558c866cf99d1e384d	completed	2026-10-07 19:00:00+07	2026-10-07 23:00:00+07	2026-10-07 10:03:14.728495+07	b9468e92-2e57-4010-96d8-779ab1e8a62b
+1f063a6b-d4e6-4846-a4e1-d95eb420b4fc	745c5c32-4f43-4512-b34f-f9ec8dc977ea	43e27143-6f21-468f-a1e4-f38c28b96df9	BOOKING-335a2e81b2454fe897e7d5fbc82f9ab4	confirmed	2026-10-27 18:00:00+07	2026-10-27 21:00:00+07	2026-10-27 13:56:08.777425+07	b9468e92-2e57-4010-96d8-779ab1e8a62b
+5aafdbc5-cab0-49f5-9740-cd0ae66d845f	745c5c32-4f43-4512-b34f-f9ec8dc977ea	bb984b42-91ee-466f-93ec-f71154d3c857	BOOKING-e672ef94e4fa4cc18662dc68a84a091a	confirmed	2026-10-27 18:00:00+07	2026-10-27 21:00:00+07	2026-10-27 13:56:23.942844+07	a128ffe4-8cb4-4027-8f7a-1b983f4cf0ad
+8042b33a-443b-47f5-8289-70ee2bdd1135	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	ff31697e-1cdb-4c4f-8236-438cac6aa3fd	BOOKING-3144d67f3c8a4b04839adc1e453a18ed	completed	2026-10-27 18:00:00+07	2026-10-27 21:00:00+07	2026-10-27 13:53:15.21926+07	6676c325-096c-490a-a2f9-0d5ad9146969
+92dedcaa-d61c-4fa7-a68c-8b439a9eaf83	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	976446e6-e308-4d56-9c78-48d656ffecde	BOOKING-a9622da7561e4bda94eef3c7b6f88576	confirmed	2026-10-28 18:00:00+07	2026-10-28 21:00:00+07	2026-10-28 11:15:17.194038+07	6676c325-096c-490a-a2f9-0d5ad9146969
+749e9943-98b7-486f-80cf-880e56b48d80	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	976446e6-e308-4d56-9c78-48d656ffecde	BOOKING-236f3d5d827b47ba8d913e5439f17fb1	confirmed	2026-10-29 18:00:00+07	2026-10-29 21:00:00+07	2026-10-29 01:23:21.273827+07	6676c325-096c-490a-a2f9-0d5ad9146969
+ae532a0c-0483-447f-8d0d-214f208dcb47	745c5c32-4f43-4512-b34f-f9ec8dc977ea	82e4ecc0-7a76-4403-94ca-259e8bf8e0af	BOOKING-a98a6c6d876746fdb5c70a75796b040f	confirmed	2026-10-29 18:00:00+07	2026-10-29 21:00:00+07	2026-10-29 02:25:11.425597+07	afae64c0-09f2-4a09-9393-1a897f9fcfc4
 \.
 
 
@@ -4600,6 +4621,11 @@ COPY public.parking_lots (id, name, address, grid_width, grid_height, created_at
 e536414d-1dbe-4655-ad39-e87d6f2f9efb	Bãi xe Demo	123 Đường ABC	5	5	2026-09-12 08:10:02.087576+07	21.0285	105.8542	Hoàn Kiếm	Hà Nội	25000	t	t	active	\N	\N
 27950993-9277-4e25-ac0f-6c7eb2f40bd1	Bãi đỗ xe kdt Đô Nghĩa	\N	8	6	2026-09-25 16:22:34.140597+07	21.0205	105.7645	Hoàn Kiếm	Hà Nội	25000	t	t	active	\N	\N
 ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	Bãi xe Đô Nghĩa	\N	8	6	2026-09-26 21:55:32.954591+07	21.0205	105.7645	Hà Đông	Hà Nội	25000	t	t	active	\N	\N
+10dce3da-0da1-43ba-828e-b3115fe2dd90	Bãi Đỗ Xe Ga Metro Văn Quán (Hà Đông)	Khu vực Bãi Đỗ Xe Ga Metro Văn Quán (Hà Đông), Hà Nội	5	4	2026-10-05 02:25:12.146171+07	\N	\N	\N	Hà Nội	15000	t	t	active	\N	B1
+ec402034-3697-415c-97bc-83cfc49d0145	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Khu Đô Thị Mới Đô Nghĩa, Phường Yên Nghĩa, Quận Hà Đông, Hà Nội	10	8	2026-10-05 02:36:28.885265+07	\N	\N	Hà Đông	Hà Nội	15000	t	t	active	\N	B1
+8070d485-56db-46e3-ab9c-a9719fdef11f	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Khu vực Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông), Hà Nội	5	4	2026-10-05 16:54:31.216248+07	\N	\N	\N	Hà Nội	15000	t	t	active	\N	B1
+3af1418e-7c5d-4d53-8819-e0c19b7966de	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Khu vực Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông), Hà Nội	5	4	2026-10-05 16:55:40.222896+07	\N	\N	\N	Hà Nội	15000	t	t	active	\N	B1
+d3b84805-05f2-4f23-b65e-9333d2f25be6	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Khu vực Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông), Hà Nội	5	4	2026-10-05 16:56:33.110274+07	\N	\N	\N	Hà Nội	15000	t	t	active	\N	B1
 \.
 
 
@@ -4608,13 +4634,87 @@ ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	Bãi xe Đô Nghĩa	\N	8	6	2026-09-26 21:55
 --
 
 COPY public.parking_slots (id, lot_id, slot_code, pos_x, pos_y, status, is_obstacle, vehicle_type) FROM stdin;
+3f41f219-5f03-433c-a6c1-b580b60c6218	3af1418e-7c5d-4d53-8819-e0c19b7966de	A4	3	0	available	f	car
+aae655ab-8852-461c-bcb3-1cd27ae53d80	3af1418e-7c5d-4d53-8819-e0c19b7966de	A5	4	0	available	f	car
+1408b8fc-95ef-4680-96db-4134f80a3f35	3af1418e-7c5d-4d53-8819-e0c19b7966de	B1	0	1	available	f	car
+5e74eff9-5f91-4819-a522-8d05690f0a7f	3af1418e-7c5d-4d53-8819-e0c19b7966de	B2	1	1	available	f	car
+fd587553-f7e2-4f94-9c26-9746162f5eaf	3af1418e-7c5d-4d53-8819-e0c19b7966de	B3	2	1	available	f	car
+ae3b072a-2f7a-4813-8e4f-df83ffce5166	3af1418e-7c5d-4d53-8819-e0c19b7966de	B4	3	1	available	f	car
+0a0182d5-872e-4f9a-b2ad-4028d864aff0	3af1418e-7c5d-4d53-8819-e0c19b7966de	B5	4	1	available	f	car
+551111e9-9e6a-481f-8879-20b1e6e6899e	3af1418e-7c5d-4d53-8819-e0c19b7966de	C1	0	2	available	f	car
+82e3b226-3d00-4e8c-8b5c-62b57a61d1b2	3af1418e-7c5d-4d53-8819-e0c19b7966de	C2	1	2	available	f	car
+a9c30d56-0960-4a69-90de-4c8e57830849	3af1418e-7c5d-4d53-8819-e0c19b7966de	C3	2	2	available	f	car
+0218fb08-adad-4644-b505-117fd74104a9	3af1418e-7c5d-4d53-8819-e0c19b7966de	C4	3	2	available	f	car
+2cc3fc59-8606-4cbe-a959-3f1756094f11	3af1418e-7c5d-4d53-8819-e0c19b7966de	C5	4	2	available	f	car
+010ff255-f447-40a1-8213-cf7630400991	3af1418e-7c5d-4d53-8819-e0c19b7966de	D1	0	3	available	f	car
+a03669f1-2ffc-443e-8a22-ce09bb54589c	3af1418e-7c5d-4d53-8819-e0c19b7966de	D2	1	3	available	f	car
+aca86b51-ce0c-42ef-83ce-37032131387a	3af1418e-7c5d-4d53-8819-e0c19b7966de	D3	2	3	available	f	car
+4c874d48-21cc-43e0-85b3-eb2404e6547c	3af1418e-7c5d-4d53-8819-e0c19b7966de	D4	3	3	available	f	car
+14da7a4f-444c-4f8d-80c2-a0b992cd3902	3af1418e-7c5d-4d53-8819-e0c19b7966de	D5	4	3	available	f	car
+5b75a721-2ee6-4bb7-8db2-49fe5ebd5a0f	d3b84805-05f2-4f23-b65e-9333d2f25be6	A1	0	0	available	f	car
+3633ad30-56fa-40ef-8e22-a7aef823c5c0	d3b84805-05f2-4f23-b65e-9333d2f25be6	A2	1	0	available	f	car
+84868715-2295-4f5b-9744-bc013fad77d6	d3b84805-05f2-4f23-b65e-9333d2f25be6	A3	2	0	available	f	car
+5d244a6f-bdd6-4834-80ac-77bd0c5908c4	d3b84805-05f2-4f23-b65e-9333d2f25be6	A4	3	0	available	f	car
+1e7bbcc5-5ad6-4de8-b259-12a1f3154ae1	d3b84805-05f2-4f23-b65e-9333d2f25be6	A5	4	0	available	f	car
+b5d3705f-7a39-4f7f-b837-ae7869e28874	d3b84805-05f2-4f23-b65e-9333d2f25be6	B1	0	1	available	f	car
+c0f75bb9-7fe3-4020-9d62-19e91f11c53c	d3b84805-05f2-4f23-b65e-9333d2f25be6	B2	1	1	available	f	car
+3cea8d86-4ea4-4965-ac5d-951fb1265860	d3b84805-05f2-4f23-b65e-9333d2f25be6	B3	2	1	available	f	car
+88fba0a3-51bd-4faa-af50-43a94fbb5443	d3b84805-05f2-4f23-b65e-9333d2f25be6	B4	3	1	available	f	car
+fbaad742-5a96-4c1e-91f1-43c8df2c0a07	d3b84805-05f2-4f23-b65e-9333d2f25be6	B5	4	1	available	f	car
+5dcbcb75-93a5-4016-98b6-b519955b108e	d3b84805-05f2-4f23-b65e-9333d2f25be6	C1	0	2	available	f	car
+4f321de4-bcf1-4cd9-a46f-d63517210983	d3b84805-05f2-4f23-b65e-9333d2f25be6	C2	1	2	available	f	car
+2dc7ffdd-ea88-4648-a9c7-2f5871f9dcb0	d3b84805-05f2-4f23-b65e-9333d2f25be6	C3	2	2	available	f	car
+3bf7f589-7838-4edd-85a4-74182dce3a63	d3b84805-05f2-4f23-b65e-9333d2f25be6	C4	3	2	available	f	car
+fc402cae-cff1-4ab6-bdea-51c9f9fd9d60	d3b84805-05f2-4f23-b65e-9333d2f25be6	C5	4	2	available	f	car
+ffcba6c8-0e87-4cea-b433-fea3a79fce6c	d3b84805-05f2-4f23-b65e-9333d2f25be6	D1	0	3	available	f	car
+ff581cd9-35ea-4588-8a7b-07fde20e3257	d3b84805-05f2-4f23-b65e-9333d2f25be6	D2	1	3	available	f	car
+ca44568a-363a-44ab-b463-29346de152fb	d3b84805-05f2-4f23-b65e-9333d2f25be6	D3	2	3	available	f	car
+feeb8c09-9ea6-4d1f-9c83-3a9de3b658ad	d3b84805-05f2-4f23-b65e-9333d2f25be6	D4	3	3	available	f	car
+71d54f5a-e5ef-4b8c-a6b5-abc1d001ad76	d3b84805-05f2-4f23-b65e-9333d2f25be6	D5	4	3	available	f	car
+976446e6-e308-4d56-9c78-48d656ffecde	ec402034-3697-415c-97bc-83cfc49d0145	A-01	0	0	occupied	f	car
+151079e5-fedc-415d-b411-4ec2a19a9698	8070d485-56db-46e3-ab9c-a9719fdef11f	D1	0	3	available	f	car
+eaba0041-de71-4f2c-89c9-5b7470ea04b2	8070d485-56db-46e3-ab9c-a9719fdef11f	D2	1	3	available	f	car
+bebe9619-0ac4-4c12-bcba-66df028569af	3af1418e-7c5d-4d53-8819-e0c19b7966de	A3	2	0	available	f	car
+964b9104-9fe4-4de2-92e2-8443bae6bbfc	8070d485-56db-46e3-ab9c-a9719fdef11f	A1	0	0	available	f	car
+50f6f2ea-aea9-4593-8758-0e156d9b6d7d	8070d485-56db-46e3-ab9c-a9719fdef11f	A4	3	0	available	f	car
+e0144f9e-6566-4aef-a040-2f757beda3eb	8070d485-56db-46e3-ab9c-a9719fdef11f	A2	1	0	available	f	car
+09f5ca28-9d5b-4070-a475-a61ea992238a	8070d485-56db-46e3-ab9c-a9719fdef11f	C5	4	2	available	f	car
+5d5d6ecb-c588-4335-b4bc-f7c9e84ea73c	8070d485-56db-46e3-ab9c-a9719fdef11f	A3	2	0	available	f	car
+ac765afa-cb0e-4f3c-91f2-d4ca73ef21aa	8070d485-56db-46e3-ab9c-a9719fdef11f	D5	4	3	available	f	car
+c6200b72-3641-4ef2-badc-30ae3db14dc9	8070d485-56db-46e3-ab9c-a9719fdef11f	C4	3	2	available	f	car
+fe771043-b768-493b-9ae4-f2d9d8a2c25d	8070d485-56db-46e3-ab9c-a9719fdef11f	B1	0	1	available	f	car
+6cc48dc3-74f4-4663-a78d-a12d75d19777	8070d485-56db-46e3-ab9c-a9719fdef11f	A5	4	0	available	f	car
+dc3e90ad-7e49-4df2-82d3-4776b49a4458	8070d485-56db-46e3-ab9c-a9719fdef11f	D3	2	3	available	f	car
+05c32a4f-413f-4bad-8d1d-23fa84a3a34f	8070d485-56db-46e3-ab9c-a9719fdef11f	D4	3	3	available	f	car
+401c3f2e-d059-421d-8056-332fe6c43d61	8070d485-56db-46e3-ab9c-a9719fdef11f	C2	1	2	available	f	car
+ce221b8b-a0db-49f4-b664-6766b199af14	8070d485-56db-46e3-ab9c-a9719fdef11f	B2	1	1	available	f	car
+44081ad8-d5d2-4dc4-b043-44928b9843b0	10dce3da-0da1-43ba-828e-b3115fe2dd90	C-03	0	0	available	f	car
+d2b345d1-d4f3-4b55-a211-568a4985fdb5	8070d485-56db-46e3-ab9c-a9719fdef11f	B5	4	1	available	f	car
 0b7306b3-a4e6-4e19-91f2-8e6d861905c3	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A4	3	0	available	f	car
-dca80584-1365-4aff-98ce-cad16f1b1165	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A5	4	0	available	f	car
+ddfb25e0-1e16-4ffc-a320-0d62031160e2	3af1418e-7c5d-4d53-8819-e0c19b7966de	A1	0	0	available	f	car
 8dd164ff-ba82-4317-8dad-e2d3bc7402b7	e536414d-1dbe-4655-ad39-e87d6f2f9efb	B1	0	1	available	f	car
 9ba328a0-a894-4e77-84fd-dffebff9b00c	e536414d-1dbe-4655-ad39-e87d6f2f9efb	B2	1	1	available	f	car
 135dfed7-6c70-4a01-9be5-8d2a08ac8e8a	e536414d-1dbe-4655-ad39-e87d6f2f9efb	B3	2	1	available	f	car
 b3972394-ad14-4772-bcc7-0f822d89b5e9	e536414d-1dbe-4655-ad39-e87d6f2f9efb	B4	3	1	available	f	car
 d2b42d1e-f5c0-4041-af16-3f09164a890b	e536414d-1dbe-4655-ad39-e87d6f2f9efb	B5	4	1	available	f	car
+6137b2f1-5bec-4e4b-9714-0c6a02d9dbb7	8070d485-56db-46e3-ab9c-a9719fdef11f	C3	2	2	available	f	car
+f302ddae-cae2-4263-b2cb-be681d3193a6	8070d485-56db-46e3-ab9c-a9719fdef11f	B4	3	1	available	f	car
+e81d5773-9827-4dc0-b9b5-e86ba7243cb5	8070d485-56db-46e3-ab9c-a9719fdef11f	B3	2	1	available	f	car
+09baafde-38af-4692-8ebe-006c55c9a2bc	8070d485-56db-46e3-ab9c-a9719fdef11f	C1	0	2	available	f	car
+c41729f3-9300-45b6-b94c-6b1b53e11ca8	3af1418e-7c5d-4d53-8819-e0c19b7966de	A2	1	0	available	f	car
+dca80584-1365-4aff-98ce-cad16f1b1165	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A5	4	0	available	f	car
+6043c70e-fa6a-42ac-95b3-9904ba58d3bc	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C1	0	2	available	f	car
+d10333e6-c727-41b5-91af-048960aa57e3	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C2	1	2	available	f	car
+0bbba595-c6db-410a-84c3-229ff988d248	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C3	2	2	available	f	car
+50849789-dfb6-4537-8bce-7b73d05a13f0	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C4	3	2	available	f	car
+e8c35ccd-90e8-4245-8e80-0e3a52a776b1	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C5	4	2	available	f	car
+86060857-2821-4a06-b48a-1594808f2c95	ec402034-3697-415c-97bc-83cfc49d0145	B-08	0	0	available	f	car
+09d6cbe1-2d70-4d34-a28d-a17d5fe13785	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C6	5	2	available	f	car
+b671364e-2b20-4d91-a402-8fd41f6c91f6	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C7	6	2	available	f	car
+38bb11e5-93b2-40e5-a863-ee4c79224012	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C8	7	2	available	f	car
+1a60f7f3-4810-4ca5-8909-b1842e11712d	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D1	0	3	available	f	car
+a1c5dbf6-829d-4c53-b237-757f0f3f5ac0	10dce3da-0da1-43ba-828e-b3115fe2dd90	B-08	0	0	available	f	car
+56ccd7c0-ce16-4919-a93e-e4faedc43c52	ec402034-3697-415c-97bc-83cfc49d0145	B-07	0	0	available	f	car
 fed8a402-4058-41cf-9a87-bb05c62aa22e	e536414d-1dbe-4655-ad39-e87d6f2f9efb	C1	0	2	available	f	car
 33959ca9-459f-447c-b9a6-65944c7e64ff	e536414d-1dbe-4655-ad39-e87d6f2f9efb	C2	1	2	available	f	car
 81f7d381-88ad-4289-ac19-f31e7fb65fc1	e536414d-1dbe-4655-ad39-e87d6f2f9efb	C3	2	2	available	t	car
@@ -4626,12 +4726,28 @@ b4098650-d4a2-451d-9697-11ffddefd136	e536414d-1dbe-4655-ad39-e87d6f2f9efb	C4	3	2
 711c03d6-44e7-4824-a896-f80b47811a2b	e536414d-1dbe-4655-ad39-e87d6f2f9efb	D4	3	3	available	f	car
 b15bef56-753b-4850-910b-d03aa9e92ee9	e536414d-1dbe-4655-ad39-e87d6f2f9efb	D5	4	3	available	f	car
 39d49420-d79e-4c99-a134-148dd09dcc17	e536414d-1dbe-4655-ad39-e87d6f2f9efb	E1	0	4	available	f	car
+650a5278-ead4-4bac-b1b2-efe0970b6914	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D2	1	3	available	f	car
+87cfb917-c8e1-4206-ae28-56532c49b86b	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D3	2	3	available	f	car
+7a83a418-c4a4-49a4-a7b0-915d149eb55e	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D4	3	3	available	f	car
+54526003-7210-428d-987a-146b6427da6b	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D5	4	3	available	f	car
+97cd11b5-34db-4a25-99a7-6d4d4224ee1c	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D6	5	3	available	f	car
+cae912c0-2ac5-42b3-a4da-44366c86a6df	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D7	6	3	available	f	car
+626d16bf-c03f-4184-a713-fc14f556d8cc	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D8	7	3	available	f	car
+1f5ccfc1-c982-4ac1-85e2-f4197b697866	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E1	0	4	available	f	car
+1069951b-5bc5-4548-acdc-eab21c8065ad	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E2	1	4	available	f	car
+3dcde7ef-23f1-4139-a51b-0ed585318acd	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E3	2	4	available	f	car
+98a00b33-9ac7-4576-af9a-d3365099c194	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E4	3	4	available	f	car
+80be7e98-8d53-4dd8-b1e6-94876def6f07	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E5	4	4	available	f	car
+106cd655-2207-417c-97f0-0a13f94b0979	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E6	5	4	available	f	car
+a366a990-1b7e-4717-af66-d7f8d03c5934	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E7	6	4	available	f	car
+6ecc06d3-317f-4890-92fb-50af6a83275a	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E8	7	4	available	f	car
+e968fec7-4583-4442-a585-81a3b9050f16	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F1	0	5	available	f	car
 4f87f0f5-07cd-457a-8e6b-122dcc696e66	e536414d-1dbe-4655-ad39-e87d6f2f9efb	E2	1	4	available	f	car
 d4c53744-2e65-43ea-9b22-c6c4e059aa9c	e536414d-1dbe-4655-ad39-e87d6f2f9efb	E3	2	4	available	f	car
 449c92f2-ed77-4e16-9d51-e98cade23d43	e536414d-1dbe-4655-ad39-e87d6f2f9efb	E4	3	4	available	f	car
 7685acbe-9f08-4716-b51c-3c2630d7fd3c	e536414d-1dbe-4655-ad39-e87d6f2f9efb	E5	4	4	available	f	car
-08453162-d892-4471-8922-f337abd7f60b	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A3	2	0	occupied	f	car
-6a1e3631-f133-4be7-ac08-43de3d3df81e	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A2	1	0	occupied	f	car
+08453162-d892-4471-8922-f337abd7f60b	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A3	2	0	available	f	car
+6a1e3631-f133-4be7-ac08-43de3d3df81e	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A2	1	0	available	f	car
 90fd4836-3fb6-4094-83c4-289257e2dde7	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A1	0	0	available	f	car
 66cbb616-fd69-42e1-a933-e5d302499172	27950993-9277-4e25-ac0f-6c7eb2f40bd1	A1	0	0	available	f	car
 44ca6be3-c69a-4496-af81-6e00ab563d1a	27950993-9277-4e25-ac0f-6c7eb2f40bd1	A2	1	0	available	f	car
@@ -4697,31 +4813,6 @@ edee881e-5077-45fa-b79d-c0d914242f2a	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	A8	7	0
 763c48c8-4f73-4140-bcc1-ddbac9894c9d	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	B6	5	1	available	f	car
 056b6015-354c-4323-b85e-636d64aa13ae	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	B7	6	1	available	f	car
 3f2bcf01-5583-49c6-9b46-e4d22822035c	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	B8	7	1	available	f	car
-6043c70e-fa6a-42ac-95b3-9904ba58d3bc	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C1	0	2	available	f	car
-d10333e6-c727-41b5-91af-048960aa57e3	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C2	1	2	available	f	car
-0bbba595-c6db-410a-84c3-229ff988d248	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C3	2	2	available	f	car
-50849789-dfb6-4537-8bce-7b73d05a13f0	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C4	3	2	available	f	car
-e8c35ccd-90e8-4245-8e80-0e3a52a776b1	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C5	4	2	available	f	car
-09d6cbe1-2d70-4d34-a28d-a17d5fe13785	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C6	5	2	available	f	car
-b671364e-2b20-4d91-a402-8fd41f6c91f6	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C7	6	2	available	f	car
-38bb11e5-93b2-40e5-a863-ee4c79224012	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	C8	7	2	available	f	car
-1a60f7f3-4810-4ca5-8909-b1842e11712d	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D1	0	3	available	f	car
-650a5278-ead4-4bac-b1b2-efe0970b6914	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D2	1	3	available	f	car
-87cfb917-c8e1-4206-ae28-56532c49b86b	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D3	2	3	available	f	car
-7a83a418-c4a4-49a4-a7b0-915d149eb55e	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D4	3	3	available	f	car
-54526003-7210-428d-987a-146b6427da6b	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D5	4	3	available	f	car
-97cd11b5-34db-4a25-99a7-6d4d4224ee1c	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D6	5	3	available	f	car
-cae912c0-2ac5-42b3-a4da-44366c86a6df	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D7	6	3	available	f	car
-626d16bf-c03f-4184-a713-fc14f556d8cc	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	D8	7	3	available	f	car
-1f5ccfc1-c982-4ac1-85e2-f4197b697866	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E1	0	4	available	f	car
-1069951b-5bc5-4548-acdc-eab21c8065ad	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E2	1	4	available	f	car
-3dcde7ef-23f1-4139-a51b-0ed585318acd	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E3	2	4	available	f	car
-98a00b33-9ac7-4576-af9a-d3365099c194	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E4	3	4	available	f	car
-80be7e98-8d53-4dd8-b1e6-94876def6f07	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E5	4	4	available	f	car
-106cd655-2207-417c-97f0-0a13f94b0979	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E6	5	4	available	f	car
-a366a990-1b7e-4717-af66-d7f8d03c5934	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E7	6	4	available	f	car
-6ecc06d3-317f-4890-92fb-50af6a83275a	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	E8	7	4	available	f	car
-e968fec7-4583-4442-a585-81a3b9050f16	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F1	0	5	available	f	car
 0a7d03b0-5c93-4ad0-a819-7a2cfdb7ff7a	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F2	1	5	available	f	car
 04af7a10-c036-4b78-b916-8e517bcd10c6	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F3	2	5	available	f	car
 f5eaeccd-d92b-465e-aaf0-6f5d05950999	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F4	3	5	available	f	car
@@ -4729,6 +4820,39 @@ f5eaeccd-d92b-465e-aaf0-6f5d05950999	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F4	3	5
 96cc293c-a2ef-4120-906f-6d934c6b4fc4	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F6	5	5	available	f	car
 1d762a9e-5864-4dbe-9f2c-dc6c46c674c3	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F7	6	5	available	f	car
 5e7a1807-6837-4adc-aa05-dbb6837ee4b8	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F8	7	5	available	f	car
+d56a9f48-1732-4dae-97c5-ed99685f7879	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A-024	0	0	available	f	car
+03773b0a-a37b-45d0-a9da-c835dd33e095	e536414d-1dbe-4655-ad39-e87d6f2f9efb	A-005	0	0	available	f	car
+3ddeccc7-5b14-4cd2-97fb-c09a49cc5558	e536414d-1dbe-4655-ad39-e87d6f2f9efb	L-001	0	0	available	f	car
+88698c9c-9a15-402f-9618-62b136455c09	e536414d-1dbe-4655-ad39-e87d6f2f9efb	L-005	0	0	available	f	car
+49dc9279-aa46-4f8f-b84b-c66d605de5d1	e536414d-1dbe-4655-ad39-e87d6f2f9efb	L-006	0	0	available	f	car
+7a2d1878-ab8c-4835-95e8-e41b96de11aa	10dce3da-0da1-43ba-828e-b3115fe2dd90	A1	0	0	available	f	car
+8d9b6650-c258-4d3a-a398-4e01f21739cb	10dce3da-0da1-43ba-828e-b3115fe2dd90	A2	1	0	available	f	car
+1b8246ae-ae1c-4be6-8bd5-ef0581b5ce4c	10dce3da-0da1-43ba-828e-b3115fe2dd90	A3	2	0	available	f	car
+18579ce8-6d34-4c1f-b2b8-d7024a56e10d	10dce3da-0da1-43ba-828e-b3115fe2dd90	A4	3	0	available	f	car
+0c7a7eac-758c-46d0-abb2-b82bdf79c643	10dce3da-0da1-43ba-828e-b3115fe2dd90	A5	4	0	available	f	car
+d07f1d91-500c-4c47-8c10-bb5b9d748625	10dce3da-0da1-43ba-828e-b3115fe2dd90	B1	0	1	available	f	car
+bcc8600c-1980-47da-91ef-368944f233d5	10dce3da-0da1-43ba-828e-b3115fe2dd90	B2	1	1	available	f	car
+1b654029-df9b-4138-92f8-0ba6a511ce63	10dce3da-0da1-43ba-828e-b3115fe2dd90	B3	2	1	available	f	car
+c6fa14ea-3b39-4b5f-8ce6-0000e45a0603	10dce3da-0da1-43ba-828e-b3115fe2dd90	B4	3	1	available	f	car
+e6d21ab1-c58c-464a-8ac8-2f65036a3e44	10dce3da-0da1-43ba-828e-b3115fe2dd90	B5	4	1	available	f	car
+5e541e5b-f2f2-4e0d-be4d-902240ee2ef7	10dce3da-0da1-43ba-828e-b3115fe2dd90	C1	0	2	available	f	car
+7844d548-7cf3-485d-b9ea-90d83a574769	10dce3da-0da1-43ba-828e-b3115fe2dd90	C2	1	2	available	f	car
+a75497af-5129-4d51-8fa4-51d04fc3550a	10dce3da-0da1-43ba-828e-b3115fe2dd90	C3	2	2	available	f	car
+3caa0ddc-e57c-4e74-b820-b2ed919b93ec	10dce3da-0da1-43ba-828e-b3115fe2dd90	C4	3	2	available	f	car
+a2d982bd-f695-40c7-bac5-99b99f48ff6f	10dce3da-0da1-43ba-828e-b3115fe2dd90	C5	4	2	available	f	car
+0b10d35f-f0b9-40a8-b59d-751907c8e410	10dce3da-0da1-43ba-828e-b3115fe2dd90	D1	0	3	available	f	car
+1e7194ec-a4d8-404d-9c34-db2a13d3f09e	10dce3da-0da1-43ba-828e-b3115fe2dd90	D2	1	3	available	f	car
+2ed5fb7d-0a40-481e-8db2-78637c32bf20	10dce3da-0da1-43ba-828e-b3115fe2dd90	D3	2	3	available	f	car
+4053a0ef-9b62-45ce-8a41-380258892e51	10dce3da-0da1-43ba-828e-b3115fe2dd90	D4	3	3	available	f	car
+b8778be5-cd3f-45db-b979-8b7eea7886e9	10dce3da-0da1-43ba-828e-b3115fe2dd90	D5	4	3	available	f	car
+e5190678-8b21-4ca7-80f4-35c11aab5f04	ec402034-3697-415c-97bc-83cfc49d0145	DN-05	0	0	available	f	car
+625d033d-cb0f-46ab-86b4-7eedbb8223e8	10dce3da-0da1-43ba-828e-b3115fe2dd90	VQ-01	0	0	available	f	car
+82e4ecc0-7a76-4403-94ca-259e8bf8e0af	ec402034-3697-415c-97bc-83cfc49d0145	B-09	0	0	occupied	f	car
+43e27143-6f21-468f-a1e4-f38c28b96df9	10dce3da-0da1-43ba-828e-b3115fe2dd90	A-01	0	0	available	f	car
+c5bcfe44-d190-40d4-942d-9026d5f10c3b	ec402034-3697-415c-97bc-83cfc49d0145	B-10	0	0	occupied	f	car
+ff31697e-1cdb-4c4f-8236-438cac6aa3fd	ec402034-3697-415c-97bc-83cfc49d0145	A-02	0	0	occupied	f	car
+933273ab-b02c-4857-8a13-9bc69c0ab43e	ec402034-3697-415c-97bc-83cfc49d0145	A-04	0	0	available	f	car
+bb984b42-91ee-466f-93ec-f71154d3c857	10dce3da-0da1-43ba-828e-b3115fe2dd90	A-03	0	0	available	f	car
 \.
 
 
@@ -4737,10 +4861,66 @@ f5eaeccd-d92b-465e-aaf0-6f5d05950999	ab22d3fe-7acf-4eef-8ff0-37a48bd2806c	F4	3	5
 --
 
 COPY public.sessions (id, booking_id, slot_id, check_in_time, check_out_time, handled_by_staff, vehicle_id, check_in_by, check_out_by, status, total_fee, note, created_at, updated_at) FROM stdin;
-efd8f91a-5735-43c7-8245-88b53cda4069	b4b263bb-a302-452b-8f2f-9f2d19867bb0	90fd4836-3fb6-4094-83c4-289257e2dde7	2026-09-12 08:38:40.957102+07	2026-09-12 08:40:43.017828+07	test2@example.com	\N	\N	\N	PARKING	0	\N	2026-09-30 10:02:38.345821+07	2026-09-30 10:02:38.345821+07
-7e4e6ac2-d6cb-40ec-9657-937e850b7585	\N	6a1e3631-f133-4be7-ac08-43de3d3df81e	2026-09-30 07:52:55.690032+07	\N	test2@example.com	d23cc86f-7b62-427a-b3f0-07306707caa3	efc32a41-1828-4322-93f3-ca131bfe923c	\N	PARKING	0	Khách vào sạc xe điện EV	2026-09-30 10:07:55.668983+07	2026-09-30 10:07:55.668983+07
-76aa9fad-5dac-4e83-b539-ecf606f668b5	\N	08453162-d892-4471-8922-f337abd7f60b	2026-09-30 08:27:55.690032+07	\N	test2@example.com	96d993a1-e65a-4c65-8589-1d83cb6de4fc	efc32a41-1828-4322-93f3-ca131bfe923c	\N	PARKING	0	Khách vãng lai gửi xe mua sắm	2026-09-30 10:07:55.668983+07	2026-09-30 10:07:55.668983+07
-00d376de-3f6a-4b1e-87ab-1554bd46c147	\N	0b7306b3-a4e6-4e19-91f2-8e6d861905c3	2026-09-30 04:07:55.690032+07	2026-09-30 08:07:55.690032+07	test2@example.com	563a746a-82e8-4024-9099-e89130f4397c	efc32a41-1828-4322-93f3-ca131bfe923c	efc32a41-1828-4322-93f3-ca131bfe923c	COMPLETED	100000	Đã thanh toán VNPay QR hoàn tất	2026-09-30 10:07:55.668983+07	2026-09-30 10:07:55.668983+07
+75eb769a-da4a-47f7-9100-8adc929b995b	\N	09baafde-38af-4692-8ebe-006c55c9a2bc	2026-10-08 20:14:14.175337+07	2026-10-08 20:14:20.131861+07	dan@gmai.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-08 20:14:14.173606+07	2026-10-08 20:14:20.127186+07
+cb31da16-7780-499a-9ecc-12c2bc310229	\N	964b9104-9fe4-4de2-92e2-8443bae6bbfc	2026-10-06 01:38:20.76208+07	2026-10-06 01:38:34.129806+07	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-06 01:38:20.698287+07	2026-10-06 01:38:34.11166+07
+ca24d5ea-20e5-47a5-b485-ba1d28faf344	\N	e0144f9e-6566-4aef-a040-2f757beda3eb	2026-10-06 01:39:02.134202+07	2026-10-06 14:27:11.366496+07	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-06 01:39:02.130218+07	2026-10-06 14:27:11.348561+07
+93cf0087-e4e1-47f1-9113-8ce4ddb59c24	\N	5d5d6ecb-c588-4335-b4bc-f7c9e84ea73c	2026-10-06 14:30:00.766349+07	2026-10-06 14:30:19.511929+07	dan@gmai.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-06 14:30:00.763688+07	2026-10-06 14:30:19.50882+07
+8f7bc0c8-f82a-42b7-8d73-02ea1e0b67a4	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-06 14:29:42.960346+07	2026-10-06 14:30:42.101265+07	dan@gmai.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	30000	Khách vãng lai vào trực tiếp	2026-10-06 14:29:42.928623+07	2026-10-06 14:30:42.098063+07
+e209115f-5688-4b96-bfd0-a6e92ee7dcc2	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-08 20:24:35.152959+07	2026-10-08 20:24:44.316674+07	bao@gmail.com	1ed0ff16-55ac-4a3f-aa34-8caa2a84ef04	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Nguyễn Duy Bảo (Ca Sáng (06h - 14h))	2026-10-08 20:24:35.148758+07	2026-10-08 20:24:44.313028+07
+5732a4fd-8db2-45ab-9e16-596e30af225d	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-07 23:47:48.851757+07	2026-10-08 20:04:00.929068+07	manh@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-07 23:47:48.848151+07	2026-10-08 20:04:00.921766+07
+478ca351-d404-44be-8789-4dbbb8aac9df	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-08 20:12:05.117956+07	2026-10-08 20:12:14.030675+07	dan@gmai.com	6676c325-096c-490a-a2f9-0d5ad9146969	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-08 20:12:05.11109+07	2026-10-08 20:12:14.019679+07
+86f5e560-6ef7-4426-9e9f-0cd9eaab3d37	\N	f302ddae-cae2-4263-b2cb-be681d3193a6	2026-10-08 00:39:12.179569+07	2026-10-08 20:12:28.370587+07	bao@gmail.com	9b5ff220-7d50-4ab0-acbb-27d17ba4dbab	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	570000	Khách vãng lai vào trực tiếp	2026-10-08 00:39:12.150352+07	2026-10-08 20:12:28.362953+07
+0bd97440-bd92-4ada-baa4-a6316fafaa95	\N	56ccd7c0-ce16-4919-a93e-e4faedc43c52	2026-10-07 10:55:49.385961+07	2026-10-07 11:06:15.26119+07	bao@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	0	Khách vãng lai vào trực tiếp [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-07 10:55:49.384848+07	2026-10-07 11:06:15.242231+07
+75fd6a34-30e8-4660-a1aa-2ec2db2c27d0	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-07 10:37:15.788168+07	2026-10-07 10:37:35.889853+07	bao@gmail.com	a128ffe4-8cb4-4027-8f7a-1b983f4cf0ad	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-07 10:37:15.779001+07	2026-10-07 10:37:35.875532+07
+89b7927d-8854-47d4-b99a-f44725081126	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-08 20:38:39.387885+07	2026-10-08 20:38:44.219948+07	bao@gmail.com	dcc85321-5816-482f-9e09-b8945806a021	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Nguyễn Duy Bảo (Ca Sáng (06h - 14h))	2026-10-08 20:38:39.387054+07	2026-10-08 20:38:44.21742+07
+a303d3f6-2690-4a0e-832a-8c64b46732f3	\N	50f6f2ea-aea9-4593-8758-0e156d9b6d7d	2026-10-07 10:54:06.018111+07	2026-10-07 11:17:51.118021+07	bao@gmail.com	b6e1f0f6-aed8-49d0-81f5-e63edd645e69	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-07 10:54:06.012605+07	2026-10-07 11:17:51.104661+07
+d55a0141-e91d-4a6b-bbf2-9b3b615cfc07	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-08 20:37:33.813919+07	2026-10-08 20:37:38.650879+07	bao@gmail.com	dcc85321-5816-482f-9e09-b8945806a021	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Nguyễn Duy Bảo (Ca Sáng (06h - 14h))	2026-10-08 20:37:33.812914+07	2026-10-08 20:37:38.637386+07
+8651e422-5131-472a-8e9e-b9a4f93bb229	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-07 10:55:33.722533+07	2026-10-07 23:43:02.721834+07	bao@gmail.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	360000	Khách vãng lai vào trực tiếp	2026-10-07 10:55:33.720916+07	2026-10-07 23:43:02.719062+07
+97913ca7-429b-45bc-83d4-b7128e04ae7a	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-08 20:39:59.503651+07	2026-10-08 20:40:08.302015+07	dan@gmai.com	6676c325-096c-490a-a2f9-0d5ad9146969	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-08 20:39:59.499372+07	2026-10-08 20:40:08.292478+07
+d89106cf-90bd-4c2f-bb55-c42c2f74c50a	\N	e81d5773-9827-4dc0-b9b5-e86ba7243cb5	2026-10-07 23:48:14.507235+07	2026-10-08 01:01:43.24853+07	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-07 23:48:14.506166+07	2026-10-08 01:01:43.2402+07
+741ca808-b3ee-4e21-8214-259af5efa4ed	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-08 21:44:57.711603+07	2026-10-08 22:04:09.364089+07	dan@gmai.com	6676c325-096c-490a-a2f9-0d5ad9146969	2e48a316-901e-4e59-87d2-5b6b4832f624	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-08 21:44:57.704514+07	2026-10-08 22:04:09.352133+07
+c0430a6a-fc6c-4e52-8dad-eb38a5632d45	\N	401c3f2e-d059-421d-8056-332fe6c43d61	2026-10-08 21:45:39.716954+07	2026-10-08 22:04:05.115822+07	dan@gmai.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	2e48a316-901e-4e59-87d2-5b6b4832f624	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-08 21:45:39.715258+07	2026-10-08 22:04:05.100297+07
+7e0fdc85-c782-4587-a21c-210c31cc34d1	\N	fe771043-b768-493b-9ae4-f2d9d8a2c25d	2026-10-07 11:06:58.27327+07	2026-10-07 23:42:49.556182+07	bao@gmail.com	ce798acf-33ae-43df-b143-c48cac26adf6	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	360000	Khách vãng lai vào trực tiếp	2026-10-07 11:06:58.270916+07	2026-10-07 23:42:49.544116+07
+e8b28388-6ed6-4a4e-8a54-d6c6a5da9e0c	\N	6cc48dc3-74f4-4663-a78d-a12d75d19777	2026-10-07 11:06:31.576835+07	2026-10-07 23:42:56.598682+07	bao@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-07 11:06:31.574987+07	2026-10-07 23:42:56.595975+07
+c25681e2-cb7b-4f9c-9a85-74f3361b24da	\N	ce221b8b-a0db-49f4-b664-6766b199af14	2026-10-07 23:48:02.227348+07	2026-10-08 18:51:50.045141+07	manh@gmail.com	b6e1f0f6-aed8-49d0-81f5-e63edd645e69	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-07 23:48:02.226489+07	2026-10-08 18:51:50.023375+07
+df9a1b44-5598-411b-a94c-7697a7c7b6ea	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-08 00:12:28.475945+07	2026-10-08 18:52:59.151692+07	manh@gmail.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	540000	Khách vãng lai vào trực tiếp	2026-10-08 00:12:28.469929+07	2026-10-08 18:52:59.14816+07
+f78406a7-776b-4f8e-877f-9784cfa0324a	\N	d2b345d1-d4f3-4b55-a211-568a4985fdb5	2026-10-08 00:57:27.620047+07	2026-10-08 18:53:03.890494+07	manh@gmail.com	f247e0f6-0afb-4ab1-9706-2d8d98761be3	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	510000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-08 00:57:27.614342+07	2026-10-08 18:53:03.88559+07
+a7ce6c8d-988b-4130-b749-f1d10fcccc32	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-09 02:01:38.300753+07	2026-10-09 02:02:16.2802+07	manh@gmail.com	48781a1a-c8bd-4e64-ab41-a96cc6052cf1	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-09 02:01:38.295795+07	2026-10-09 02:02:16.272636+07
+3320591c-3415-46b1-b352-9188a8a51983	\N	6137b2f1-5bec-4e4b-9714-0c6a02d9dbb7	2026-10-08 22:04:38.256836+07	2026-10-09 02:02:19.641476+07	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-08 22:04:38.251746+07	2026-10-09 02:02:19.63897+07
+1a0fc0ae-74b3-4f39-befe-94409acb863c	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-09 02:02:45.181837+07	2026-10-09 02:03:03.669508+07	manh@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-09 02:02:45.180549+07	2026-10-09 02:03:03.658918+07
+c0a9ea85-d058-4a56-ac54-9fa145518c83	\N	c5bcfe44-d190-40d4-942d-9026d5f10c3b	2026-10-09 16:18:00.426639+07	2026-10-09 16:18:23.189998+07	dan@gmail.com	48781a1a-c8bd-4e64-ab41-a96cc6052cf1	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Trần Hữu Dân (Ca Chiều (14h - 22h))	2026-10-09 16:18:00.423873+07	2026-10-09 16:18:23.174613+07
+9fb1a4d9-d106-42a1-8ed7-0347bf5bc31b	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-09 16:17:31.402387+07	2026-10-09 16:18:29.434308+07	dan@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-09 16:17:31.394549+07	2026-10-09 16:18:29.430879+07
+a867dd58-87da-48d1-9de4-26f0037c87a5	\N	c6200b72-3641-4ef2-badc-30ae3db14dc9	2026-10-09 16:32:56.441647+07	2026-10-09 20:34:14.905034+07	dan@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-09 16:32:56.439279+07	2026-10-09 20:34:14.894026+07
+bdcaf88a-61b3-4b03-b659-07dc838ea5ee	\N	86060857-2821-4a06-b48a-1594808f2c95	2026-10-27 13:17:46.471608+07	2026-10-29 02:34:36.302596+07	bao@gmail.com	a5c52a93-cd4d-45ac-b762-167b32998585	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	1110000	Đăng ký trực tiếp bởi nhân viên Nguyễn Duy Bảo (Ca Sáng (06h - 14h))	2026-10-27 13:17:46.470639+07	2026-10-29 02:34:36.281925+07
+4ae8d868-6464-4d2f-b58b-24b3e922be4e	\N	151079e5-fedc-415d-b411-4ec2a19a9698	2026-10-22 20:26:54.832401+07	2026-10-22 20:27:07.328095+07	dan@gmail.com	48781a1a-c8bd-4e64-ab41-a96cc6052cf1	2e48a316-901e-4e59-87d2-5b6b4832f624	2e48a316-901e-4e59-87d2-5b6b4832f624	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Trần Hữu Dân (Ca Chiều (14h - 22h))	2026-10-22 20:26:54.81127+07	2026-10-22 20:27:07.310293+07
+651af79e-1940-4663-b2d9-51c071fe3885	\N	09f5ca28-9d5b-4070-a475-a61ea992238a	2026-10-09 20:34:31.700044+07	2026-10-22 20:38:43.196171+07	dan@gmail.com	119841f2-7662-4a18-a2ef-e610d0608904	2e48a316-901e-4e59-87d2-5b6b4832f624	3f829362-23f9-4dc1-afd7-3e0a97354cdc	COMPLETED	9360000	Đăng ký trực tiếp bởi nhân viên Trần Hữu Dân (Ca Chiều (14h - 22h))	2026-10-09 20:34:31.696041+07	2026-10-22 20:38:43.190091+07
+ee35798e-23b3-4332-8b2a-0b0dbd2cc8fe	\N	bebe9619-0ac4-4c12-bcba-66df028569af	2026-10-27 00:53:42.832617+07	2026-10-27 00:53:59.18204+07	manh@gmail.com	a8125b9f-65e2-4373-93b6-d78e61094df5	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 00:53:42.831273+07	2026-10-27 00:53:59.17276+07
+e4836a8e-4696-4267-b548-ba0c8b368626	\N	eaba0041-de71-4f2c-89c9-5b7470ea04b2	2026-10-26 22:33:18.971373+07	2026-10-26 23:24:19.015442+07	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-26 22:33:18.971837+07	2026-10-26 23:24:19.008262+07
+220338dd-3002-48a5-91d8-c094f6fb2f3d	\N	ff31697e-1cdb-4c4f-8236-438cac6aa3fd	2026-10-26 22:30:58.128982+07	2026-10-26 23:24:26.252163+07	manh@gmail.com	48781a1a-c8bd-4e64-ab41-a96cc6052cf1	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-26 22:30:58.110793+07	2026-10-26 23:24:26.239942+07
+5549a5ea-e89f-4ade-be14-11ae2bc1658d	\N	c5bcfe44-d190-40d4-942d-9026d5f10c3b	2026-10-26 23:25:07.854611+07	2026-10-26 23:25:25.169353+07	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-26 23:25:07.853077+07	2026-10-26 23:25:25.166872+07
+2bc33ab3-469e-471b-a856-661d40cc62f3	\N	ac765afa-cb0e-4f3c-91f2-d4ca73ef21aa	2026-10-26 23:27:16.352494+07	2026-10-26 23:52:33.36341+07	manh@gmail.com	f2f74e3d-218a-4593-8a08-60a9596d8863	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-26 23:27:16.350773+07	2026-10-26 23:52:33.3451+07
+02727bd1-b7bc-4a2d-8a51-8d9cf012e738	\N	dc3e90ad-7e49-4df2-82d3-4776b49a4458	2026-10-26 23:23:37.322351+07	2026-10-27 00:05:37.861515+07	manh@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-26 23:23:37.301615+07	2026-10-27 00:05:37.859399+07
+e019b843-20d8-4329-848a-0dc9b7e029b2	\N	05c32a4f-413f-4bad-8d1d-23fa84a3a34f	2026-10-26 23:26:29.824899+07	2026-10-27 00:05:43.712927+07	manh@gmail.com	48781a1a-c8bd-4e64-ab41-a96cc6052cf1	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-26 23:26:29.823667+07	2026-10-27 00:05:43.70998+07
+9bcf98c5-5c99-40fc-a08c-17a88cb49154	\N	ddfb25e0-1e16-4ffc-a320-0d62031160e2	2026-10-27 00:06:12.71844+07	2026-10-27 00:06:19.490273+07	manh@gmail.com	48781a1a-c8bd-4e64-ab41-a96cc6052cf1	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 00:06:12.717352+07	2026-10-27 00:06:19.485204+07
+5a8e828a-5b05-4331-9d68-3d5910d4428e	\N	933273ab-b02c-4857-8a13-9bc69c0ab43e	2026-10-27 00:56:00.104259+07	2026-10-27 00:56:13.093964+07	manh@gmail.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 00:56:00.103291+07	2026-10-27 00:56:13.082285+07
+0981f057-f525-4007-98d0-8532a7f99d70	\N	933273ab-b02c-4857-8a13-9bc69c0ab43e	2026-10-27 00:44:16.351999+07	2026-10-27 00:44:29.072589+07	manh@gmail.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 00:44:16.337551+07	2026-10-27 00:44:29.043509+07
+9cdaee5a-69aa-4255-8489-e4a8e2e95e33	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-27 00:44:45.776884+07	2026-10-27 00:45:06.195298+07	manh@gmail.com	a128ffe4-8cb4-4027-8f7a-1b983f4cf0ad	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 00:44:45.774974+07	2026-10-27 00:45:06.185395+07
+7b74c07b-1143-4fc4-b9d7-1066b2a040ad	\N	c41729f3-9300-45b6-b94c-6b1b53e11ca8	2026-10-27 00:48:40.939013+07	2026-10-27 00:53:02.309977+07	bao@gmail.com	e9ef8924-7ca9-4b1a-b2d2-b19d08f32612	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Nguyễn Duy Bảo (Ca Sáng (06h - 14h))	2026-10-27 00:48:40.9375+07	2026-10-27 00:53:02.307245+07
+8c5b3993-ad63-48a2-ae3e-28ceb20c295f	\N	86060857-2821-4a06-b48a-1594808f2c95	2026-10-27 00:55:56.464401+07	2026-10-27 00:56:17.972027+07	manh@gmail.com	a5c52a93-cd4d-45ac-b762-167b32998585	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 00:55:56.46443+07	2026-10-27 00:56:17.960621+07
+6542f978-c87d-4058-ab4f-a81e41770968	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-27 00:56:46.068546+07	2026-10-27 00:59:04.118872+07	manh@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-27 00:56:46.068023+07	2026-10-27 00:59:04.097709+07
+28fee65b-d28b-404c-b446-1e8ab7e25f30	\N	0b7306b3-a4e6-4e19-91f2-8e6d861905c3	2026-10-27 00:56:33.80043+07	2026-10-27 01:07:33.461777+07	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Xe có Vé tháng tại Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông) - Đỗ tại Bãi xe Demo tính cước vãng lai [Vé tháng tại Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông) - Tính giờ tại bãi này]	2026-10-27 00:56:33.798128+07	2026-10-27 01:07:33.453114+07
+41e9b7b3-9784-4066-be18-b3410a1d17ba	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-27 01:07:45.643137+07	2026-10-27 01:08:20.888501+07	manh@gmail.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 01:07:45.645058+07	2026-10-27 01:08:20.881533+07
+7eba3c9e-565c-48d7-91bd-50049658e098	\N	86060857-2821-4a06-b48a-1594808f2c95	2026-10-27 01:07:49.947897+07	2026-10-27 01:08:28.000189+07	manh@gmail.com	a5c52a93-cd4d-45ac-b762-167b32998585	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-27 01:07:49.945442+07	2026-10-27 01:08:27.982043+07
+193e0ab1-b82a-4b4f-8e4b-e17e3eaae45c	\N	ff31697e-1cdb-4c4f-8236-438cac6aa3fd	2026-10-27 01:07:43.004301+07	2026-10-27 13:17:34.59616+07	manh@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-27 01:07:42.973013+07	2026-10-27 13:17:34.562895+07
+a060ee6d-e079-485f-9ed1-b4e43dd948fc	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-27 13:18:18.885028+07	2026-10-27 13:53:56.985223+07	bao@gmail.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Nguyễn Duy Bảo (Ca Sáng (06h - 14h))	2026-10-27 13:18:18.88418+07	2026-10-27 13:53:56.988906+07
+f80b60e9-a6d5-408c-adfe-7c15b9497e37	\N	dca80584-1365-4aff-98ce-cad16f1b1165	2026-10-27 13:18:10.158427+07	2026-10-27 13:54:37.225478+07	bao@gmail.com	abbdd0b6-7576-464b-98b5-e8d6da8cc6ab	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	30000	Đăng ký trực tiếp bởi nhân viên Nguyễn Duy Bảo (Ca Sáng (06h - 14h))	2026-10-27 13:18:10.156858+07	2026-10-27 13:54:37.221484+07
+095e3401-70cc-435f-8672-eab8db3e53ed	\N	ff31697e-1cdb-4c4f-8236-438cac6aa3fd	2026-10-29 01:22:42.906948+07	2026-10-29 01:22:52.428759+07	manh@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-29 01:22:42.899596+07	2026-10-29 01:22:52.42492+07
+1c967ae2-77b6-4e9a-919a-0162185e168b	\N	56ccd7c0-ce16-4919-a93e-e4faedc43c52	2026-10-27 13:17:42.138893+07	2026-10-27 13:54:31.090398+07	bao@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-27 13:17:42.126576+07	2026-10-27 13:54:31.091612+07
+819dd068-193a-4fcf-902e-ab817b91494f	\N	82e4ecc0-7a76-4403-94ca-259e8bf8e0af	2026-10-29 02:25:44.992678+07	\N	manh@gmail.com	afae64c0-09f2-4a09-9393-1a897f9fcfc4	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	\N	PARKING	0	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-29 02:25:44.991612+07	2026-10-29 02:25:44.991612+07
+8a8f79e2-f62c-4ce5-a543-adf7560dbb46	\N	c5bcfe44-d190-40d4-942d-9026d5f10c3b	2026-10-29 02:25:49.036251+07	\N	manh@gmail.com	b9468e92-2e57-4010-96d8-779ab1e8a62b	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	\N	PARKING	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)]	2026-10-29 02:25:49.034828+07	2026-10-29 02:25:49.034828+07
+64129adb-9176-4c1c-a0f9-1ed0d306c998	\N	ff31697e-1cdb-4c4f-8236-438cac6aa3fd	2026-10-29 02:25:54.216212+07	\N	manh@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	\N	PARKING	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)]	2026-10-29 02:25:54.215038+07	2026-10-29 02:25:54.215038+07
+b1ed0635-baf5-448c-a602-ce00e9030d63	\N	976446e6-e308-4d56-9c78-48d656ffecde	2026-10-29 02:25:58.181933+07	\N	manh@gmail.com	a128ffe4-8cb4-4027-8f7a-1b983f4cf0ad	e0e0f4f7-aee9-41c4-9c7f-b7774a791179	\N	PARKING	0	Đăng ký trực tiếp bởi nhân viên Đinh Đức Mạnh (Ca Đêm (22h - 06h))	2026-10-29 02:25:58.181305+07	2026-10-29 02:25:58.181305+07
+fc4bc089-e5eb-4aa9-b9d6-824f4d201a96	\N	ff31697e-1cdb-4c4f-8236-438cac6aa3fd	2026-10-27 13:53:37.574179+07	2026-10-28 11:14:57.787926+07	bao@gmail.com	6676c325-096c-490a-a2f9-0d5ad9146969	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	3eb9c2d5-3735-42dc-958e-3ce6044f9a64	COMPLETED	0	👑 Thuê bao Vé tháng VIP - Vào tự do (0 VNĐ) [Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)] [👑 Vé tháng VIP - Miễn phí 0 VNĐ]	2026-10-27 13:53:37.566573+07	2026-10-28 11:14:57.777537+07
 \.
 
 
@@ -4748,10 +4928,17 @@ efd8f91a-5735-43c7-8245-88b53cda4069	b4b263bb-a302-452b-8f2f-9f2d19867bb0	90fd48
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, email, password_hash, full_name, role, created_at, username, phone, status, updated_at) FROM stdin;
-2e2aa648-7759-40a6-b5d0-946473228164	phvdat220805@gmail.com	$2b$12$CSee/16yBdgsGI97wFytUuSlxhoTTTGbtm8yUYefsLz0E1tMUAw4q	Phạm Văn Đạt	customer	2026-09-24 02:12:58.255556+07	phvdat220805	0988776603	active	2026-09-30 10:06:53.052759+07
-34f2e0eb-74b0-4dde-90e7-be8913c06153	user@example.com	$2b$12$e6TLCwBaj/.BVe2CNpTAg.pHMrKc98TNTpW3cLG9pyiJn019pFUFW	string	customer	2026-09-12 07:48:01.410595+07	user	0988776601	active	2026-09-30 10:06:53.052759+07
-efc32a41-1828-4322-93f3-ca131bfe923c	test2@example.com	$2b$12$1c/ENRUXYNUio61cBRWY6uIqY2folfOwEs872ztr21kVWYatLMuWm	Nguyen Van B	admin	2026-09-12 07:51:25.441392+07	test2	0988776602	active	2026-09-30 10:06:53.052759+07
+COPY public.users (id, email, password_hash, full_name, role, created_at, username, phone, status, updated_at, assigned_lot, shift) FROM stdin;
+fe52bc9b-ed55-4143-ad58-3f756ab3fd9f	ngoc@gmail.com	$2b$12$jljALM7NTkqeSvNAL/vmrezVxL4mzmlKip3P2H62/ka5HjCXgTl76	Phạm Thị Ngọc	customer	2026-10-07 10:39:28.022976+07	ngoc	1234567890	active	2026-10-07 10:39:28.022976+07	\N	Ca Sáng (06h - 14h)
+2e2aa648-7759-40a6-b5d0-946473228164	phvdat220805@gmail.com	$2b$12$CSee/16yBdgsGI97wFytUuSlxhoTTTGbtm8yUYefsLz0E1tMUAw4q	Phạm Văn Đạt	customer	2026-09-24 02:12:58.255556+07	phvdat220805	0988776603	active	2026-09-30 10:06:53.052759+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Sáng (06h - 14h)
+2deee543-5fbb-463e-830d-2b75254857cd	customer@parking.vn	$2b$12$jv7F4ZQbscJNLJXJCLJ3i.5MVtGx.AJZlymHGlhYFI5CA2dFtz0sW	Nguyễn Văn Đạt (Đã Cập Nhật)	customer	2026-10-01 00:15:13.45106+07	customer_vip	0988999888	active	2026-10-08 21:57:29.574082+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Sáng (06h - 14h)
+745c5c32-4f43-4512-b34f-f9ec8dc977ea	23017150@st.phenikaa-uni.edu.vn	$2b$12$0piCBRfEYUd.UzvMfZtrFO1qTcAWUp/e1Up4pbndAbMqYg1Ledpbq	Phạm Văn Đạt	customer	2026-10-01 03:00:28.854685+07	23017150	0123456789	active	2026-10-08 22:02:37.490632+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Sáng (06h - 14h)
+9cdfdf8b-d6ba-4a80-bd8a-22194e567fe1	admin@parking.vn	$2b$12$G9qmnI6Fc3xJ81cewXjOW.deHiGGDUw.gLp2rrmF3GD.Gqp0q2J8W	Hệ Thống Quản Trị Viên	admin	2026-10-01 00:15:13.45106+07	admin	0901234567	active	2026-10-01 00:15:13.45106+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Sáng (06h - 14h)
+0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	panh@gmail.com	$2b$12$ag.//hpgw4Hh66GW73CCyOZMR1wBkWBMbtLihKdkvboCx/okGqCsK	Đặng Phương Anh	customer	2026-10-05 17:31:53.320343+07	panh	0326989362	active	2026-10-05 17:31:53.320343+07	\N	Ca Sáng (06h - 14h)
+3f829362-23f9-4dc1-afd7-3e0a97354cdc	staff@parking.vn	$2b$12$HmcDvhi.DiLjhhnSt7yFrOuwsZSeUj./v6sZ/aqh1xByNvis7IJI6	Nhân viên Bãi đỗ	staff	2026-10-08 00:36:31.476425+07	staff	\N	active	2026-10-08 00:36:31.476425+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Sáng (06h - 14h)
+2e48a316-901e-4e59-87d2-5b6b4832f624	dan@gmail.com	$2b$12$GZ9HwqWbcMCf2TDqjB22wuba3p0hI.9RUKpCLXI1tDmZsBXdz5y7K	Trần Hữu Dân	staff	2026-10-05 16:56:33.187871+07	staff_do_nghia_ca_chieu	0123456789	active	2026-10-22 20:26:18.29656+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Chiều (14h - 22h)
+e0e0f4f7-aee9-41c4-9c7f-b7774a791179	manh@gmail.com	$2b$12$z9d61FhMLgkFCXQAwPx.V.eSU0gYMjSIT.F.2MldJJIl8zBm8NyFq	Đinh Đức Mạnh	staff	2026-10-05 16:55:40.260262+07	staff_do_nghia_ca_dem	0123456789	active	2026-10-26 22:30:28.720768+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Đêm (22h - 06h)
+3eb9c2d5-3735-42dc-958e-3ce6044f9a64	bao@gmail.com	$2b$12$WP0Pxk7GJULR8BF3toY7fedUI3CFlL64HVyuQR6lVRny.pnepv0lS	Nguyễn Duy Bảo	staff	2026-10-05 16:54:31.350523+07	staff_do_nghia	0123456789	active	2026-10-27 13:16:43.097545+07	Bãi Đỗ Xe KĐT Đô Nghĩa (Hà Đông)	Ca Sáng (06h - 14h)
 \.
 
 
@@ -4760,11 +4947,28 @@ efc32a41-1828-4322-93f3-ca131bfe923c	test2@example.com	$2b$12$1c/ENRUXYNUio61cBR
 --
 
 COPY public.vehicles (id, license_plate, vehicle_type, brand, color, owner_name, owner_phone, user_id, created_at, updated_at) FROM stdin;
-d23cc86f-7b62-427a-b3f0-07306707caa3	30F-888.88	ev	VinFast VF8	Trắng Ngọc Trai	string	0988776655	34f2e0eb-74b0-4dde-90e7-be8913c06153	2026-09-30 10:06:53.076826+07	2026-09-30 10:06:53.076826+07
-96d993a1-e65a-4c65-8589-1d83cb6de4fc	29A-123.45	car	Mazda CX-5	Đỏ Soul Red	Trần Thị Mai	0934567890	\N	2026-09-30 10:06:53.076826+07	2026-09-30 10:06:53.076826+07
-563a746a-82e8-4024-9099-e89130f4397c	29H-999.99	car	Mercedes-Benz C300	Đen Obsidian	Phạm Quốc Bảo	0977112233	\N	2026-09-30 10:06:53.076826+07	2026-09-30 10:06:53.076826+07
-67a5954b-bf17-40d2-abeb-5f3f6274c310	30K-456.78	car	Honda CR-V	Bạc Lunar Silver	Lê Hoàng Long	0918293847	\N	2026-09-30 10:06:53.076826+07	2026-09-30 10:06:53.076826+07
-100682cc-f024-4e59-aec3-ba96b34f893c	29B-111.22	car	Toyota Camry	Trắng	Vũ Đình Trọng	0909876543	\N	2026-09-30 10:06:53.076826+07	2026-09-30 10:06:53.076826+07
+b9468e92-2e57-4010-96d8-779ab1e8a62b	89AB-55930	motorcycle	Honda	Đen	Phạm Văn Đạt	0123456789	745c5c32-4f43-4512-b34f-f9ec8dc977ea	2026-10-05 16:57:21.722811+07	2026-10-05 16:57:21.722811+07
+a128ffe4-8cb4-4027-8f7a-1b983f4cf0ad	17B7-59449	motorcycle	Honda	Xám	Phạm Văn Đạt	0123456789	745c5c32-4f43-4512-b34f-f9ec8dc977ea	2026-10-05 16:57:46.735421+07	2026-10-05 16:57:46.735421+07
+afae64c0-09f2-4a09-9393-1a897f9fcfc4	17B8-4953	motorcycle	Honda	Trắng	Phạm Văn Đạt	0123456789	745c5c32-4f43-4512-b34f-f9ec8dc977ea	2026-10-05 16:58:12.968494+07	2026-10-05 16:58:12.968494+07
+a5c52a93-cd4d-45ac-b762-167b32998585	16B1-16105	motorcycle	Yamaha	Trắng	Phạm Văn Đạt	0123456789	745c5c32-4f43-4512-b34f-f9ec8dc977ea	2026-10-05 17:19:23.925892+07	2026-10-05 17:19:23.925892+07
+6676c325-096c-490a-a2f9-0d5ad9146969	17B7-22085	car	Mercedes-Benz	Đen	Đặng Phương Anh	0326989362	0a5ffd98-8e0f-4f36-b179-976aa40fbeb9	2026-10-05 17:32:44.239941+07	2026-10-05 17:32:44.239941+07
+13f0ca5d-628f-4681-93f3-d0664ca542ca	59A1-123.45	motorcycle	\N	\N	Nguyễn Văn A	0901234567	\N	2026-10-06 01:28:24.127878+07	2026-10-06 01:28:24.127878+07
+102ba616-bd9f-4947-9b6f-3d6ca24104e1	17B1-77777	motorcycle	Honda	Đen	Phạm Thị Ngọc	1234567890	\N	2026-10-07 10:40:36.959145+07	2026-10-07 10:40:36.959145+07
+b6e1f0f6-aed8-49d0-81f5-e63edd645e69	17B7-77777	motorcycle	Honda	Trắng	Phạm Thị Ngọc	1234567890	fe52bc9b-ed55-4143-ad58-3f756ab3fd9f	2026-10-07 10:41:36.060313+07	2026-10-07 10:52:14.302842+07
+ce798acf-33ae-43df-b143-c48cac26adf6	29AC-99999	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-07 11:06:58.270916+07	2026-10-07 11:06:58.270916+07
+d202c582-ce9a-4893-949f-828e4714d9a0	30G-999.99	car	\N	\N	Khách vào bãi	\N	\N	2026-10-08 00:28:02.115607+07	2026-10-08 00:28:02.115607+07
+834e21d9-f647-4208-8807-295f59a330a3	30G99999	car	\N	\N	Khách vào bãi	\N	\N	2026-10-08 00:28:02.128604+07	2026-10-08 00:28:02.128604+07
+9b5ff220-7d50-4ab0-acbb-27d17ba4dbab	30A-777.66	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-08 00:39:12.150352+07	2026-10-08 00:39:12.150352+07
+f247e0f6-0afb-4ab1-9706-2d8d98761be3	59A1-444444	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-08 00:57:27.614342+07	2026-10-08 00:57:27.614342+07
+1ed0ff16-55ac-4a3f-aa34-8caa2a84ef04	30A-999.88	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-08 20:24:35.148758+07	2026-10-08 20:24:35.148758+07
+dcc85321-5816-482f-9e09-b8945806a021	51H-999.88	car	\N	\N	Khách vào bãi	\N	\N	2026-10-08 20:37:33.812914+07	2026-10-08 20:37:33.812914+07
+48781a1a-c8bd-4e64-ab41-a96cc6052cf1	29A-888.88	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-09 02:01:38.295795+07	2026-10-09 02:01:38.295795+07
+119841f2-7662-4a18-a2ef-e610d0608904	17B7-11111	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-09 20:34:31.696041+07	2026-10-09 20:34:31.696041+07
+f2f74e3d-218a-4593-8a08-60a9596d8863	17B7-12345	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-26 23:27:16.350773+07	2026-10-26 23:27:16.350773+07
+e9ef8924-7ca9-4b1a-b2d2-b19d08f32612	29A-666.99	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-27 00:48:40.9375+07	2026-10-27 00:48:40.9375+07
+a8125b9f-65e2-4373-93b6-d78e61094df5	14A2_11111	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-27 00:53:42.831273+07	2026-10-27 00:53:42.831273+07
+abbdd0b6-7576-464b-98b5-e8d6da8cc6ab	17B9-12345	motorcycle	\N	\N	Khách vào bãi	\N	\N	2026-10-27 13:18:10.156858+07	2026-10-27 13:18:10.156858+07
+77c054b5-83f0-4a43-bcce-f74818801106	29A-888.99	car	\N	\N	Khách Hàng A	0988776655	\N	2026-10-27 13:40:46.154496+07	2026-10-27 13:40:46.154496+07
 \.
 
 
@@ -4953,5 +5157,5 @@ ALTER TABLE ONLY public.vehicles
 -- PostgreSQL database dump complete
 --
 
-\unrestrict LfBwmSsCFGMHlKfDK86U216ysh41a5pDLMLPVHCQbJk1XpdplXMvGYD1LFZeVaS
+\unrestrict kb47p3AxKxb0BaUVZPCERUJuEVtfeEq0HvvJ87aEHk3S0pkzqwP0cUx82bgfcEi
 
