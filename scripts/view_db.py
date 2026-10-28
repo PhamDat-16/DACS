@@ -58,15 +58,23 @@ def show_summary():
             slots_cnt = len(l.slots)
             print(f"{str(l.id)[:8]:<10} | {str(l.name)[:33]:<35} | {str(l.address or 'Hà Nội')[:33]:<35} | Lưới {l.grid_width}x{l.grid_height} ({slots_cnt} slots)")
 
-        # In mẫu bảng sessions
-        print("\n[+] MẪU DỮ LIỆU BẢNG `sessions` (Các phiên gửi xe thực tế gần nhất):")
-        print(f"{'ID':<10} | {'Biển số xe':<16} | {'Slot ID':<10} | {'Trạng thái':<14} | {'Tổng tiền'}")
-        print("-" * 75)
-        for s in sessions[-5:]:
-            fee = f"{int(s.total_fee or 0):,} đ" if s.total_fee else "0 đ (Đang đỗ)"
+        # In bảng sessions với thời gian check-in/check-out đầy đủ (sắp xếp mới nhất lên đầu)
+        recent_sessions = (
+            db.query(ParkingSession)
+            .order_by(ParkingSession.check_in_time.desc())
+            .limit(15)
+            .all()
+        )
+        print("\n[+] DANH SÁCH CÁC PHIÊN GỬI XE THỰC TẾ GẦN ĐÂY NHẤT (BẢNG `sessions`):")
+        print(f"{'Biển số xe':<14} | {'Thời gian vào (Check-in)':<22} | {'Thời gian ra (Check-out)':<22} | {'Trạng thái':<14} | {'Tổng tiền'}")
+        print("-" * 96)
+        for s in recent_sessions:
+            fee = f"{int(s.total_fee or 0):,} đ" if s.total_fee else "0 đ"
             plate = (s.vehicle.license_plate if s.vehicle else s.note) or "Xe vãng lai"
-            print(f"{str(s.id)[:8]:<10} | {str(plate)[:14]:<16} | {str(s.slot_id)[:8]:<10} | {str(s.status.value):<14} | {fee}")
-
+            in_time = s.check_in_time.strftime("%d/%m/%Y %H:%M:%S") if s.check_in_time else "Chưa ghi nhận"
+            out_time = s.check_out_time.strftime("%d/%m/%Y %H:%M:%S") if s.check_out_time else "Chưa xuất bến"
+            status_str = "Đang đỗ" if s.status.value == "PARKING" else "Đã hoàn thành"
+            print(f"{str(plate)[:12]:<14} | {in_time:<22} | {out_time:<22} | {status_str:<14} | {fee}")
         print("=" * 80)
         print("=> Kết nối thành công tới PostgreSQL: localhost:5432/parking_system")
     except Exception as e:
