@@ -40,9 +40,9 @@ Xin chào! Đây là đồ án "Hệ Thống Quản Lý Bãi Đỗ Xe Thông Min
 -----------------------------------------------------------------------------
 | Vai trò               | Tài khoản đăng nhập      | Mật khẩu mặc định |
 | --------------------- | ------------------------ | ----------------- |
-| Quản trị viên (Admin) | admin@parking.vn (hoặc gõ: admin)   | admin123  |
-| Nhân viên bãi (Staff) | staff@parking.vn (hoặc gõ: staff)   | 1234567890 |
-| Khách hàng (Customer) | customer@parking.vn (hoặc gõ: customer) | 123456 |
+| Quản trị viên (Admin) | admin@parking.vn (hoặc gõ: admin)   | admin123  | (mật khẩu và tên tài khoản mặc định).
+| Nhân viên bãi (Staff) | manh@parking.vn (hoặc gõ: staff)   | 1234567890 | (có thể vào tài khoản admin để xem tên tài khoản và mật khẩu của staff).
+| Khách hàng (Customer) | panh@parking.vn (hoặc gõ: customer) | 1234567890  |(có thể tự đăng kí tài khoản cá nhân khách hàng để sử dụng).
 
 -----------------------------------------------------------------------------
 4. CÁC TÍNH NĂNG CHÍNH CÓ THỂ TRẢI NGHIỆM:
@@ -57,3 +57,4 @@ Xin chào! Đây là đồ án "Hệ Thống Quản Lý Bãi Đỗ Xe Thông Min
 
 Chúc bạn có trải nghiệm tuyệt vời với Smart Parking System!
 =============================================================================
+
